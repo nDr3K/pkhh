@@ -1,8 +1,8 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 WORKDIR /src
 COPY ["PokeSaveRomManager.Api/PokeSaveRomManager.Api.csproj", "PokeSaveRomManager.Api/"]
 COPY ["PokeSaveRomManager.Data/PokeSaveRomManager.Data.csproj", "PokeSaveRomManager.Data/"]

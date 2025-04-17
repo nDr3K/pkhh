@@ -1,0 +1,19 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace PokeSaveRomManager.Data.Entities
+{
+    public class TeamMember
+    {
+        [Key]
+        public int Id { get; set; }
+        public int TeamId { get; set; }
+        public int PokemonInstanceId { get; set; }
+
+        // Navigation properties
+        [ForeignKey("TeamId")]
+        public Team Team { get; set; }
+        [ForeignKey("PokemonInstanceId")]
+        public PokemonInstance PokemonInstance { get; set; }
+    }
+}
