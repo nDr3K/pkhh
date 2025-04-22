@@ -11,5 +11,6 @@ namespace PokeSaveRomManager.Data.Entities
 
         // Navigation properties
         public ICollection<Move> Moves { get; set; }
+        public ICollection<TypeGame> TypeGame { get; set; }
     }
 }

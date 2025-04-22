@@ -18,5 +18,6 @@ namespace PokeSaveRomManager.Data.Entities
         public ICollection<Team> Teams { get; set; }
         public ICollection<Box> Boxes { get; set; }
         public ICollection<MoveGame> MoveGame { get; set; }
+        public ICollection<TypeGame> TypeGame { get; set; }
     }
 }
