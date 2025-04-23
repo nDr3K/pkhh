@@ -19,7 +19,8 @@ namespace PokeSaveRomManager.Data
 		public DbSet<Item> Items { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Move> Moves { get; set; }
-		public DbSet<MoveLearningMethod> MoveLearningMethods { get; set; }
+		public DbSet<MoveGame> MoveGames { get; set; }
+        public DbSet<MoveLearningMethod> MoveLearningMethods { get; set; }
 		public DbSet<MoveLearning> MoveLearning { get; set; }
 		public DbSet<Pokemon> Pokemon { get; set; }
 		public DbSet<Form> Forms { get; set; }
