@@ -15,8 +15,9 @@ namespace PokeSaveRomManager.Data.Domain
         public int HP { get; set; }
         public int Attack { get; set; }
         public int Defense { get; set; }
-        public int SpAttack { get; set; }
-        public int SpDefense { get; set; }
+        public int? Special { get; set; }
+        public int? SpAttack { get; set; }
+        public int? SpDefense { get; set; }
         public int Speed { get; set; }
         public int Type1Id { get; set; }
         public int? Type2Id { get; set; }

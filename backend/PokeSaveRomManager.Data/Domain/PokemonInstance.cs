@@ -25,13 +25,15 @@ namespace PokeSaveRomManager.Data.Domain
 		public int? IVHP { get; set; }
 		public int? IVAttack { get; set; }
 		public int? IVDefense { get; set; }
-		public int? IVSpAttack { get; set; }
+		public int? IVSpecial { get; set; }
+        public int? IVSpAttack { get; set; }
 		public int? IVSpDefense { get; set; }
 		public int? IVSpeed { get; set; }
 		public int? EVHP { get; set; }
 		public int? EVAttack { get; set; }
 		public int? EVDefense { get; set; }
-		public int? EVSpAttack { get; set; }
+        public int? EVSpecial { get; set; }
+        public int? EVSpAttack { get; set; }
 		public int? EVSpDefense { get; set; }
 		public int? EVSpeed { get; set; }
 		public string OriginalTrainerName { get; set; }
