@@ -7,6 +7,7 @@ using PokeSaveRomManager.Api.Auth0.Interfaces;
 using PokeSaveRomManager.Api.Games;
 using PokeSaveRomManager.Api.Shared.Middleware;
 using PokeSaveRomManager.Api.Shared.Policies;
+using PokeSaveRomManager.Api.Types;
 using PokeSaveRomManager.Api.Users;
 using PokeSaveRomManager.Data;
 
@@ -40,6 +41,8 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(PermissionPolicies.GamesPolicy, policy =>
         policy.RequireClaim("permissions", "manage:games"));
+    options.AddPolicy(PermissionPolicies.TypesPolicy, policy =>
+        policy.RequireClaim("permissions", "manage:types"));
 });
 
 // Add services to the container.
@@ -60,6 +63,8 @@ builder.WebHost.ConfigureKestrel(options =>
 builder.Services.AddUserServices();
 // Register game services
 builder.Services.AddgGameServices();
+// Register type services
+builder.Services.AddgTypeServices();
 
 // Add HttpContextAccessor to access HttpContext in services
 builder.Services.AddHttpContextAccessor();
