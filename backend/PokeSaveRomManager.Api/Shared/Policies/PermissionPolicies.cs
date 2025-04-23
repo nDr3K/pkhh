@@ -4,5 +4,6 @@
     {
         public const string GamesPolicy = "GamesPolicy";
         public const string TypesPolicy = "TypesPolicy";
+        public const string StatsPolicy = "StatsPolicy";
     }
 }

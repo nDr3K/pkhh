@@ -7,6 +7,7 @@ using PokeSaveRomManager.Api.Auth0.Interfaces;
 using PokeSaveRomManager.Api.Games;
 using PokeSaveRomManager.Api.Shared.Middleware;
 using PokeSaveRomManager.Api.Shared.Policies;
+using PokeSaveRomManager.Api.Stats;
 using PokeSaveRomManager.Api.Types;
 using PokeSaveRomManager.Api.Users;
 using PokeSaveRomManager.Data;
@@ -43,7 +44,18 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("permissions", "manage:games"));
     options.AddPolicy(PermissionPolicies.TypesPolicy, policy =>
         policy.RequireClaim("permissions", "manage:types"));
+    options.AddPolicy(PermissionPolicies.StatsPolicy, policy =>
+        policy.RequireClaim("permissions", "manage:stats"));
 });
+
+// Register user services
+builder.Services.AddUserServices();
+// Register game services
+builder.Services.AddgGameServices();
+// Register type services
+builder.Services.AddgTypeServices();
+// Register stat services
+builder.Services.AddStatServices();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -58,13 +70,6 @@ builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(80); // Only listen on HTTP port
 });
-
-// Register user services
-builder.Services.AddUserServices();
-// Register game services
-builder.Services.AddgGameServices();
-// Register type services
-builder.Services.AddgTypeServices();
 
 // Add HttpContextAccessor to access HttpContext in services
 builder.Services.AddHttpContextAccessor();

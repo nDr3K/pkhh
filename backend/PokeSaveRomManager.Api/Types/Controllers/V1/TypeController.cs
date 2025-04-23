@@ -56,6 +56,8 @@ namespace PokeSaveRomManager.Api.Types.Controllers.V1
             {
                 return BadRequest(ModelState);
             }
+
+            _logger.LogInformation("Creating new type: {TypeName}", type.Name);
             var createdType = await _typeService.AddAsync(type);
             return CreatedAtAction(nameof(GetType), new { id = createdType.Id }, createdType);
         }
@@ -95,6 +97,7 @@ namespace PokeSaveRomManager.Api.Types.Controllers.V1
             var exists = await _typeService.ExistsAsync(id);
             if (!exists)
             {
+                _logger.LogWarning("Type with id: {Id} not found", id);
                 return NotFound();
             }
             await _typeService.DeleteAsync(id);
