@@ -36,30 +36,30 @@ namespace PokeSaveRomManager.Api.Games.Mapper
         }
 
         // Map GameCreateDto -> Game
-        public static Game ToEntity(this GameCreateDto gameCreateDto)
+        public static Game ToEntity(this GameCreateDto gameDto)
         {
-            if (gameCreateDto == null)
+            if (gameDto == null)
                 return null;
 
             return new Game
             {
-                Name = gameCreateDto.Name,
-                Generation = gameCreateDto.Generation,
-                Official = gameCreateDto.Official,
-                Region = gameCreateDto.Region
+                Name = gameDto.Name,
+                Generation = gameDto.Generation,
+                Official = gameDto.Official,
+                Region = gameDto.Region
             };
         }
 
         // Map GameUpdateDto -> Game (updates existing Game)
-        public static void UpdateFromDto(this Game game, GameUpdateDto gameUpdateDto)
+        public static void UpdateFromDto(this Game game, GameUpdateDto gameDto)
         {
-            if (game == null || gameUpdateDto == null)
+            if (game == null || gameDto == null)
                 return;
 
-            game.Name = gameUpdateDto.Name;
-            game.Generation = gameUpdateDto.Generation;
-            game.Official = gameUpdateDto.Official;
-            game.Region = gameUpdateDto.Region;
+            game.Name = gameDto.Name;
+            game.Generation = gameDto.Generation;
+            game.Official = gameDto.Official;
+            game.Region = gameDto.Region;
         }
     }
 }
