@@ -6,6 +6,7 @@ using PokeSaveRomManager.Api.Auth0;
 using PokeSaveRomManager.Api.Auth0.Interfaces;
 using PokeSaveRomManager.Api.Games;
 using PokeSaveRomManager.Api.Shared.Middleware;
+using PokeSaveRomManager.Api.Shared.Policies;
 using PokeSaveRomManager.Api.Users;
 using PokeSaveRomManager.Data;
 
@@ -37,8 +38,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("DevPermission", policy =>
-        policy.RequireClaim("permissions", "dev:full"));
+    options.AddPolicy(PermissionPolicies.GamesPolicy, policy =>
+        policy.RequireClaim("permissions", "manage:games"));
 });
 
 // Add services to the container.
@@ -87,12 +88,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 //app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapControllers();
 

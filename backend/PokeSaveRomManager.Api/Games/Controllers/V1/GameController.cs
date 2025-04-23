@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeSaveRomManager.Api.Games.DTOs;
 using PokeSaveRomManager.Api.Games.Services;
+using PokeSaveRomManager.Api.Shared.Policies;
 
 namespace PokeSaveRomManager.Api.Games.Controllers.V1
 {
@@ -50,6 +51,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = PermissionPolicies.GamesPolicy)]
         public async Task<ActionResult<GameDto>> CreateGame(GameCreateDto game)
         {
             if (!ModelState.IsValid)
@@ -67,6 +69,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = PermissionPolicies.GamesPolicy)]
         public async Task<IActionResult> UpdateGame(int id, GameUpdateDto game)
         {
 
@@ -91,6 +94,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = PermissionPolicies.GamesPolicy)]
         public async Task<IActionResult> DeleteGame(int id)
         {
             _logger.LogInformation("Deleting game with id: {Id}", id);
