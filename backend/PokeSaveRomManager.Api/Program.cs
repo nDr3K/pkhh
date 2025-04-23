@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using PokeSaveRomManager.Api.Auth0;
 using PokeSaveRomManager.Api.Auth0.Interfaces;
 using PokeSaveRomManager.Api.Games;
+using PokeSaveRomManager.Api.Natures;
 using PokeSaveRomManager.Api.Shared.Middleware;
 using PokeSaveRomManager.Api.Shared.Policies;
 using PokeSaveRomManager.Api.Stats;
@@ -46,6 +47,8 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("permissions", "manage:types"));
     options.AddPolicy(PermissionPolicies.StatsPolicy, policy =>
         policy.RequireClaim("permissions", "manage:stats"));
+    options.AddPolicy(PermissionPolicies.NaturesPolicy, policy =>
+        policy.RequireClaim("permissions", "manage:natures"));
 });
 
 // Register user services
@@ -56,6 +59,8 @@ builder.Services.AddgGameServices();
 builder.Services.AddgTypeServices();
 // Register stat services
 builder.Services.AddStatServices();
+// Register nature services
+builder.Services.AddNatureServices();
 
 // Add services to the container.
 builder.Services.AddControllers();
