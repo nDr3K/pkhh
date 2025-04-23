@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PokeSaveRomManager.Api.Auth0;
 using PokeSaveRomManager.Api.Auth0.Interfaces;
+using PokeSaveRomManager.Api.Shared.Middleware;
 using PokeSaveRomManager.Api.Users;
 using PokeSaveRomManager.Data;
 
@@ -78,6 +79,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 //app.UseHttpsRedirection();
 
