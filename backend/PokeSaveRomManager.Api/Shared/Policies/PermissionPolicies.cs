@@ -6,5 +6,6 @@
         public const string TypesPolicy = "TypesPolicy";
         public const string StatsPolicy = "StatsPolicy";
         public const string NaturesPolicy = "NaturesPolicy";
+        public const string CategoriesPolicy = "CategoriesPolicy";
     }
 }
