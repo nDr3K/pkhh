@@ -1,4 +1,4 @@
-﻿using PokeSaveRomManager.Data.Entities;
+﻿using PokeSaveRomManager.Data.Domain;
 
 namespace PokeSaveRomManager.Api.Users.Repositories
 {

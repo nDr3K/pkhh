@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using PokeSaveRomManager.Data.Entities;
-using Type = PokeSaveRomManager.Data.Entities.Type;
+using PokeSaveRomManager.Data.Domain;
+using Type = PokeSaveRomManager.Data.Domain.Type;
 
 namespace PokeSaveRomManager.Data
 {

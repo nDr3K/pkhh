@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokeSaveRomManager.Data;
-using PokeSaveRomManager.Data.Entities;
+using PokeSaveRomManager.Data.Domain;
 
 namespace PokeSaveRomManager.Api.Users.Repositories
 {
@@ -14,20 +14,33 @@ namespace PokeSaveRomManager.Api.Users.Repositories
 
         public async Task<User> GetByAuth0IdAsync(string id)
         {
-            return await _context.Users
+            var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Auth0Id == id);
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with Auth0 ID {id} not found.");
+            }
+            return user;
         }
 
         public async Task<User> GetByEmailAsync(string email)
         {
-            return await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with email {email} not found.");
+            }
+            return user;
         }
 
         public async Task<User> GetByIdAsync(int id)
         {
-            return await _context.Users
-                .FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with ID {id} not found.");
+            }
+            return user;
         }
 
         public async Task<bool> ExistsAsync(string email)

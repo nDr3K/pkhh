@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace PokeSaveRomManager.Data.Entities
+namespace PokeSaveRomManager.Data.Domain
 {
     public class Nature
     {

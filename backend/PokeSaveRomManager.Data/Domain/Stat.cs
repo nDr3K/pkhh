@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
-namespace PokeSaveRomManager.Data.Entities
+namespace PokeSaveRomManager.Data.Domain
 {
     public class Stat
     {

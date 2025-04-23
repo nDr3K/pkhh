@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PokeSaveRomManager.Data.Entities
+namespace PokeSaveRomManager.Data.Domain
 {
-    public class Category
+    public class Ability
     {
         [Key]
         public int Id { get; set; }
@@ -10,6 +10,6 @@ namespace PokeSaveRomManager.Data.Entities
         public string Name { get; set; }
 
         // Navigation properties
-        public ICollection<Move> Moves { get; set; }
+        public ICollection<PokemonAbility> PokemonAbilities { get; set; }
     }
 }

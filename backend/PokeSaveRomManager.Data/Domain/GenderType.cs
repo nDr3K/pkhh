@@ -1,4 +1,4 @@
-namespace PokeSaveRomManager.Data.Entities
+namespace PokeSaveRomManager.Data.Domain
 {
     public enum GenderType
     {

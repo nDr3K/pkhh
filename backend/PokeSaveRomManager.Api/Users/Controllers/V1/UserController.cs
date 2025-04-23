@@ -22,27 +22,27 @@ namespace PokeSaveRomManager.Api.Users.Controllers.V1
 
         // This endpoint will be called after successful Auth0 authentication
         [HttpGet("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> HandleAuth0Login()
         {
-            try
+            _logger.LogInformation("Handling Auth0 login for user: {User}", User.Identity?.Name);
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                // Get existing user or create new one based on Auth0 data
-                var user = await _userService.GetOrCreateUserFromClaimsAsync(User);
+                _logger.LogWarning("User is not authenticated");
+                return Unauthorized("User is not authenticated");
+            }
+            // Get existing user or create new one based on Auth0 data
+            var user = await _userService.GetOrCreateUserFromClaimsAsync(User);
 
-                // Return user data and potentially a session token or other application-specific info
-                return Ok(new
-                {
-                    UserId = user.Id,
-                    user.Name,
-                    user.Email,
-                    Message = "User successfully authenticated"
-                });
-            }
-            catch (Exception ex)
+            // Return user data and potentially a session token or other application-specific info
+            return Ok(new
             {
-                _logger.LogError(ex, "Error processing authentication for user");
-                return StatusCode(500, "Error processing authentication");
-            }
+                UserId = user.Id,
+                user.Name,
+                user.Email,
+                Message = "User successfully authenticated"
+            });
         }
     }
 }

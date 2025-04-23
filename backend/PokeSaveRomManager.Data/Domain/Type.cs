@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PokeSaveRomManager.Data.Entities
+namespace PokeSaveRomManager.Data.Domain
 {
     public class Type
     {

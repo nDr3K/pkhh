@@ -1,4 +1,4 @@
-﻿using PokeSaveRomManager.Data.Entities;
+﻿using PokeSaveRomManager.Data.Domain;
 using System.Security.Claims;
 
 namespace PokeSaveRomManager.Api.Users.Services
