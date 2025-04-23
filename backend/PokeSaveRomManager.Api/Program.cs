@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PokeSaveRomManager.Api.Auth0;
 using PokeSaveRomManager.Api.Auth0.Interfaces;
+using PokeSaveRomManager.Api.Games;
 using PokeSaveRomManager.Api.Shared.Middleware;
 using PokeSaveRomManager.Api.Users;
 using PokeSaveRomManager.Data;
@@ -56,6 +57,8 @@ builder.WebHost.ConfigureKestrel(options =>
 
 // Register user services
 builder.Services.AddUserServices();
+// Register game services
+builder.Services.AddgGameServices();
 
 // Add HttpContextAccessor to access HttpContext in services
 builder.Services.AddHttpContextAccessor();
@@ -69,6 +72,10 @@ builder.Services.AddApiVersioning(options =>
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ReportApiVersions = true;
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
 });
 
 var app = builder.Build();
