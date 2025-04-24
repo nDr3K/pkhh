@@ -10,7 +10,7 @@ namespace PokeSaveRomManager.Api.Natures.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/nature")]
+    [Route("api/v{version:apiVersion}/natures")]
     public class NatureController : Controller
     {
         private readonly INatureService _natureService;

@@ -10,7 +10,7 @@ namespace PokeSaveRomManager.Api.Stats.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/stat")]
+    [Route("api/v{version:apiVersion}/stats")]
     public class StatController : Controller
     {
         private readonly IStatService _statService;

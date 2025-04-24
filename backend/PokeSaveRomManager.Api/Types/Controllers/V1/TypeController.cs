@@ -10,7 +10,7 @@ namespace PokeSaveRomManager.Api.Types.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/type")]
+    [Route("api/v{version:apiVersion}/types")]
     public class TypeController : Controller
     {
         private readonly ITypeService _typeService;
