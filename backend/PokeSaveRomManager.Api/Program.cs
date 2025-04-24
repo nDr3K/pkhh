@@ -2,6 +2,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PokeSaveRomManager.Api.Abilities;
 using PokeSaveRomManager.Api.Auth0;
 using PokeSaveRomManager.Api.Auth0.Interfaces;
 using PokeSaveRomManager.Api.Categories;
@@ -52,6 +53,8 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("permissions", "manage:natures"));
     options.AddPolicy(PermissionPolicies.CategoriesPolicy, policy =>
         policy.RequireClaim("permissions", "manage:categories"));
+    options.AddPolicy(PermissionPolicies.AbilitiesPolicy, policy =>
+        policy.RequireClaim("permissions", "manage:abilities"));
 });
 
 // Register user services
@@ -66,6 +69,8 @@ builder.Services.AddStatServices();
 builder.Services.AddNatureServices();
 // Register category services
 builder.Services.AddCategoryServices();
+// Register ability services
+builder.Services.AddAbilityServices();
 
 // Add services to the container.
 builder.Services.AddControllers();
