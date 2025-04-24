@@ -8,7 +8,7 @@ namespace PokeSaveRomManager.Data.Domain
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public int NameId { get; set; }
         public int TypeId { get; set; }
         public int CategoryId { get; set; }
         public int? Power { get; set; }
@@ -18,6 +18,8 @@ namespace PokeSaveRomManager.Data.Domain
         public int Priority { get; set; } = 0;
 
         // Navigation properties
+        [ForeignKey("NameId")]
+        public MoveName Name { get; set; }
         [ForeignKey("TypeId")]
         public Type Type { get; set; }
         [ForeignKey("CategoryId")]

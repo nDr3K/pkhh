@@ -13,13 +13,15 @@ namespace PokeSaveRomManager.Data
 		public DbSet<User> Users { get; set; }
 		public DbSet<Game> Games { get; set; }
 		public DbSet<Type> Types { get; set; }
-		public DbSet<Ability> Abilities { get; set; }
+        public DbSet<TypeGame> TypeGames { get; set; }
+        public DbSet<Ability> Abilities { get; set; }
 		public DbSet<Stat> Stats { get; set; }
 		public DbSet<Nature> Natures { get; set; }
 		public DbSet<Item> Items { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Move> Moves { get; set; }
-		public DbSet<MoveGame> MoveGames { get; set; }
+		public DbSet<MoveName> MoveNames { get; set; }
+        public DbSet<MoveGame> MoveGames { get; set; }
         public DbSet<MoveLearningMethod> MoveLearningMethods { get; set; }
 		public DbSet<MoveLearning> MoveLearning { get; set; }
 		public DbSet<Pokemon> Pokemon { get; set; }
