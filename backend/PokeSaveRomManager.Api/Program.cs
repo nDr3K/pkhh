@@ -7,6 +7,7 @@ using PokeSaveRomManager.Api.Auth0;
 using PokeSaveRomManager.Api.Auth0.Interfaces;
 using PokeSaveRomManager.Api.Categories;
 using PokeSaveRomManager.Api.Games;
+using PokeSaveRomManager.Api.Items;
 using PokeSaveRomManager.Api.Natures;
 using PokeSaveRomManager.Api.Shared.Middleware;
 using PokeSaveRomManager.Api.Shared.Policies;
@@ -55,6 +56,8 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("permissions", "manage:categories"));
     options.AddPolicy(PermissionPolicies.AbilitiesPolicy, policy =>
         policy.RequireClaim("permissions", "manage:abilities"));
+    options.AddPolicy(PermissionPolicies.ItemsPolicy, policy =>
+        policy.RequireClaim("permissions", "manage:items"));
 });
 
 // Register user services
@@ -71,6 +74,8 @@ builder.Services.AddNatureServices();
 builder.Services.AddCategoryServices();
 // Register ability services
 builder.Services.AddAbilityServices();
+// Register Item services
+builder.Services.AddItemServices();
 
 // Add services to the container.
 builder.Services.AddControllers();
