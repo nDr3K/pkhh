@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeSaveRomManager.Api.Categories.DTOs;
 using PokeSaveRomManager.Api.Categories.Services;
+using PokeSaveRomManager.Api.Shared.Constants;
 
 namespace PokeSaveRomManager.Api.Categories.Controllers.V1
 {
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/categories")]
+    [Route(ApiRoutes.Categories.Root)]
     public class CategoryController : Controller
     {
         public readonly ICategoryService _categoryService;

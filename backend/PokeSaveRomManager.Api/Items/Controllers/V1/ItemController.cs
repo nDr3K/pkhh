@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeSaveRomManager.Api.Items.DTOs;
 using PokeSaveRomManager.Api.Items.Services;
+using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Policies;
 
 namespace PokeSaveRomManager.Api.Items.Controllers.V1
@@ -10,7 +11,7 @@ namespace PokeSaveRomManager.Api.Items.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/items")]
+    [Route(ApiRoutes.Items.Root)]
     public class ItemController : Controller
     {
         private readonly IItemService _itemService;

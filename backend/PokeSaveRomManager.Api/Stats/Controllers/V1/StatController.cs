@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Policies;
 using PokeSaveRomManager.Api.Stats.DTOs;
 using PokeSaveRomManager.Api.Stats.Services;
@@ -10,7 +11,7 @@ namespace PokeSaveRomManager.Api.Stats.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/stats")]
+    [Route(ApiRoutes.Stats.Root)]
     public class StatController : Controller
     {
         private readonly IStatService _statService;

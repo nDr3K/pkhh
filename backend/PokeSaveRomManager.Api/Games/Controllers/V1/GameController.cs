@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeSaveRomManager.Api.Games.DTOs;
 using PokeSaveRomManager.Api.Games.Services;
+using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Policies;
 
 namespace PokeSaveRomManager.Api.Games.Controllers.V1
@@ -10,7 +11,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/games")]
+    [Route(ApiRoutes.Games.Root)]
     public class GameController : Controller
     {
         private readonly IGameService _gameService;
@@ -110,7 +111,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
             return NoContent();
         }
 
-        [HttpGet("generation/{generation}")]
+        [HttpGet(ApiRoutes.Games.Generation + "/{generation}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<GameDto>>> GetGamesByGeneration(int generation)
         {
@@ -119,7 +120,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
             return Ok(games);
         }
 
-        [HttpGet("region/{region}")]
+        [HttpGet(ApiRoutes.Games.Region + "/{region}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<GameDto>>> GetGamesByRegion(string region)
         {
@@ -128,7 +129,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
             return Ok(games);
         }
 
-        [HttpGet("official")]
+        [HttpGet(ApiRoutes.Games.Official)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<GameDto>>> GetOfficialGames()
         {

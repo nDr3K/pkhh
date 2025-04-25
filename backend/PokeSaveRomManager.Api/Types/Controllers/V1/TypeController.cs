@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Policies;
 using PokeSaveRomManager.Api.Types.DTOs;
 using PokeSaveRomManager.Api.Types.Services;
@@ -10,7 +11,7 @@ namespace PokeSaveRomManager.Api.Types.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/types")]
+    [Route(ApiRoutes.Types.Root)]
     public class TypeController : Controller
     {
         private readonly ITypeService _typeService;

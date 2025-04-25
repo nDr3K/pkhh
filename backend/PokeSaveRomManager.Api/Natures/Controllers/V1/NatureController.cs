@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeSaveRomManager.Api.Natures.DTOs;
 using PokeSaveRomManager.Api.Natures.Services;
+using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Policies;
 
 namespace PokeSaveRomManager.Api.Natures.Controllers.V1
@@ -10,7 +11,7 @@ namespace PokeSaveRomManager.Api.Natures.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/natures")]
+    [Route(ApiRoutes.Natures.Root)]
     public class NatureController : Controller
     {
         private readonly INatureService _natureService;

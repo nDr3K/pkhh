@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeSaveRomManager.Api.Abilities.DTOs;
 using PokeSaveRomManager.Api.Abilities.Services;
+using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Policies;
 
 namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
@@ -10,7 +11,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/abilities")]
+    [Route(ApiRoutes.Abilities.Root)]
     public class AbilityController : Controller
     {
         private readonly IAbilityService _abilityService;
@@ -98,7 +99,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
         }
 
         //AbilityName
-        [HttpGet("names")]
+        [HttpGet(ApiRoutes.Abilities.Names)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<AbilityNameDto>>> GetAbilityNames()
         {
@@ -107,7 +108,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
             return Ok(abilityNames);
         }
 
-        [HttpGet("names/{id}")]
+        [HttpGet(ApiRoutes.Abilities.Names + "/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AbilityNameDto>> GetAbilityName(int id)
@@ -123,7 +124,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
             return Ok(abilityName);
         }
 
-        [HttpPost("names")]
+        [HttpPost(ApiRoutes.Abilities.Names)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = PermissionPolicies.AbilitiesPolicy)]
@@ -139,7 +140,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
             return CreatedAtAction(nameof(GetAbilityName), new { id = createdAbilityName.Id }, createdAbilityName);
         }
 
-        [HttpPut("names/{id}")]
+        [HttpPut(ApiRoutes.Abilities.Names + "/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -156,7 +157,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
             return NoContent();
         }
 
-        [HttpDelete("names/{id}")]
+        [HttpDelete(ApiRoutes.Abilities.Names + "/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = PermissionPolicies.AbilitiesPolicy)]
