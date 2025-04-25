@@ -28,19 +28,19 @@ namespace PokeSaveRomManager.Api.Games.Repositories
                 .Include(t => t.Game)
                 .Include(t => t.Type)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(g => g.Id == id);
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<GameType> AddAsync(GameType gameType)
         {
-            await _context.GameTypes.AddAsync(gameType);
+            _context.GameTypes.Add(gameType);
             await SaveChangesAsync();
-            return gameType;
+            return await GetByIdAsync(gameType.Id);
         }
 
         public async Task UpdateAsync(GameType gameType)
         {
-            _context.Entry(gameType).State = EntityState.Modified;
+            _context.GameTypes.Update(gameType);
             await SaveChangesAsync();
         }
 
@@ -56,7 +56,7 @@ namespace PokeSaveRomManager.Api.Games.Repositories
 
         public async Task<bool> ExistsAsync(int id)
         {
-            return await _context.GameTypes.AnyAsync(g => g.Id == id);
+            return await _context.GameTypes.AnyAsync(t => t.Id == id);
         }
 
         private async Task SaveChangesAsync()

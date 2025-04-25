@@ -34,7 +34,7 @@ namespace PokeSaveRomManager.Api.Abilities.Repositories
         {
             _context.Abilities.Add(ability);
             await _context.SaveChangesAsync();
-            return ability;
+            return await GetByIdAsync(ability.Id);
         }
 
         public async Task UpdateAsync(Ability ability)

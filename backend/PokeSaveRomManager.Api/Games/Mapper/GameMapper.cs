@@ -1,13 +1,12 @@
 ﻿using PokeSaveRomManager.Api.Games.DTOs;
 using PokeSaveRomManager.Data.Domain;
-using System.Security.AccessControl;
-using static PokeSaveRomManager.Api.Shared.Constants.ApiRoutes;
 
 namespace PokeSaveRomManager.Api.Games.Mapper
 {
     public static class GameMapper
     {
         // Game
+        #region Game
         public static GameDto ToDto(this Game game)
         {
             if (game == null)
@@ -61,9 +60,10 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             game.Official = gameDto.Official;
             game.Region = gameDto.Region;
         }
-
+        #endregion
 
         // GameType
+        #region Type
         public static GameTypeDto ToDto(this GameType gameType)
         {
             if (gameType == null)
@@ -107,5 +107,54 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             gameType.GameId = gameTypeDto.GameId;
             gameType.TypeInGameId = gameTypeDto.TypeInGameId;
         }
+        #endregion
+
+        // GameAbility
+        #region Ability
+        public static GameAbilityDto ToDto(this GameAbility gameAbility)
+        {
+            if (gameAbility == null)
+                return null;
+
+            return new GameAbilityDto
+            {
+                Id = gameAbility.Id,
+                AbilityName = gameAbility.Ability.Name.Name,
+                GameName = gameAbility.Game.Name,
+                AbilityInGameId = gameAbility.AbilityInGameId
+            };
+        }
+
+        public static IEnumerable<GameAbilityDto> ToDtos(this IEnumerable<GameAbility> gameAbilities)
+        {
+            if (gameAbilities == null)
+                return new List<GameAbilityDto>();
+
+            return gameAbilities.Select(g => g.ToDto());
+        }
+
+        public static GameAbility ToEntity(this GameAbilityCreateDto gameAbilityDto)
+        {
+            if (gameAbilityDto == null)
+                return null;
+
+            return new GameAbility
+            {
+                AbilityId = gameAbilityDto.AbilityId,
+                GameId = gameAbilityDto.GameId,
+                AbilityInGameId = gameAbilityDto.AbilityInGameId
+            };
+        }
+
+        public static void UpdateFromDto(this GameAbility gameAbility, GameAbilityUpdateDto gameAbilityDto)
+        {
+            if (gameAbility == null || gameAbilityDto == null)
+                return;
+
+            gameAbility.AbilityId = gameAbilityDto.AbilityId;
+            gameAbility.GameId = gameAbilityDto.GameId;
+            gameAbility.AbilityInGameId = gameAbilityDto.AbilityInGameId;
+        }
+        #endregion
     }
 }

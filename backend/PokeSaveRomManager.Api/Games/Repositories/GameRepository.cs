@@ -49,7 +49,7 @@ namespace PokeSaveRomManager.Api.Games.Repositories
 
         public async Task UpdateAsync(Game game)
         {
-            _context.Entry(game).State = EntityState.Modified;
+            _context.Games.Update(game);
             await SaveChangesAsync();
         }
 

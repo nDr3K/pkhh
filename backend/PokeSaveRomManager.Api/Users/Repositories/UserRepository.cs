@@ -57,7 +57,7 @@ namespace PokeSaveRomManager.Api.Users.Repositories
 
         public async Task<User> UpdateAsync(User user)
         {
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return user;
         }

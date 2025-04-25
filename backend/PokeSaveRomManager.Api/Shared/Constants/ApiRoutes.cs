@@ -42,9 +42,9 @@
             public const string Generation = "generation";
             public const string Region = "region";
 
-            public const string Types = "types";
-            public const string Moves = "moves";
-            public const string Abilities = "abilities";
+            public const string Types = Root + "/types";
+            public const string Moves = Root + "/moves";
+            public const string Abilities = Root + "/abilities";
         }
 
         public static class Users

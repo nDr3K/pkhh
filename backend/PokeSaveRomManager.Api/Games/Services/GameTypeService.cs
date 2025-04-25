@@ -20,7 +20,7 @@ namespace PokeSaveRomManager.Api.Games.Services
         {
             try
             {
-                _logger.LogInformation("Retrieving all game types");
+                _logger.LogInformation("Retrieving all game types)");
                 var gameTypes = await _gameTypeRepository.GetAllAsync();
                 return gameTypes.ToDtos(); // GameTypeMapper Collection Method
             }
