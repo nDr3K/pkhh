@@ -11,7 +11,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/abilities")]
-    public class AbilityController: Controller
+    public class AbilityController : Controller
     {
         private readonly IAbilityService _abilityService;
         private readonly ILogger<AbilityController> _logger;
@@ -22,6 +22,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
             _logger = logger;
         }
 
+        //Ability
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<AbilityDto>>> GetAbilities()
@@ -93,6 +94,83 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
                 return NotFound();
             }
             await _abilityService.DeleteAsync(id);
+            return NoContent();
+        }
+
+        //AbilityName
+        [HttpGet("names")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<AbilityNameDto>>> GetAbilityNames()
+        {
+            _logger.LogInformation("Getting all ability names");
+            var abilityNames = await _abilityService.GetAllNamesAsync();
+            return Ok(abilityNames);
+        }
+
+        [HttpGet("names/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<AbilityNameDto>> GetAbilityName(int id)
+        {
+            _logger.LogInformation("Getting ability name with id: {Id}", id);
+            var abilityName = await _abilityService.GetNameByIdAsync(id);
+            if (abilityName == null)
+            {
+                _logger.LogWarning("Ability name with id: {Id} not found", id);
+                return NotFound();
+            }
+
+            return Ok(abilityName);
+        }
+
+        [HttpPost("names")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = PermissionPolicies.AbilitiesPolicy)]
+        public async Task<ActionResult<AbilityNameDto>> CreateAbilityName(AbilityNameCreateDto abilityName)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Creating new ability: {Name}", abilityName.Name);
+            var createdAbilityName = await _abilityService.CreateNameAsync(abilityName);
+            return CreatedAtAction(nameof(GetAbilityName), new { id = createdAbilityName.Id }, createdAbilityName);
+        }
+
+        [HttpPut("names/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = PermissionPolicies.AbilitiesPolicy)]
+        public async Task<IActionResult> UpdateAbilityName(int id, AbilityNameUpdateDto abilityName)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Updating ability name with id: {Id}", id);
+            await _abilityService.UpdateNameAsync(id, abilityName);
+            return NoContent();
+        }
+
+        [HttpDelete("names/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = PermissionPolicies.AbilitiesPolicy)]
+        public async Task<IActionResult> DeleteAbilityName(int id)
+        {
+            _logger.LogInformation("Deleting ability name with id: {Id}", id);
+            var exists = await _abilityService.ExistsNameAsync(id);
+            if (!exists)
+            {
+                _logger.LogWarning("Ability name with id: {Id} not found", id);
+                return NotFound();
+            }
+
+            await _abilityService.DeleteNameAsync(id);
             return NoContent();
         }
     }

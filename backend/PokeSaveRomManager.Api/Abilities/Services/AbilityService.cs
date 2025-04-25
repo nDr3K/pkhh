@@ -15,6 +15,7 @@ namespace PokeSaveRomManager.Api.Abilities.Services
             _logger = logger;
         }
 
+        //Ability
         public async Task<IEnumerable<AbilityDto>> GetAllAsync()
         {
             try
@@ -100,6 +101,97 @@ namespace PokeSaveRomManager.Api.Abilities.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error checking existence of ability with ID: {id}");
+                throw;
+            }
+        }
+
+        //AbilityName
+        public async Task<IEnumerable<AbilityNameDto>> GetAllNamesAsync()
+        {
+            try
+            {
+                _logger.LogInformation("Fetching all ability names");
+                var abilityNames = await _abilityRepository.GetAllNamesAsync();
+                return abilityNames.ToDtos();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching ability names");
+                throw;
+            }
+        }
+
+        public async Task<AbilityNameDto> GetNameByIdAsync(int id)
+        {
+            try
+            {
+                _logger.LogInformation($"Fetching ability name with ID: {id}");
+                var abilityName = await _abilityRepository.GetNameByIdAsync(id);
+                return abilityName.ToDto();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error fetching ability name with ID: {id}");
+                throw;
+            }
+        }
+
+        public async Task<AbilityNameDto> CreateNameAsync(AbilityNameCreateDto abilityNameCreateDto)
+        {
+            try
+            {
+                _logger.LogInformation("Creating new ability name");
+                var abilityName = abilityNameCreateDto.ToEntity();
+                var createdAbilityName = await _abilityRepository.CreateNameAsync(abilityName);
+                return createdAbilityName.ToDto();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating ability name");
+                throw;
+            }
+        }
+
+        public async Task UpdateNameAsync(int id, AbilityNameUpdateDto abilityNameUpdateDto)
+        {
+            try
+            {
+                _logger.LogInformation($"Updating ability name with ID: {id}");
+                var abilityName = await _abilityRepository.GetNameByIdAsync(id);
+                abilityName.UpdateFromDto(abilityNameUpdateDto);
+                await _abilityRepository.UpdateNameAsync(abilityName);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error updating ability name with ID: {id}");
+                throw;
+            }
+        }
+
+        public async Task DeleteNameAsync(int id)
+        {
+            try
+            {
+                _logger.LogInformation($"Deleting ability name with ID: {id}");
+                await _abilityRepository.DeleteNameAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error deleting ability name with ID: {id}");
+                throw;
+            }
+        }
+
+        public async Task<bool> ExistsNameAsync(int id)
+        {
+            try
+            {
+                _logger.LogInformation($"Checking existence of ability name with ID: {id}");
+                return await _abilityRepository.ExistsNameAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error checking existence of ability name with ID: {id}");
                 throw;
             }
         }
