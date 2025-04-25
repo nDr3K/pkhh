@@ -24,7 +24,7 @@ namespace PokeSaveRomManager.Data.Domain
         public Type Type { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
-        public ICollection<MoveGame> MoveGame { get; set; }
+        public ICollection<GameMove> GameMoves { get; set; }
         public ICollection<PokemonInstance> PokemonInstancesWithMove1 { get; set; }
         public ICollection<PokemonInstance> PokemonInstancesWithMove2 { get; set; }
         public ICollection<PokemonInstance> PokemonInstancesWithMove3 { get; set; }

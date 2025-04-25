@@ -8,7 +8,7 @@ namespace PokeSaveRomManager.Data.Domain
         [Key]
         public int Id { get; set; }
         public int PokemonId { get; set; }
-        public int MoveGameId { get; set; }
+        public int GameInMoveId { get; set; }
         public int MethodId { get; set; }
         public int? Level { get; set; }
         public string TMNumber { get; set; }
@@ -18,8 +18,8 @@ namespace PokeSaveRomManager.Data.Domain
         // Navigation properties
         [ForeignKey("PokemonId")]
         public Pokemon Pokemon { get; set; }
-        [ForeignKey("MoveGameId")]
-        public MoveGame MoveGame { get; set; }
+        [ForeignKey("GameInMoveId")]
+        public GameMove GameMove { get; set; }
         [ForeignKey("MethodId")]
         public MoveLearningMethod Method { get; set; }
     }

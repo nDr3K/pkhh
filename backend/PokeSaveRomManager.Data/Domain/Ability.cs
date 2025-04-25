@@ -14,6 +14,6 @@ namespace PokeSaveRomManager.Data.Domain
         [ForeignKey("NameId")]
         public AbilityName Name { get; set; }
         public ICollection<PokemonAbility> PokemonAbilities { get; set; }
-        public ICollection<AbilityGame> AbilityGames { get; set; }
+        public ICollection<GameAbility> GameAbilities { get; set; }
     }
 }

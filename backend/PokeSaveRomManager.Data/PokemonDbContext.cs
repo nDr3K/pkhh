@@ -13,17 +13,17 @@ namespace PokeSaveRomManager.Data
 		public DbSet<User> Users { get; set; }
 		public DbSet<Game> Games { get; set; }
 		public DbSet<Type> Types { get; set; }
-        public DbSet<TypeGame> TypeGames { get; set; }
+        public DbSet<GameType> TypeGames { get; set; }
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<AbilityName> AbilityNames { get; set; }
-        public DbSet<AbilityGame> AbilityGames { get; set; }
+        public DbSet<GameAbility> GameAbilities { get; set; }
         public DbSet<Stat> Stats { get; set; }
 		public DbSet<Nature> Natures { get; set; }
 		public DbSet<Item> Items { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Move> Moves { get; set; }
 		public DbSet<MoveName> MoveNames { get; set; }
-        public DbSet<MoveGame> MoveGames { get; set; }
+        public DbSet<GameMove> MoveGames { get; set; }
         public DbSet<MoveLearningMethod> MoveLearningMethods { get; set; }
 		public DbSet<MoveLearning> MoveLearning { get; set; }
 		public DbSet<Pokemon> Pokemon { get; set; }
@@ -114,7 +114,19 @@ namespace PokeSaveRomManager.Data
 				.HasMaxLength(10)
 				.HasConversion<string>();
 
-			base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<AbilityName>()
+				.HasMany(an => an.Abilities)
+				.WithOne(a => a.Name)
+				.HasForeignKey(a => a.NameId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<MoveName>()
+                .HasMany(mn => mn.Moves)
+                .WithOne(m => m.Name)
+                .HasForeignKey(m => m.NameId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
 		}
 	}
 }

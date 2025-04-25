@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeSaveRomManager.Data.Domain
 {
-    public class AbilityGame
+    public class GameAbility
     {
         [Key]
         public int Id { get; set; }
@@ -15,7 +15,7 @@ namespace PokeSaveRomManager.Data.Domain
         public int GameId { get; set; }
 
         [Required]
-        public int AbilityGameId { get; set; } // Unique identifier for the ability in the game
+        public int AbilityInGameId { get; set; } // Unique identifier for the ability in the game
 
 
         // Navigation properties

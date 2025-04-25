@@ -33,8 +33,9 @@ namespace PokeSaveRomManager.Api.Games.Repositories
                 .Include(g => g.Pokemon)
                 .Include(g => g.Teams)
                 .Include(g => g.Boxes)
-                .Include(g => g.MoveGame)
-                .Include(g => g.TypeGame)
+                .Include(g => g.Moves)
+                .Include(g => g.Types)
+                .Include(g => g.Abilities)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(g => g.Id == id);
         }

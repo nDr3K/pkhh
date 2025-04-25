@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeSaveRomManager.Data.Domain
 {
-    public class TypeGame
+    public class GameType
     {
         [Key]
         public int Id { get; set; }
@@ -12,7 +12,7 @@ namespace PokeSaveRomManager.Data.Domain
         [Required]
         public int GameId { get; set; }
         [Required]
-        public int GameTypeId { get; set; } // id of the type in the game
+        public int TypeInGameId { get; set; } // id of the type in the game
 
         // Navigation properties
         [ForeignKey("TypeId")]

@@ -23,6 +23,7 @@ namespace PokeSaveRomManager.Api.Games.DTOs
         public List<int> BoxIds { get; set; } = [];
         public List<int> MoveGameIds { get; set; } = [];
         public List<int> TypeGameIds { get; set; } = [];
+        public List<int> AbilityGameIds { get; set; } = [];
     }
 
     public class GameCreateDto

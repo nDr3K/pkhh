@@ -21,8 +21,9 @@ namespace PokeSaveRomManager.Api.Games.Mapper
                 PokemonIds = game.Pokemon?.Select(p => p.Id).ToList() ?? [],
                 TeamIds = game.Teams?.Select(t => t.Id).ToList() ?? [],
                 BoxIds = game.Boxes?.Select(b => b.Id).ToList() ?? [],
-                MoveGameIds = game.MoveGame?.Select(m => m.Id).ToList() ?? [],
-                TypeGameIds = game.TypeGame?.Select(t => t.Id).ToList() ?? []
+                MoveGameIds = game.Moves?.Select(m => m.Id).ToList() ?? [],
+                TypeGameIds = game.Types?.Select(t => t.Id).ToList() ?? [],
+                AbilityGameIds = game.Abilities?.Select(a => a.Id).ToList() ?? []
             };
         }
 
