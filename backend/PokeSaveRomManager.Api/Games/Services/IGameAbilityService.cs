@@ -4,11 +4,11 @@ namespace PokeSaveRomManager.Api.Games.Services
 {
     public interface IGameAbilityService
     {
-        Task<IEnumerable<GameAbilityDto>> GetAllAsync();
-        Task<GameAbilityDto> GetByIdAsync(int id);
-        Task<GameAbilityDto> AddAsync(GameAbilityCreateDto gameAbility);
-        Task UpdateAsync(int id, GameAbilityUpdateDto gameAbility);
-        Task DeleteAsync(int id);
-        Task<bool> ExistsAsync(int id);
+        Task<IEnumerable<GameAbilityDto>> GetAllAsync(int gameId);
+        Task<GameAbilityDto> GetByIdAsync(int gameId, int id);
+        Task<GameAbilityDto> AddAsync(int gameId, GameAbilityCreateDto gameAbility);
+        Task UpdateAsync(int gameId, int id, GameAbilityUpdateDto gameAbility);
+        Task DeleteAsync(int gameId, int id);
+        Task<bool> ExistsAsync(int gameId, int id);
     }
 }

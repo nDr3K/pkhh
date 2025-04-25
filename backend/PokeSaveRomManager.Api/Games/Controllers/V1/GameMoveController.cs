@@ -25,26 +25,26 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int gameId)
         {
-            _logger.LogInformation("Retrieving all game moves");
-            var gameMoves = await _gameMoveService.GetAllAsync();
+            _logger.LogInformation("Retrieving all moves for game with ID: {GameId}", gameId);
+            var gameMoves = await _gameMoveService.GetAllAsync(gameId);
             return Ok(gameMoves);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(int gameId, int id)
         {
-            var gameMove = await _gameMoveService.GetByIdAsync(id);
+            var gameMove = await _gameMoveService.GetByIdAsync(gameId, id);
             if (gameMove == null)
             {
-                _logger.LogWarning("Game move with ID: {Id} not found", id);
+                _logger.LogWarning("Game move with ID: {Id} not found for game with ID: {GameId}", id, gameId);
                 return NotFound();
             }
 
-            _logger.LogInformation("Retrieving game move with ID: {Id}", id);
+            _logger.LogInformation("Retrieving game move with ID: {Id} for game with ID: {GameId}", id, gameId);
             return Ok(gameMove);
         }
 
@@ -52,15 +52,15 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = PermissionPolicies.GamesPolicy)]
-        public async Task<IActionResult> Add(GameMoveCreateDto gameMoveDto)
+        public async Task<IActionResult> Add(int gameId, GameMoveCreateDto gameMoveDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            _logger.LogInformation("Adding new game move {GameMoveId} for {GameId}", gameMoveDto.MoveId, gameMoveDto.GameId);
-            var gameMove = await _gameMoveService.AddAsync(gameMoveDto);
+            var existingGameMove = await _gameMoveService.GetByIdAsync(gameId, gameMoveDto.MoveId);
+            var gameMove = await _gameMoveService.AddAsync(gameId, gameMoveDto);
             return CreatedAtAction(nameof(GetById), new { id = gameMove.Id }, gameMove);
         }
 
@@ -68,22 +68,22 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Update(int id, GameMoveUpdateDto gameMoveDto)
+        public async Task<IActionResult> Update(int gameId, int id, GameMoveUpdateDto gameMoveDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var existingGameMove = await _gameMoveService.GetByIdAsync(id);
+            var existingGameMove = await _gameMoveService.GetByIdAsync(gameId, id);
             if (existingGameMove == null)
             {
-                _logger.LogWarning("Game move with ID: {Id} not found", id);
+                _logger.LogWarning("Game move with ID: {Id} not found for game with ID: {GameId}", id, gameId);
                 return NotFound();
             }
 
-            _logger.LogInformation("Updating game move with ID: {Id}", id);
-            await _gameMoveService.UpdateAsync(id, gameMoveDto);
+            _logger.LogInformation("Updating game move with ID: {Id} for game with ID: {GameId}", id, gameId);
+            await _gameMoveService.UpdateAsync(gameId, id, gameMoveDto);
             return NoContent();
         }
 
@@ -91,17 +91,17 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = PermissionPolicies.GamesPolicy)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int gameId, int id)
         {
-            var existingGameMove = await _gameMoveService.GetByIdAsync(id);
+            var existingGameMove = await _gameMoveService.GetByIdAsync(gameId, id);
             if (existingGameMove == null)
             {
-                _logger.LogWarning("Game move with ID: {Id} not found", id);
+                _logger.LogWarning("Game move with ID: {Id} not found for game with ID: {GameId}", id, gameId);
                 return NotFound();
             }
 
-            _logger.LogInformation("Deleting game move with ID: {Id}", id);
-            await _gameMoveService.DeleteAsync(id);
+            _logger.LogInformation("Deleting game move with ID: {Id} for game with ID: {GameId}", id, gameId);
+            await _gameMoveService.DeleteAsync(gameId, id);
             return NoContent();
         }
     }

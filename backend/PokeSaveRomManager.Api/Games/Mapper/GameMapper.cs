@@ -73,7 +73,6 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             {
                 Id = gameType.Id,
                 TypeName = gameType.Type.Name,
-                GameName = gameType.Game.Name,
                 TypeInGameId = gameType.TypeInGameId
             };
         }
@@ -86,25 +85,26 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             return gameTypes.Select(g => g.ToDto());
         }
 
-        public static GameType ToEntity(this GameTypeCreateDto gameTypeDto)
+        public static GameType ToEntity(int gameId, GameTypeCreateDto gameTypeDto)
         {
             if (gameTypeDto == null)
                 return null;
+
             return new GameType
             {
                 TypeId = gameTypeDto.TypeId,
-                GameId = gameTypeDto.GameId,
+                GameId = gameId,
                 TypeInGameId = gameTypeDto.TypeInGameId
             };
         }
 
-        public static void UpdateFromDto(this GameType gameType, GameTypeUpdateDto gameTypeDto)
+        public static void UpdateFromDto(this GameType gameType, int gameId, GameTypeUpdateDto gameTypeDto)
         {
             if (gameType == null || gameTypeDto == null)
                 return;
 
             gameType.TypeId = gameTypeDto.TypeId;
-            gameType.GameId = gameTypeDto.GameId;
+            gameType.GameId = gameId;
             gameType.TypeInGameId = gameTypeDto.TypeInGameId;
         }
         #endregion
@@ -120,7 +120,6 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             {
                 Id = gameAbility.Id,
                 AbilityName = gameAbility.Ability.Name.Name,
-                GameName = gameAbility.Game.Name,
                 AbilityInGameId = gameAbility.AbilityInGameId
             };
         }
@@ -133,7 +132,7 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             return gameAbilities.Select(g => g.ToDto());
         }
 
-        public static GameAbility ToEntity(this GameAbilityCreateDto gameAbilityDto)
+        public static GameAbility ToEntity(int gameId, GameAbilityCreateDto gameAbilityDto)
         {
             if (gameAbilityDto == null)
                 return null;
@@ -141,18 +140,18 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             return new GameAbility
             {
                 AbilityId = gameAbilityDto.AbilityId,
-                GameId = gameAbilityDto.GameId,
+                GameId = gameId,
                 AbilityInGameId = gameAbilityDto.AbilityInGameId
             };
         }
 
-        public static void UpdateFromDto(this GameAbility gameAbility, GameAbilityUpdateDto gameAbilityDto)
+        public static void UpdateFromDto(this GameAbility gameAbility, int gameId, GameAbilityUpdateDto gameAbilityDto)
         {
             if (gameAbility == null || gameAbilityDto == null)
                 return;
 
             gameAbility.AbilityId = gameAbilityDto.AbilityId;
-            gameAbility.GameId = gameAbilityDto.GameId;
+            gameAbility.GameId = gameId;
             gameAbility.AbilityInGameId = gameAbilityDto.AbilityInGameId;
         }
         #endregion
@@ -168,7 +167,6 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             {
                 Id = gameMove.Id,
                 MoveName = gameMove.Move.Name.Name,
-                GameName = gameMove.Game.Name,
                 MoveInGameId = gameMove.MoveInGameId
             };
         }
@@ -181,7 +179,7 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             return gameMoves.Select(g => g.ToDto());
         }
 
-        public static GameMove ToEntity(this GameMoveCreateDto gameMoveDto)
+        public static GameMove ToEntity(int gameId, GameMoveCreateDto gameMoveDto)
         {
             if (gameMoveDto == null)
                 return null;
@@ -189,18 +187,18 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             return new GameMove
             {
                 MoveId = gameMoveDto.MoveId,
-                GameId = gameMoveDto.GameId,
+                GameId = gameId,
                 MoveInGameId = gameMoveDto.MoveInGameId
             };
         }
 
-        public static void UpdateFromDto(this GameMove gameMove, GameMoveUpdateDto gameMoveDto)
+        public static void UpdateFromDto(this GameMove gameMove, int gameId, GameMoveUpdateDto gameMoveDto)
         {
             if (gameMove == null || gameMoveDto == null)
                 return;
 
             gameMove.MoveId = gameMoveDto.MoveId;
-            gameMove.GameId = gameMoveDto.GameId;
+            gameMove.GameId = gameId;
             gameMove.MoveInGameId = gameMoveDto.MoveInGameId;
         }
         #endregion

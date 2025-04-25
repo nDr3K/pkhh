@@ -24,41 +24,41 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<GameTypeDto>>> GetAllTypes()
+        public async Task<ActionResult<IEnumerable<GameTypeDto>>> GetAllTypes(int gameId)
         {
-            _logger.LogInformation("Getting all game types");
-            var types = await _gameTypeService.GetAllAsync();
+            _logger.LogInformation("Getting all game types for game with id: {GameId}", gameId);
+            var types = await _gameTypeService.GetAllAsync(gameId);
             return Ok(types);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GameTypeDto>> GetTypeById(int id)
+        public async Task<ActionResult<GameTypeDto>> GetTypeById(int gameId, int id)
         {
-            _logger.LogInformation("Getting game type with id: {Id}", id);
-            var type = await _gameTypeService.GetByIdAsync(id);
+            var type = await _gameTypeService.GetByIdAsync(gameId, id);
             if (type == null)
             {
-                _logger.LogWarning("Game type with id: {Id} not found", id);
+                _logger.LogWarning("Game type with id: {Id} not found for game with id: {GameId}", id, gameId);
                 return NotFound();
             }
 
+            _logger.LogInformation("Getting game type with id: {Id} for game with id: {GameId}", id, gameId);
             return Ok(type);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<GameTypeDto>> AddType(GameTypeCreateDto gameTypeDto)
+        public async Task<ActionResult<GameTypeDto>> AddType(int gameId, GameTypeCreateDto gameTypeDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            _logger.LogInformation("Adding new game type {GameTypeTypeId} for {GameTypeGameId}", gameTypeDto.TypeId, gameTypeDto.GameId);
-            var gameType = await _gameTypeService.AddAsync(gameTypeDto);
+            var existingType = await _gameTypeService.GetByIdAsync(gameId, gameTypeDto.TypeInGameId);
+            var gameType = await _gameTypeService.AddAsync(gameId, gameTypeDto);
             return CreatedAtAction(nameof(GetTypeById), new { id = gameType.Id }, gameType);
         }
 
@@ -66,38 +66,39 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateType(int id, GameTypeUpdateDto gameTypeDto)
+        public async Task<IActionResult> UpdateType(int gameId, int id, GameTypeUpdateDto gameTypeDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var existingType = await _gameTypeService.GetByIdAsync(id);
+            var existingType = await _gameTypeService.GetByIdAsync(gameId, id);
             if (existingType == null)
             {
-                _logger.LogWarning("Game type with id: {Id} not found", id);
+                _logger.LogWarning("Game type with id: {Id} not found for game with id: {GameId}", id, gameId);
                 return NotFound();
             }
 
-            await _gameTypeService.UpdateAsync(id, gameTypeDto);
+            _logger.LogInformation("Updating game type with id: {Id} for game with id: {GameId}", id, gameId);
+            await _gameTypeService.UpdateAsync(gameId, id, gameTypeDto);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteType(int id)
+        public async Task<IActionResult> DeleteType(int gameId, int id)
         {
-            var existingType = await _gameTypeService.GetByIdAsync(id);
+            var existingType = await _gameTypeService.GetByIdAsync(gameId, id);
             if (existingType == null)
             {
-                _logger.LogWarning("Game type with id: {Id} not found", id);
+                _logger.LogWarning("Game type with id: {Id} not found for game with id: {GameId}", id, gameId);
                 return NotFound();
             }
 
-            _logger.LogInformation("Deleting game type with id: {Id}", id);
-            await _gameTypeService.DeleteAsync(id);
+            _logger.LogInformation("Deleting game type with id: {Id} for game with id: {GameId}", id, gameId);
+            await _gameTypeService.DeleteAsync(gameId, id);
             return NoContent();
         }
     }

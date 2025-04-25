@@ -37,14 +37,15 @@
         public static class Games
         {
             public const string Root = Base + "/games";
+            public const string ById = Root + "/{gameId}";
 
             public const string Official = "official";
             public const string Generation = "generation";
             public const string Region = "region";
 
-            public const string Types = Root + "/types";
-            public const string Moves = Root + "/moves";
-            public const string Abilities = Root + "/abilities";
+            public const string Types = ById + "/types";
+            public const string Moves = ById + "/moves";
+            public const string Abilities = ById + "/abilities";
         }
 
         public static class Users

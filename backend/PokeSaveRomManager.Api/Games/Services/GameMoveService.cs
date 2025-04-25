@@ -15,92 +15,92 @@ namespace PokeSaveRomManager.Api.Games.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<GameMoveDto>> GetAllAsync()
+        public async Task<IEnumerable<GameMoveDto>> GetAllAsync(int gameId)
         {
             try
             {
-                _logger.LogInformation("Retrieving all game moves");
-                var gameMoves = await _gameMoveRepository.GetAllAsync();
+                _logger.LogInformation("Retrieving all moves for game with ID: {gameId}", gameId);
+                var gameMoves = await _gameMoveRepository.GetAllAsync(gameId);
                 return gameMoves.ToDtos(); // GameMoveMapper Collection Method
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while retrieving all game moves");
+                _logger.LogError(ex, "Error occurred while retrieving all moves for game with ID: {gameId}", gameId);
                 throw;
             }
         }
 
-        public async Task<GameMoveDto> GetByIdAsync(int id)
+        public async Task<GameMoveDto> GetByIdAsync(int gameId, int id)
         {
             try
             {
-                _logger.LogInformation("Retrieving game move with ID: {Id}", id);
-                var gameMove = await _gameMoveRepository.GetByIdAsync(id);
+                _logger.LogInformation("Retrieving move with ID: {Id} for game with ID: {gameId}", id, gameId);
+                var gameMove = await _gameMoveRepository.GetByIdAsync(gameId, id);
                 return GameMapper.ToDto(gameMove);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while retrieving game move with ID: {Id}", id);
+                _logger.LogError(ex, "Error occurred while retrieving move with ID: {Id} for game with ID: {gameId}", id, gameId);
                 throw;
             }
         }
 
-        public async Task<GameMoveDto> AddAsync(GameMoveCreateDto gameMoveDto)
+        public async Task<GameMoveDto> AddAsync(int gameId, GameMoveCreateDto gameMoveDto)
         {
             try
             {
-                _logger.LogInformation("Adding new game move {GameMoveMoveId} for {GameMoveGameId}", gameMoveDto.MoveId, gameMoveDto.GameId);
-                var gameMove = GameMapper.ToEntity(gameMoveDto);
+                _logger.LogInformation("Adding new move with ID: {MoveId} for game with ID: {GameId}", gameMoveDto.MoveId, gameId);
+                var gameMove = GameMapper.ToEntity(gameId, gameMoveDto);
                 var addedGameMove = await _gameMoveRepository.AddAsync(gameMove);
                 return GameMapper.ToDto(addedGameMove);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while adding game move {GameMoveMoveId} for {GameMoveGameId}", gameMoveDto.MoveId, gameMoveDto.GameId);
+                _logger.LogError(ex, "Error occurred while adding new move with ID: {MoveId} for game with ID: {GameId}", gameMoveDto.MoveId, gameId);
                 throw;
             }
         }
 
-        public async Task UpdateAsync(int id, GameMoveUpdateDto gameMoveDto)
+        public async Task UpdateAsync(int gameId, int id, GameMoveUpdateDto gameMoveDto)
         {
             try
             {
-                _logger.LogInformation("Updating game move {GameMoveMoveId} for {GameMoveGameId}", gameMoveDto.MoveId, gameMoveDto.GameId);
-                var gameMove = await _gameMoveRepository.GetByIdAsync(id);
-                gameMove.UpdateFromDto(gameMoveDto);
+                _logger.LogInformation("Updating game move with ID: {Id} for game with ID: {gameId}", id, gameId);
+                var gameMove = await _gameMoveRepository.GetByIdAsync(gameId, id);
+                gameMove.UpdateFromDto(gameId, gameMoveDto);
                 await _gameMoveRepository.UpdateAsync(gameMove);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while updating game move {GameMoveMoveId} for {GameMoveGameId}", gameMoveDto.MoveId, gameMoveDto.GameId);
+                _logger.LogError(ex, "Error occurred while updating game move with ID: {Id} for game with ID: {gameId}", id, gameId);
                 throw;
             }
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int gameId, int id)
         {
             try
             {
-                _logger.LogInformation("Deleting game move with ID: {Id}", id);
-                await _gameMoveRepository.DeleteAsync(id);
+                _logger.LogInformation("Deleting game move with ID: {Id} for game with ID: {gameId}", id, gameId);
+                await _gameMoveRepository.DeleteAsync(gameId, id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while deleting game move with ID: {Id}", id);
+                _logger.LogError(ex, "Error occurred while deleting game move with ID: {Id} for game with ID: {gameId}", id, gameId);
                 throw;
             }
         }
 
-        public async Task<bool> ExistsAsync(int id)
+        public async Task<bool> ExistsAsync(int gameId, int id)
         {
             try
             {
-                _logger.LogInformation("Checking existence of game move with ID: {Id}", id);
-                return await _gameMoveRepository.ExistsAsync(id);
+                _logger.LogInformation("Checking existence of game move with ID: {Id} for game with ID: {gameId}", id, gameId);
+                return await _gameMoveRepository.ExistsAsync(gameId, id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while checking existence of game move with ID: {Id}", id);
+                _logger.LogError(ex, "Error occurred while checking existence of game move with ID: {Id} for game with ID: {gameId}", id, gameId);
                 throw;
             }
         }

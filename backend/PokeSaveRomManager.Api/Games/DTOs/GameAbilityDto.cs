@@ -7,9 +7,6 @@ namespace PokeSaveRomManager.Api.Games.DTOs
         public int Id { get; set; }
 
         [Required]
-        public string GameName { get; set; }
-
-        [Required]
         public string AbilityName { get; set; }
 
         [Required]
@@ -19,9 +16,6 @@ namespace PokeSaveRomManager.Api.Games.DTOs
     public class GameAbilityCreateDto
     {
         [Required]
-        public int GameId { get; set; }
-
-        [Required]
         public int AbilityId { get; set; }
 
         [Required]
@@ -30,9 +24,6 @@ namespace PokeSaveRomManager.Api.Games.DTOs
 
     public class GameAbilityUpdateDto
     {
-        [Required]
-        public int GameId { get; set; }
-
         [Required]
         public int AbilityId { get; set; }
 
