@@ -14,6 +14,5 @@ namespace PokeSaveRomManager.Api.Games.Repositories
         Task<IEnumerable<Game>> GetByGenerationAsync(int generation);
         Task<IEnumerable<Game>> GetByRegionAsync(string region);
         Task<IEnumerable<Game>> GetOfficialAsync();
-        Task SaveChangesAsync();
     }
 }

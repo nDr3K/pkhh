@@ -92,7 +92,7 @@ namespace PokeSaveRomManager.Api.Games.Repositories
                 .ToListAsync();
         }
 
-        public async Task SaveChangesAsync()
+        private async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
