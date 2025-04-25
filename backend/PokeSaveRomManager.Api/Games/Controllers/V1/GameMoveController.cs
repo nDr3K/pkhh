@@ -25,7 +25,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll(int gameId)
+        public async Task<ActionResult<IEnumerable<GameMoveDto>>> GetAll(int gameId)
         {
             _logger.LogInformation("Retrieving all moves for game with ID: {GameId}", gameId);
             var gameMoves = await _gameMoveService.GetAllAsync(gameId);
@@ -35,7 +35,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(int gameId, int id)
+        public async Task<ActionResult<GameMoveDto>> GetById(int gameId, int id)
         {
             var gameMove = await _gameMoveService.GetByIdAsync(gameId, id);
             if (gameMove == null)
@@ -52,7 +52,7 @@ namespace PokeSaveRomManager.Api.Games.Controllers.V1
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = PermissionPolicies.GamesPolicy)]
-        public async Task<IActionResult> Add(int gameId, GameMoveCreateDto gameMoveDto)
+        public async Task<ActionResult<GameMoveDto>> Add(int gameId, GameMoveCreateDto gameMoveDto)
         {
             if (!ModelState.IsValid)
             {

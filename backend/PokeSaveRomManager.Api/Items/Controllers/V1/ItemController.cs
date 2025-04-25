@@ -25,7 +25,7 @@ namespace PokeSaveRomManager.Api.Items.Controllers.V1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<ItemDto>>> GetAll()
         {
             _logger.LogInformation("Fetching all items");
             var items = await _itemService.GetAllAsync();
@@ -35,7 +35,7 @@ namespace PokeSaveRomManager.Api.Items.Controllers.V1
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<ItemDto>> GetById(int id)
         {
             _logger.LogInformation($"Fetching item with ID: {id}");
             var item = await _itemService.GetByIdAsync(id);
@@ -50,7 +50,7 @@ namespace PokeSaveRomManager.Api.Items.Controllers.V1
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = PermissionPolicies.ItemsPolicy)]
-        public async Task<IActionResult> Create([FromBody] ItemCreateDto itemCreateDto)
+        public async Task<ActionResult<ItemDto>> Create( ItemCreateDto itemCreateDto)
         {
             if (!ModelState.IsValid)
             {
