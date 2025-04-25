@@ -156,5 +156,53 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             gameAbility.AbilityInGameId = gameAbilityDto.AbilityInGameId;
         }
         #endregion
+
+        // GameMove
+        #region Move
+        public static GameMoveDto ToDto(this GameMove gameMove)
+        {
+            if (gameMove == null)
+                return null;
+
+            return new GameMoveDto
+            {
+                Id = gameMove.Id,
+                MoveName = gameMove.Move.Name.Name,
+                GameName = gameMove.Game.Name,
+                MoveInGameId = gameMove.MoveInGameId
+            };
+        }
+
+        public static IEnumerable<GameMoveDto> ToDtos(this IEnumerable<GameMove> gameMoves)
+        {
+            if (gameMoves == null)
+                return new List<GameMoveDto>();
+
+            return gameMoves.Select(g => g.ToDto());
+        }
+
+        public static GameMove ToEntity(this GameMoveCreateDto gameMoveDto)
+        {
+            if (gameMoveDto == null)
+                return null;
+
+            return new GameMove
+            {
+                MoveId = gameMoveDto.MoveId,
+                GameId = gameMoveDto.GameId,
+                MoveInGameId = gameMoveDto.MoveInGameId
+            };
+        }
+
+        public static void UpdateFromDto(this GameMove gameMove, GameMoveUpdateDto gameMoveDto)
+        {
+            if (gameMove == null || gameMoveDto == null)
+                return;
+
+            gameMove.MoveId = gameMoveDto.MoveId;
+            gameMove.GameId = gameMoveDto.GameId;
+            gameMove.MoveInGameId = gameMoveDto.MoveInGameId;
+        }
+        #endregion
     }
 }
