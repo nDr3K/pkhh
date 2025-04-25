@@ -10,6 +10,5 @@ namespace PokeSaveRomManager.Api.Abilities.Repositories
         Task UpdateAsync(Ability ability);
         Task DeleteAsync(int id);
         Task<bool> ExistsAsync(int id);
-        Task<bool> ExistsByNameAsync(string name);
     }
 }

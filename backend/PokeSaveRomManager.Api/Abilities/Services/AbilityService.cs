@@ -103,18 +103,5 @@ namespace PokeSaveRomManager.Api.Abilities.Services
                 throw;
             }
         }
-        public async Task<bool> ExistsByNameAsync(string name)
-        {
-            try
-            {
-                _logger.LogInformation($"Checking existence of ability with name: {name}");
-                return await _abilityRepository.ExistsByNameAsync(name);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error checking existence of ability with name: {name}");
-                throw;
-            }
-        }
     }
 }

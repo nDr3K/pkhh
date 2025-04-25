@@ -3,17 +3,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeSaveRomManager.Data.Domain
 {
-    public class MoveGame
+    public class AbilityGame
     {
         [Key]
         public int Id { get; set; }
-        public int MoveId { get; set; }
+
+        [Required]
+        public int AbilityId { get; set; }
+
+        [Required]
         public int GameId { get; set; }
-        public int MoveGameId { get; set; } // Unique identifier for the move in the game
+
+        [Required]
+        public int AbilityGameId { get; set; } // Unique identifier for the ability in the game
+
 
         // Navigation properties
-        [ForeignKey("MoveId")]
-        public Move Move { get; set; }
+        [ForeignKey("AbilityId")]
+        public Ability Ability { get; set; }
+
         [ForeignKey("GameId")]
         public Game Game { get; set; }
     }

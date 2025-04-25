@@ -16,6 +16,7 @@ namespace PokeSaveRomManager.Api.Abilities.Repositories
         public async Task<IEnumerable<Ability>> GetAllAsync()
         {
             return await _context.Abilities
+                .Include(a => a.Name)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -23,6 +24,7 @@ namespace PokeSaveRomManager.Api.Abilities.Repositories
         public async Task<Ability> GetByIdAsync(int id)
         {
             return await _context.Abilities
+                .Include(a => a.Name)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
@@ -55,13 +57,6 @@ namespace PokeSaveRomManager.Api.Abilities.Repositories
             return await _context.Abilities
                 .AsNoTracking()
                 .AnyAsync(a => a.Id == id);
-        }
-
-        public async Task<bool> ExistsByNameAsync(string name)
-        {
-            return await _context.Abilities
-                .AsNoTracking()
-                .AnyAsync(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
         public async Task SaveChangesAsync()

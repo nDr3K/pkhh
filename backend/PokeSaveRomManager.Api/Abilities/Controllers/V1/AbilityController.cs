@@ -57,14 +57,7 @@ namespace PokeSaveRomManager.Api.Abilities.Controllers.V1
                 return BadRequest(ModelState);
             }
 
-            var alreadyExists = await _abilityService.ExistsByNameAsync(ability.Name);
-            if (alreadyExists)
-            {
-                _logger.LogWarning("Ability with name: {AbilityName} already exists", ability.Name);
-                return BadRequest($"Ability with name {ability.Name} already exists.");
-            }
-
-            _logger.LogInformation("Creating new ability: {AbilityName}", ability.Name);
+            _logger.LogInformation("Creating new ability with name id: {NameId}", ability.NameId);
             var createdAbility = await _abilityService.CreateAsync(ability);
             return CreatedAtAction(nameof(GetAbility), new { id = createdAbility.Id }, createdAbility);
         }

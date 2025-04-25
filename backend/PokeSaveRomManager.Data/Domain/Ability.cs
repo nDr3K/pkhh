@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeSaveRomManager.Data.Domain
 {
@@ -7,9 +8,12 @@ namespace PokeSaveRomManager.Data.Domain
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public int NameId { get; set; }
 
         // Navigation properties
+        [ForeignKey("NameId")]
+        public AbilityName Name { get; set; }
         public ICollection<PokemonAbility> PokemonAbilities { get; set; }
+        public ICollection<AbilityGame> AbilityGames { get; set; }
     }
 }

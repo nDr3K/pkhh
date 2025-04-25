@@ -13,12 +13,12 @@ namespace PokeSaveRomManager.Api.Abilities.DTOs
     public class AbilityCreateDto
     {
         [Required]
-        public string Name { get; set; }
+        public int NameId { get; set; }
     }
 
     public class AbilityUpdateDto
     {
         [Required]
-        public string Name { get; set; }
+        public int NameId { get; set; }
     }
 }

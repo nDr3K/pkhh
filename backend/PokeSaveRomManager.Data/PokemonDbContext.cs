@@ -15,7 +15,9 @@ namespace PokeSaveRomManager.Data
 		public DbSet<Type> Types { get; set; }
         public DbSet<TypeGame> TypeGames { get; set; }
         public DbSet<Ability> Abilities { get; set; }
-		public DbSet<Stat> Stats { get; set; }
+        public DbSet<AbilityName> AbilityNames { get; set; }
+        public DbSet<AbilityGame> AbilityGames { get; set; }
+        public DbSet<Stat> Stats { get; set; }
 		public DbSet<Nature> Natures { get; set; }
 		public DbSet<Item> Items { get; set; }
 		public DbSet<Category> Categories { get; set; }

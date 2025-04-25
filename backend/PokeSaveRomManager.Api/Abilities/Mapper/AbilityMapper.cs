@@ -10,7 +10,7 @@ namespace PokeSaveRomManager.Api.Abilities.Mapper
             return new AbilityDto
             {
                 Id = ability.Id,
-                Name = ability.Name
+                Name = ability.Name.Name
             };
         }
         public static IEnumerable<AbilityDto> ToDtos(this IEnumerable<Ability> abilities)
@@ -25,7 +25,7 @@ namespace PokeSaveRomManager.Api.Abilities.Mapper
 
             return new Ability
             {
-                Name = abilityyCreateDto.Name
+                NameId = abilityyCreateDto.NameId
             };
         }
 
@@ -34,7 +34,7 @@ namespace PokeSaveRomManager.Api.Abilities.Mapper
             if (ability == null || abilityUpdateDto == null)
                 return;
 
-            ability.Name = abilityUpdateDto.Name;
+            ability.NameId = abilityUpdateDto.NameId;
         }
     }
 }
