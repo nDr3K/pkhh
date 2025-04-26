@@ -8,6 +8,7 @@ using PokeSaveRomManager.Api.Auth0.Interfaces;
 using PokeSaveRomManager.Api.Categories;
 using PokeSaveRomManager.Api.Games;
 using PokeSaveRomManager.Api.Items;
+using PokeSaveRomManager.Api.Moves;
 using PokeSaveRomManager.Api.Natures;
 using PokeSaveRomManager.Api.Shared.Middleware;
 using PokeSaveRomManager.Api.Shared.Policies;
@@ -76,6 +77,8 @@ builder.Services.AddCategoryServices();
 builder.Services.AddAbilityServices();
 // Register Item services
 builder.Services.AddItemServices();
+// Register move services
+builder.Services.AddMoveServices();
 
 // Add services to the container.
 builder.Services.AddControllers();

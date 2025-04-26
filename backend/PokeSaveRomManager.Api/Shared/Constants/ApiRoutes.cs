@@ -48,6 +48,12 @@
             public const string Abilities = ById + "/abilities";
         }
 
+        public static class Moves
+        {
+            public const string Root = Base + "/moves";
+            public const string Names = "names";
+        }
+
         public static class Users
         {
             public const string Auth = "/auth/login";

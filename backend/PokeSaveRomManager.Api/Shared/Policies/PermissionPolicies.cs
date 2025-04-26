@@ -9,5 +9,6 @@
         public const string CategoriesPolicy = "CategoriesPolicy";
         public const string AbilitiesPolicy = "AbilitiesPolicy";
         public const string ItemsPolicy = "ItemsPolicy";
+        public const string MovesPolicy = "MovesPolicy";
     }
 }
