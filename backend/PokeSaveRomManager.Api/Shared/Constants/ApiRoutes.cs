@@ -52,6 +52,8 @@
         {
             public const string Root = Base + "/moves";
             public const string Names = "names";
+
+            public const string LearningMethods = Root + "/learning-methods";
         }
 
         public static class Users

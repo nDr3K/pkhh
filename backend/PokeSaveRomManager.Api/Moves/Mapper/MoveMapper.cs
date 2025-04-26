@@ -92,5 +92,39 @@ namespace PokeSaveRomManager.Api.Moves.Mapper
 
             moveName.Name = moveNameDto.Name;
         }
+
+        // MoveLearningMethod
+        public static MoveLearningMethodDto ToDto(this MoveLearningMethod moveLearningMethod)
+        {
+            return new MoveLearningMethodDto
+            {
+                Id = moveLearningMethod.Id,
+                Name = moveLearningMethod.Name
+            };
+        }
+
+        public static IEnumerable<MoveLearningMethodDto> ToDtos(this IEnumerable<MoveLearningMethod> moveLearningMethods)
+        {
+            return moveLearningMethods.Select(c => c.ToDto());
+        }
+
+        public static MoveLearningMethod ToEntity(this MoveLearningMethodCreateDto moveLearningMethodDto)
+        {
+            if (moveLearningMethodDto == null)
+                return null;
+
+            return new MoveLearningMethod
+            {
+                Name = moveLearningMethodDto.Name
+            };
+        }
+
+        public static void UpdateFromDto(this MoveLearningMethod moveLearningMethod, MoveLearningMethodUpdateDto moveLearningMethodDto)
+        {
+            if (moveLearningMethod == null || moveLearningMethodDto == null)
+                return;
+
+            moveLearningMethod.Name = moveLearningMethodDto.Name;
+        }
     }
 }

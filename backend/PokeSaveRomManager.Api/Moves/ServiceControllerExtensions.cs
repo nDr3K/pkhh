@@ -7,8 +7,12 @@ namespace PokeSaveRomManager.Api.Moves
     {
         public static IServiceCollection AddMoveServices(this IServiceCollection services)
         {
+            // Move
             services.AddScoped<IMoveService, MoveService>();
             services.AddScoped<IMoveRepository, MoveRepository>();
+            // Move Learning Method
+            services.AddScoped<IMoveLearningMethodService, MoveLearningMethodService>();
+            services.AddScoped<IMoveLearningMethodRepository, MoveLearningMethodRepository>();
 
             return services;
         }
