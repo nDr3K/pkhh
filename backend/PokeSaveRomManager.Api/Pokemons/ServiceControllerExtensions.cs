@@ -16,6 +16,9 @@ namespace PokeSaveRomManager.Api.Pokemons
             // PokemonAbility
             services.AddScoped<IPokemonAbilityService, PokemonAbilityService>();
             services.AddScoped<IPokemonAbilityRepository, PokemonAbilityRepository>();
+            // PokemonMove
+            services.AddScoped<IPokemonMoveService, PokemonMoveService>();
+            services.AddScoped<IPokemonMoveRepository, PokemonMoveRepository>();
 
             return services;
         }

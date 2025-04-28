@@ -185,5 +185,59 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
             ability.AbilitySlot = dto.AbilitySlot;
         }
         #endregion
+
+        // PokemonMove
+        #region PokemonMove
+        public static PokemonMoveDto ToDto(this PokemonMove move)
+        {
+            return new PokemonMoveDto
+            {
+                Id = move.Id,
+                PokemonName = move.Pokemon.Name,
+                GameInMoveName = move.GameMove.Move.Name.Name,
+                MethodName = move.Method.Name,
+                Level = move.Level,
+                TMNumber = move.TMNumber,
+                IsTutor = move.IsTutor,
+                IsEggMove = move.IsEggMove
+            };
+        }
+
+        public static IEnumerable<PokemonMoveDto> ToDtos(this IEnumerable<PokemonMove> moves)
+        {
+            return moves.Select(m => m.ToDto());
+        }
+
+        public static PokemonMove ToEntity(this PokemonMoveCreateDto dto, int pokemonId)
+        {
+            if (dto == null)
+                return null;
+
+            return new PokemonMove
+            {
+                PokemonId = pokemonId,
+                GameInMoveId = dto.GameInMoveId,
+                MethodId = dto.MethodId,
+                Level = dto.Level,
+                TMNumber = dto.TMNumber,
+                IsTutor = dto.IsTutor,
+                IsEggMove = dto.IsEggMove
+            };
+        }
+
+        public static void UpdateFromDto(this PokemonMove move, int pokemonId, PokemonMoveUpdateDto dto)
+        {
+            if (move == null || dto == null)
+                return;
+
+            move.PokemonId = pokemonId;
+            move.GameInMoveId = dto.GameInMoveId;
+            move.MethodId = dto.MethodId;
+            move.Level = dto.Level;
+            move.TMNumber = dto.TMNumber;
+            move.IsTutor = dto.IsTutor;
+            move.IsEggMove = dto.IsEggMove;
+        }
+        #endregion
     }
 }
