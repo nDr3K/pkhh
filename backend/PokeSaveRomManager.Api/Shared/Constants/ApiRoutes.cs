@@ -56,6 +56,11 @@
             public const string LearningMethods = Root + "/learning-methods";
         }
 
+        public static class Pokemon
+        {
+            public const string Root = Base + "/pokemon";
+        }
+
         public static class Users
         {
             public const string Auth = "/auth/login";
