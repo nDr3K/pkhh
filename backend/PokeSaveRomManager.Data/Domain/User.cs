@@ -20,5 +20,8 @@ namespace PokeSaveRomManager.Data.Domain
 
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        // Navigation properties
+        public ICollection<Save> Saves { get; set; }
     }
 }
