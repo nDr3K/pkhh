@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PokeSaveRomManager.Data.Domain
 {
-    public class Form
+    public class PokemonForm
     {
         [Key]
         public int Id { get; set; }

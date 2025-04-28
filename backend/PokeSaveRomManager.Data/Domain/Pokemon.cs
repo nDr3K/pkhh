@@ -33,9 +33,9 @@ namespace PokeSaveRomManager.Data.Domain
         public Type Type1 { get; set; }
         [ForeignKey("Type2Id")]
         public Type Type2 { get; set; }
-        public ICollection<Form> Forms { get; set; }
+        public ICollection<PokemonForm> Forms { get; set; }
         public ICollection<PokemonAbility> Abilities { get; set; }
-        public ICollection<MoveLearning> MoveLearning { get; set; }
+        public ICollection<PokemonMove> Moves { get; set; }
         public ICollection<PokemonInstance> Instances { get; set; }
     }
 }

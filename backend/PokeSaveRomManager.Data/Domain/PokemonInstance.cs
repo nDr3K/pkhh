@@ -50,7 +50,7 @@ namespace PokeSaveRomManager.Data.Domain
 		[ForeignKey("PokemonId")]
 		public Pokemon Pokemon { get; set; }
 		[ForeignKey("FormId")]
-		public Form Form { get; set; }
+		public PokemonForm Form { get; set; }
 		[ForeignKey("NatureId")]
 		public Nature Nature { get; set; }
 		[ForeignKey("HeldItemId")]

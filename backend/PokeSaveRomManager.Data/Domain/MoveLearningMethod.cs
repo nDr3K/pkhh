@@ -10,6 +10,6 @@ namespace PokeSaveRomManager.Data.Domain
 		public string Name { get; set; }
 
 		// Navigation properties
-		public ICollection<MoveLearning> MoveLearning { get; set; }
+		public ICollection<PokemonMove> PokemonMoves { get; set; }
 	}
 }

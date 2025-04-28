@@ -25,9 +25,9 @@ namespace PokeSaveRomManager.Data
 		public DbSet<MoveName> MoveNames { get; set; }
         public DbSet<GameMove> GameMoves { get; set; }
         public DbSet<MoveLearningMethod> MoveLearningMethods { get; set; }
-		public DbSet<MoveLearning> MoveLearning { get; set; }
+		public DbSet<PokemonMove> PokemonMove { get; set; }
 		public DbSet<Pokemon> Pokemon { get; set; }
-		public DbSet<Form> Forms { get; set; }
+		public DbSet<PokemonForm> PokemonForms { get; set; }
 		public DbSet<PokemonAbility> PokemonAbilities { get; set; }
 		public DbSet<PokemonInstance> PokemonInstances { get; set; }
 		public DbSet<Team> Teams { get; set; }
@@ -66,13 +66,13 @@ namespace PokeSaveRomManager.Data
 				.IsRequired(false); // Type2 can be null
 
 			// Form Type references
-			modelBuilder.Entity<Form>()
+			modelBuilder.Entity<PokemonForm>()
 				.HasOne(f => f.Type1)
 				.WithMany()
 				.HasForeignKey(f => f.Type1Id)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			modelBuilder.Entity<Form>()
+			modelBuilder.Entity<PokemonForm>()
 				.HasOne(f => f.Type2)
 				.WithMany()
 				.HasForeignKey(f => f.Type2Id)
