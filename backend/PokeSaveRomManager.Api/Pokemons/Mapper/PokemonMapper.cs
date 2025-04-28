@@ -5,6 +5,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
 {
     public static class PokemonMapper
     {
+        // Pokemon
         public static PokemonDto ToDto(this Pokemon pokemon)
         {
             return new PokemonDto
@@ -78,6 +79,62 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
             pokemon.IsRegionalForm = dto.IsRegionalForm;
             pokemon.IsMega = dto.IsMega;
             pokemon.IsGigantamax = dto.IsGigantamax;
+        }
+
+        // PokemonForm
+
+        public static PokemonFormDto ToDto(this PokemonForm form)
+        {
+            return new PokemonFormDto
+            {
+                Id = form.Id,
+                PokemonName = form.Pokemon.Name,
+                Name = form.Name,
+                IsRegional = form.IsRegional,
+                IsMega = form.IsMega,
+                IsGigantamax = form.IsGigantamax,
+                FormOrder = form.FormOrder,
+                Type1Id = form.Type1Id,
+                Type2Id = form.Type2Id
+            };
+        }
+
+        public static IEnumerable<PokemonFormDto> ToDtos(this IEnumerable<PokemonForm> forms)
+        {
+            return forms.Select(f => f.ToDto());
+        }
+
+        public static PokemonForm ToEntity(this PokemonFormCreateDto dto, int pokemonId)
+        {
+            if (dto == null)
+                return null;
+
+            return new PokemonForm
+            {
+                PokemonId = pokemonId,
+                Name = dto.Name,
+                IsRegional = dto.IsRegional,
+                IsMega = dto.IsMega,
+                IsGigantamax = dto.IsGigantamax,
+                FormOrder = dto.FormOrder,
+                Type1Id = dto.Type1Id,
+                Type2Id = dto.Type2Id ?? null // Nullable type
+            };
+        }
+
+        public static void UpdateFromDto(this PokemonForm form, int pokemonId, PokemonFormUpdateDto dto)
+        {
+            if (form == null || dto == null)
+                return;
+
+            form.PokemonId = pokemonId;
+            form.Name = dto.Name;
+            form.IsRegional = dto.IsRegional;
+            form.IsMega = dto.IsMega;
+            form.IsGigantamax = dto.IsGigantamax;
+            form.FormOrder = dto.FormOrder;
+            form.Type1Id = dto.Type1Id;
+            form.Type2Id = dto.Type2Id ?? null; // Nullable type
         }
     }
 }

@@ -25,7 +25,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Controllers.V1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<PokemonDto>>> GetAllAsync()
         {
             _logger.LogInformation("Getting all Pokemons");
             var pokemons = await _pokemonService.GetAllAsync();
@@ -35,7 +35,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Controllers.V1
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<ActionResult<PokemonDto>> GetByIdAsync(int id)
         {
             var pokemon = await _pokemonService.GetByIdAsync(id);
             if (pokemon == null)
@@ -52,7 +52,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Controllers.V1
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = PermissionPolicies.PokemonPolicy)]
-        public async Task<IActionResult> CreateAsync(PokemonCreateDto pokemon)
+        public async Task<ActionResult<PokemonDto>> CreateAsync(PokemonCreateDto pokemon)
         {
             if (!ModelState.IsValid)
             {

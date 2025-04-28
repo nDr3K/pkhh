@@ -7,8 +7,12 @@ namespace PokeSaveRomManager.Api.Pokemons
     {
         public static IServiceCollection AddPokemonServices(this IServiceCollection services)
         {
+            // Pokemon
             services.AddScoped<IPokemonService, PokemonService>();
             services.AddScoped<IPokemonRepository, PokemonRepository>();
+            // PokemonForm
+            services.AddScoped<IPokemonFormService, PokemonFormService>();
+            services.AddScoped<IPokemonFormRepository, PokemonFormRepository>();
 
             return services;
         }

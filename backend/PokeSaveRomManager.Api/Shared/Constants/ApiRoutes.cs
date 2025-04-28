@@ -59,6 +59,11 @@
         public static class Pokemon
         {
             public const string Root = Base + "/pokemon";
+            public const string ById = Root + "/{pokemonId}";
+
+            public const string Forms = ById + "/forms";
+            public const string Abilities = ById + "/abilities";
+            public const string Moves = ById + "/moves";
         }
 
         public static class Users
