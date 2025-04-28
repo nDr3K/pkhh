@@ -68,7 +68,19 @@
 
         public static class Users
         {
+            public const string Root = Base + "/user";
+            public const string ById = Root + "/{userId}";
             public const string Auth = "/auth/login";
+        }
+
+        public static class Saves
+        {
+            public const string Root = Users.ById + "/saves";
+            public const string ById = Root + "/{saveId}";
+
+            public const string Pokemon = ById + "/pokemon";
+            public const string Teams = ById + "/teams";
+            public const string Boxes = ById + "/boxes";
         }
     }
 }

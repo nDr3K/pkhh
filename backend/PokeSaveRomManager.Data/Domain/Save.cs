@@ -14,13 +14,22 @@ namespace PokeSaveRomManager.Data.Domain
         [Required]
         public int GameId { get; set; }
 
+        [Required]
+        public int TeamId { get; set; }
+
+
         // Navigation properties
         [ForeignKey("UserId")]
         public User User { get; set; }
+
         [ForeignKey("GameId")]
         public Game Game { get; set; }
-        public ICollection<SaveTeam> Teams { get; set; }
+
+        [ForeignKey("TeamId")]
+        public SaveTeam Team { get; set; }
+
         public ICollection<SaveBox> Boxes { get; set; }
+
         public ICollection<PokemonInstance> PokemonInstances { get; set; }
     }
 }

@@ -127,6 +127,10 @@ namespace PokeSaveRomManager.Data
                 .HasForeignKey(m => m.NameId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<User>()
+				.HasIndex(u => u.Auth0Id)
+				.IsUnique();
+
             base.OnModelCreating(modelBuilder);
 		}
 	}

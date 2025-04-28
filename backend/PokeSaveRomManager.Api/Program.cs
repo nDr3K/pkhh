@@ -11,6 +11,7 @@ using PokeSaveRomManager.Api.Items;
 using PokeSaveRomManager.Api.Moves;
 using PokeSaveRomManager.Api.Natures;
 using PokeSaveRomManager.Api.Pokemons;
+using PokeSaveRomManager.Api.Saves;
 using PokeSaveRomManager.Api.Shared.Middleware;
 using PokeSaveRomManager.Api.Shared.Policies;
 using PokeSaveRomManager.Api.Stats;
@@ -64,6 +65,8 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("permissions", "manage:moves"));
     options.AddPolicy(PermissionPolicies.PokemonPolicy, policy =>
         policy.RequireClaim("permissions", "manage:pokemon"));
+    options.AddPolicy(PermissionPolicies.SavesPolicy, policy =>
+        policy.RequireClaim("permissions", "manage:saves"));
 });
 
 // Register user services
@@ -80,12 +83,14 @@ builder.Services.AddNatureServices();
 builder.Services.AddCategoryServices();
 // Register ability services
 builder.Services.AddAbilityServices();
-// Register Item services
+// Register item services
 builder.Services.AddItemServices();
 // Register move services
 builder.Services.AddMoveServices();
 // Register pokemon services
 builder.Services.AddPokemonServices();
+// Register save services
+builder.Services.AddSaveServices();
 
 // Add services to the container.
 builder.Services.AddControllers();
