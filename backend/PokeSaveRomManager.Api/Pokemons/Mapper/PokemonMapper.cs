@@ -6,6 +6,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
     public static class PokemonMapper
     {
         // Pokemon
+        #region Pokemon
         public static PokemonDto ToDto(this Pokemon pokemon)
         {
             return new PokemonDto
@@ -80,9 +81,11 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
             pokemon.IsMega = dto.IsMega;
             pokemon.IsGigantamax = dto.IsGigantamax;
         }
+        #endregion
+
 
         // PokemonForm
-
+        #region PokemonForm
         public static PokemonFormDto ToDto(this PokemonForm form)
         {
             return new PokemonFormDto
@@ -136,5 +139,51 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
             form.Type1Id = dto.Type1Id;
             form.Type2Id = dto.Type2Id ?? null; // Nullable type
         }
+        #endregion
+
+        // PokemonAbility
+        #region PokemonAbility
+        public static PokemonAbilityDto ToDto(this PokemonAbility ability)
+        {
+            return new PokemonAbilityDto
+            {
+                Id = ability.Id,
+                PokemonName = ability.Pokemon.Name,
+                AbilityName = ability.Ability.Name.Name,
+                IsHidden = ability.IsHidden,
+                AbilitySlot = ability.AbilitySlot
+            };
+        }
+
+        public static IEnumerable<PokemonAbilityDto> ToDtos(this IEnumerable<PokemonAbility> abilities)
+        {
+            return abilities.Select(a => a.ToDto());
+        }
+
+        public static PokemonAbility ToEntity(this PokemonAbilityCreateDto dto, int pokemonId)
+        {
+            if (dto == null)
+                return null;
+
+            return new PokemonAbility
+            {
+                PokemonId = pokemonId,
+                AbilityId = dto.AbilityId,
+                IsHidden = dto.IsHidden,
+                AbilitySlot = dto.AbilitySlot
+            };
+        }
+
+        public static void UpdateFromDto(this PokemonAbility ability, int pokemonId, PokemonAbilityUpdateDto dto)
+        {
+            if (ability == null || dto == null)
+                return;
+
+            ability.PokemonId = pokemonId;
+            ability.AbilityId = dto.AbilityId;
+            ability.IsHidden = dto.IsHidden;
+            ability.AbilitySlot = dto.AbilitySlot;
+        }
+        #endregion
     }
 }
