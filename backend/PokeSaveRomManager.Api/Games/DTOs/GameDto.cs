@@ -16,14 +16,6 @@ namespace PokeSaveRomManager.Api.Games.DTOs
         public bool Official { get; set; } = true;
 
         public string Region { get; set; }
-
-        // Related collections - IDs only for DTOs
-        public List<int> PokemonIds { get; set; } = [];
-        public List<int> TeamIds { get; set; } = [];
-        public List<int> BoxIds { get; set; } = [];
-        public List<int> MoveGameIds { get; set; } = [];
-        public List<int> TypeGameIds { get; set; } = [];
-        public List<int> AbilityGameIds { get; set; } = [];
     }
 
     public class GameCreateDto

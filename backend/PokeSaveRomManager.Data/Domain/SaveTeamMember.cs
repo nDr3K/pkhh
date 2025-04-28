@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PokeSaveRomManager.Data.Domain
 {
-    public class TeamMember
+    public class SaveTeamMember
     {
         [Key]
         public int Id { get; set; }
@@ -12,7 +12,7 @@ namespace PokeSaveRomManager.Data.Domain
 
         // Navigation properties
         [ForeignKey("TeamId")]
-        public Team Team { get; set; }
+        public SaveTeam Team { get; set; }
         [ForeignKey("PokemonInstanceId")]
         public PokemonInstance PokemonInstance { get; set; }
     }

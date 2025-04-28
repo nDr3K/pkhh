@@ -8,9 +8,10 @@ namespace PokeSaveRomManager.Api.Pokemons.Services
     {
         private readonly IPokemonRepository _pokemonRepository;
         private readonly ILogger<PokemonService> _logger;
-        public PokemonService(IPokemonRepository pokemonRepository)
+        public PokemonService(IPokemonRepository pokemonRepository, ILogger<PokemonService> logger)
         {
             _pokemonRepository = pokemonRepository;
+            _logger = logger;
         }
 
         public async Task<PokemonDto> GetByIdAsync(int id)

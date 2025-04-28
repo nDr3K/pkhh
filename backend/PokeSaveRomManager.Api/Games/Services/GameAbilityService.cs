@@ -9,9 +9,10 @@ namespace PokeSaveRomManager.Api.Games.Services
         private readonly IGameAbilityRepository _gameAbilityRepository;
         private readonly ILogger<GameAbilityService> _logger;
 
-        public GameAbilityService(IGameAbilityRepository gameAbilityRepository)
+        public GameAbilityService(IGameAbilityRepository gameAbilityRepository, ILogger<GameAbilityService> logger)
         {
             _gameAbilityRepository = gameAbilityRepository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<GameAbilityDto>> GetAllAsync(int gameId)

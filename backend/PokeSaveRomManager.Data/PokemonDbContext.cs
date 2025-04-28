@@ -29,11 +29,12 @@ namespace PokeSaveRomManager.Data
 		public DbSet<Pokemon> Pokemon { get; set; }
 		public DbSet<PokemonForm> PokemonForms { get; set; }
 		public DbSet<PokemonAbility> PokemonAbilities { get; set; }
-		public DbSet<PokemonInstance> PokemonInstances { get; set; }
-		public DbSet<Team> Teams { get; set; }
-		public DbSet<TeamMember> TeamMembers { get; set; }
-		public DbSet<Box> Boxes { get; set; }
-		public DbSet<BoxSlot> BoxSlots { get; set; }
+		public DbSet<Save> Saves { get; set; }
+        public DbSet<PokemonInstance> PokemonInstances { get; set; }
+		public DbSet<SaveTeam> SaveTeams { get; set; }
+		public DbSet<SaveTeamMember> SaveTeamMembers { get; set; }
+		public DbSet<SaveBox> SaveBoxes { get; set; }
+		public DbSet<SaveBoxSlot> SaveBoxSlots { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

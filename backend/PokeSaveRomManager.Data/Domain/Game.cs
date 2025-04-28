@@ -15,8 +15,7 @@ namespace PokeSaveRomManager.Data.Domain
 
         // Navigation properties
         public ICollection<Pokemon> Pokemon { get; set; }
-        public ICollection<Team> Teams { get; set; }
-        public ICollection<Box> Boxes { get; set; }
+        public ICollection<Save> Saves { get; set; }
         public ICollection<GameMove> Moves { get; set; }
         public ICollection<GameType> Types { get; set; }
         public ICollection<GameAbility> Abilities { get; set; }

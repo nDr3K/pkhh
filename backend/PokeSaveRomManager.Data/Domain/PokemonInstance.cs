@@ -7,7 +7,7 @@ namespace PokeSaveRomManager.Data.Domain
 	{
 		[Key]
 		public int Id { get; set; }
-		public int UserId { get; set; }
+		public int SaveId { get; set; }
 		public int GameId { get; set; }
 		public int PokemonId { get; set; }
 		public int? FormId { get; set; }
@@ -42,10 +42,10 @@ namespace PokeSaveRomManager.Data.Domain
 		public string MetLocation { get; set; }
 		public string Ribbons { get; set; }
 
-		// Navigation properties
-		[ForeignKey("UserId")]
-		public User User { get; set; }
-		[ForeignKey("GameId")]
+        // Navigation properties
+        [ForeignKey("SaveId")]
+        public Save Save { get; set; }
+        [ForeignKey("GameId")]
 		public Game Game { get; set; }
 		[ForeignKey("PokemonId")]
 		public Pokemon Pokemon { get; set; }
@@ -65,7 +65,7 @@ namespace PokeSaveRomManager.Data.Domain
 		public Move Move3 { get; set; }
 		[ForeignKey("Move4Id")]
 		public Move Move4 { get; set; }
-		public ICollection<TeamMember> TeamMembers { get; set; }
-		public ICollection<BoxSlot> BoxSlots { get; set; }
+		public ICollection<SaveTeamMember> TeamMembers { get; set; }
+		public ICollection<SaveBoxSlot> BoxSlots { get; set; }
 	}
 }

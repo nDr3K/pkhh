@@ -30,12 +30,6 @@ namespace PokeSaveRomManager.Api.Games.Repositories
         public async Task<Game> GetByIdWithRelatedEntitiesAsync(int id)
         {
             return await _context.Games
-                .Include(g => g.Pokemon)
-                .Include(g => g.Teams)
-                .Include(g => g.Boxes)
-                .Include(g => g.Moves)
-                .Include(g => g.Types)
-                .Include(g => g.Abilities)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(g => g.Id == id);
         }

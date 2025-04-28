@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PokeSaveRomManager.Data.Domain
 {
-    public class BoxSlot
+    public class SaveBoxSlot
     {
         [Key]
         public int Id { get; set; }
@@ -13,7 +13,7 @@ namespace PokeSaveRomManager.Data.Domain
 
         // Navigation properties
         [ForeignKey("BoxId")]
-        public Box Box { get; set; }
+        public SaveBox Box { get; set; }
         [ForeignKey("PokemonInstanceId")]
         public PokemonInstance PokemonInstance { get; set; }
     }

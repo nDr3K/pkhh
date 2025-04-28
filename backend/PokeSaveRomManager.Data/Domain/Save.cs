@@ -1,21 +1,26 @@
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace PokeSaveRomManager.Data.Domain
 {
-    public class Box
+    public class Save
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
         public int UserId { get; set; }
+
+        [Required]
         public int GameId { get; set; }
-        public string Name { get; set; }
 
         // Navigation properties
         [ForeignKey("UserId")]
         public User User { get; set; }
         [ForeignKey("GameId")]
         public Game Game { get; set; }
-        public ICollection<BoxSlot> Slots { get; set; }
+        public ICollection<SaveTeam> Teams { get; set; }
+        public ICollection<SaveBox> Boxes { get; set; }
+        public ICollection<PokemonInstance> PokemonInstances { get; set; }
     }
 }
