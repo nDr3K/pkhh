@@ -47,14 +47,14 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Id = pokemonInstance.Id,
                 PokemonName = pokemonInstance.Pokemon.Name,
                 Type1 = pokemonInstance.Pokemon.Type1.Name,
-                Type2 = pokemonInstance.Pokemon.Type2.Name,
-                Ability = pokemonInstance.Ability.Name.Name,
+                Type2 = pokemonInstance.Pokemon.Type2?.Name,
+                Ability = pokemonInstance.Ability?.Name.Name,
                 Level = pokemonInstance.Level,
-                Nature = pokemonInstance.Nature.Name,
-                Move1 = pokemonInstance.Move1.Name.Name,
-                Move2 = pokemonInstance.Move2.Name.Name,
-                Move3 = pokemonInstance.Move3.Name.Name,
-                Move4 = pokemonInstance.Move4.Name.Name
+                Nature = pokemonInstance.Nature?.Name,
+                Move1 = pokemonInstance.Move1?.Name.Name,
+                Move2 = pokemonInstance.Move2?.Name.Name,
+                Move3 = pokemonInstance.Move3?.Name.Name,
+                Move4 = pokemonInstance.Move4?.Name.Name
             };
         }
 
