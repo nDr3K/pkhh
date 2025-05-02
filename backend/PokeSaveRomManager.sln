@@ -7,13 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeSaveRomManager.Api", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeSaveRomManager.Data", "PokeSaveRomManager.Data\PokeSaveRomManager.Data.csproj", "{B0C79347-9038-4B9A-BD80-B9D0755DEC39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeSaveRomManager.Parser", "PokeSaveRomManager.Parser\PokeSaveRomManager.Parser.csproj", "{69B33291-0FF5-4602-A723-426123BDBFE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{86338770-61FB-4861-816A-303233D90FEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +23,15 @@ Global
 		{B0C79347-9038-4B9A-BD80-B9D0755DEC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C79347-9038-4B9A-BD80-B9D0755DEC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C79347-9038-4B9A-BD80-B9D0755DEC39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69B33291-0FF5-4602-A723-426123BDBFE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69B33291-0FF5-4602-A723-426123BDBFE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69B33291-0FF5-4602-A723-426123BDBFE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69B33291-0FF5-4602-A723-426123BDBFE2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1C186A8-B720-4086-842A-3EBA734C098F}
 	EndGlobalSection
 EndGlobal
