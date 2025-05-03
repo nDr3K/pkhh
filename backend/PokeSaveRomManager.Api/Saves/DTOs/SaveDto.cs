@@ -3,20 +3,20 @@
     public class SaveDto
     {
         public int Id { get; set; }
-        public string GameName { get; set; }
+        public string Game { get; set; }
         public SaveDtoPokemon[] Team { get; set; } = [];
     }
 
     public class SaveDtoPokemon
     {
         public int Id { get; set; } // PokemonInstanceId
-        public int PokemonId { get; set; } // PokemonId
+        public string Name { get; set; }
     }
 
     public class SaveDetailDto
     {
         public int Id { get; set; }
-        public string GameName { get; set; }
+        public string Game { get; set; }
         public SaveDetailDtoPokemon[] Team { get; set; } = [];
         public SaveDetailDtoPokemon[] Boxes { get; set; } = [];
     }
@@ -24,7 +24,7 @@
     public class SaveDetailDtoPokemon
     {
         public int Id { get; set; } // PokemonInstanceId
-        public string PokemonName { get; set; }
+        public string Name { get; set; }
         public string Type1 { get; set; }
         public string Type2 { get; set; }
         public string Ability { get; set; }

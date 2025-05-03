@@ -8,9 +8,8 @@ namespace PokeSaveRomManager.Data.Domain
 		[Key]
 		public int Id { get; set; }
 		public int SaveId { get; set; }
-		public int GameId { get; set; }
 		public int PokemonId { get; set; }
-		public int? FormId { get; set; }
+		public int FormId { get; set; }
 		public string Nickname { get; set; }
 		public GenderType Gender { get; set; }
 		public int Level { get; set; }
@@ -36,17 +35,10 @@ namespace PokeSaveRomManager.Data.Domain
         public int? EVSpAttack { get; set; }
 		public int? EVSpDefense { get; set; }
 		public int? EVSpeed { get; set; }
-		public string OriginalTrainerName { get; set; }
-		public string OriginalTrainerId { get; set; }
-		public int? MetLevel { get; set; }
-		public string MetLocation { get; set; }
-		public string Ribbons { get; set; }
 
         // Navigation properties
         [ForeignKey("SaveId")]
         public Save Save { get; set; }
-        [ForeignKey("GameId")]
-		public Game Game { get; set; }
 		[ForeignKey("PokemonId")]
 		public Pokemon Pokemon { get; set; }
 		[ForeignKey("FormId")]

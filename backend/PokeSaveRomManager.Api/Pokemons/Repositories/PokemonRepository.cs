@@ -18,8 +18,6 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
             return await _context.Pokemon
                 .AsNoTracking()
                 .Include(p => p.Game)
-                .Include(p => p.Type1)
-                .Include(p => p.Type2)
                 .ToListAsync();
         }
 
@@ -27,6 +25,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
         {
             return await _context.Pokemon
                 .AsNoTracking()
+                .Include(p => p.Game)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
@@ -57,9 +56,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
         {
             return await _context.Pokemon
                 .AsNoTracking()
-                .Include(p => p.Game)
-                .Include(p => p.Type1)
-                .Include(p => p.Type2)
+                .Include(p => p.Game) // Might not be needed
                 .Where(p => p.GameId == gameId)
                 .ToListAsync();
         }

@@ -15,19 +15,6 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
                 Name = pokemon.Name,
                 DexNumber = pokemon.DexNumber,
                 Game = pokemon.Game.Name,
-                HP = pokemon.HP,
-                Attack = pokemon.Attack,
-                Defense = pokemon.Defense,
-                Special = pokemon.Special,
-                SpAttack = pokemon.SpAttack,
-                SpDefense = pokemon.SpDefense,
-                Speed = pokemon.Speed,
-                Type1 = pokemon.Type1.Name,
-                Type2 = pokemon.Type2?.Name,
-                FormName = pokemon.FormName,
-                IsRegionalForm = pokemon.IsRegionalForm,
-                IsMega = pokemon.IsMega,
-                IsGigantamax = pokemon.IsGigantamax
             };
         }
 
@@ -44,19 +31,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
             {
                 Name = dto.Name,
                 DexNumber = dto.DexNumber,
-                HP = dto.HP,
-                Attack = dto.Attack,
-                Defense = dto.Defense,
-                Special = dto.Special,
-                SpAttack = dto.SpAttack,
-                SpDefense = dto.SpDefense,
-                Speed = dto.Speed,
-                Type1Id = dto.Type1Id,
-                Type2Id = dto.Type2Id ?? null, // Nullable type
-                FormName = dto.FormName ?? string.Empty, // Default to empty string if null
-                IsRegionalForm = dto.IsRegionalForm,
-                IsMega = dto.IsMega,
-                IsGigantamax = dto.IsGigantamax
+                GameId = dto.GameId,
             };
         }
 
@@ -67,19 +42,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
 
             pokemon.Name = dto.Name;
             pokemon.DexNumber = dto.DexNumber;
-            pokemon.HP = dto.HP;
-            pokemon.Attack = dto.Attack;
-            pokemon.Defense = dto.Defense;
-            pokemon.Special = dto.Special;
-            pokemon.SpAttack = dto.SpAttack;
-            pokemon.SpDefense = dto.SpDefense;
-            pokemon.Speed = dto.Speed;
-            pokemon.Type1Id = dto.Type1Id;
-            pokemon.Type2Id = dto.Type2Id ?? null; // Nullable type
-            pokemon.FormName = dto.FormName ?? string.Empty; // Default to empty string if null
-            pokemon.IsRegionalForm = dto.IsRegionalForm;
-            pokemon.IsMega = dto.IsMega;
-            pokemon.IsGigantamax = dto.IsGigantamax;
+            pokemon.GameId = dto.GameId;
         }
         #endregion
 
@@ -93,12 +56,19 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
                 Id = form.Id,
                 PokemonName = form.Pokemon.Name,
                 Name = form.Name,
+                HP = form.HP,
+                Attack = form.Attack,
+                Defense = form.Defense,
+                Special = form.Special,
+                SpAttack = form.SpAttack,
+                SpDefense = form.SpDefense,
+                Speed = form.Speed,
+                Type1 = form.Type1.Name,
+                Type2 = form.Type2?.Name,
+                IsDefault = form.IsDefault,
                 IsRegional = form.IsRegional,
                 IsMega = form.IsMega,
-                IsGigantamax = form.IsGigantamax,
-                FormOrder = form.FormOrder,
-                Type1Id = form.Type1Id,
-                Type2Id = form.Type2Id
+                IsGigantamax = form.IsGigantamax
             };
         }
 
@@ -115,13 +85,21 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
             return new PokemonForm
             {
                 PokemonId = pokemonId,
+                InternalId = dto.InternalId,
                 Name = dto.Name,
+                HP = dto.HP,
+                Attack = dto.Attack,
+                Defense = dto.Defense,
+                Special = dto.Special,
+                SpAttack = dto.SpAttack,
+                SpDefense = dto.SpDefense,
+                Speed = dto.Speed,
+                Type1Id = dto.Type1Id,
+                Type2Id = dto?.Type2Id,
+                IsDefault = dto.IsDefault,
                 IsRegional = dto.IsRegional,
                 IsMega = dto.IsMega,
-                IsGigantamax = dto.IsGigantamax,
-                FormOrder = dto.FormOrder,
-                Type1Id = dto.Type1Id,
-                Type2Id = dto.Type2Id ?? null // Nullable type
+                IsGigantamax = dto.IsGigantamax
             };
         }
 
@@ -131,13 +109,21 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
                 return;
 
             form.PokemonId = pokemonId;
+            form.InternalId = dto.InternalId;
             form.Name = dto.Name;
+            form.HP = dto.HP;
+            form.Attack = dto.Attack;
+            form.Defense = dto.Defense;
+            form.Special = dto.Special;
+            form.SpAttack = dto.SpAttack;
+            form.SpDefense = dto.SpDefense;
+            form.Speed = dto.Speed;
+            form.Type1Id = dto.Type1Id;
+            form.Type2Id = dto?.Type2Id;
+            form.IsDefault = dto.IsDefault;
             form.IsRegional = dto.IsRegional;
             form.IsMega = dto.IsMega;
             form.IsGigantamax = dto.IsGigantamax;
-            form.FormOrder = dto.FormOrder;
-            form.Type1Id = dto.Type1Id;
-            form.Type2Id = dto.Type2Id ?? null; // Nullable type
         }
         #endregion
 

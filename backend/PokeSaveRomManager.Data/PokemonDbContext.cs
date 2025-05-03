@@ -52,20 +52,6 @@ namespace PokeSaveRomManager.Data
 				.HasForeignKey(n => n.DecreasedStatId)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			// Pokemon Type references
-			modelBuilder.Entity<Pokemon>()
-				.HasOne(p => p.Type1)
-				.WithMany()
-				.HasForeignKey(p => p.Type1Id)
-				.OnDelete(DeleteBehavior.Restrict);
-
-			modelBuilder.Entity<Pokemon>()
-				.HasOne(p => p.Type2)
-				.WithMany()
-				.HasForeignKey(p => p.Type2Id)
-				.OnDelete(DeleteBehavior.Restrict)
-				.IsRequired(false); // Type2 can be null
-
 			// Form Type references
 			modelBuilder.Entity<PokemonForm>()
 				.HasOne(f => f.Type1)

@@ -66,8 +66,12 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                                 Pokemon = new Pokemon {
                                     Name = m.PokemonInstance.Pokemon.Name,
                                     DexNumber = m.PokemonInstance.Pokemon.DexNumber,
-                                    Type1 = m.PokemonInstance.Pokemon.Type1,
-                                    Type2 = m.PokemonInstance.Pokemon.Type2
+                                },
+                                Form = new PokemonForm
+                                {
+                                    Name = m.PokemonInstance.Form.Name,
+                                    Type1 = m.PokemonInstance.Form.Type1,
+                                    Type2 = m.PokemonInstance.Form.Type2
                                 },
                                 Nature = m.PokemonInstance.Nature,
                                 Ability = m.PokemonInstance.Ability,

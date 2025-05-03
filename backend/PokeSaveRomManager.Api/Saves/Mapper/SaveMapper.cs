@@ -12,11 +12,11 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             return new SaveDto
             {
                 Id = save.Id,
-                GameName = save.Game.Name,
+                Game = save.Game.Name,
                 Team = save.Team.Members.Select(m => new SaveDtoPokemon
                 {
                     Id = m.PokemonInstance.Id,
-                    PokemonId = m.PokemonInstance.PokemonId
+                    Name = m.PokemonInstance.Pokemon.Name
                 }).ToArray()
 
             };
@@ -34,7 +34,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             return new SaveDetailDto
             {
                 Id = save.Id,
-                GameName = save.Game.Name,
+                Game = save.Game.Name,
                 Team = save.Team.Members.Select(m => m.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
                 Boxes = save.Boxes.SelectMany(b => b.Slots).Select(s => s.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray()
             };
@@ -45,9 +45,9 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             return new SaveDetailDtoPokemon
             {
                 Id = pokemonInstance.Id,
-                PokemonName = pokemonInstance.Pokemon.Name,
-                Type1 = pokemonInstance.Pokemon.Type1.Name,
-                Type2 = pokemonInstance.Pokemon.Type2?.Name,
+                Name = pokemonInstance.Pokemon.Name,
+                Type1 = pokemonInstance.Form.Type1.Name,
+                Type2 = pokemonInstance.Form.Type2?.Name,
                 Ability = pokemonInstance.Ability?.Name.Name,
                 Level = pokemonInstance.Level,
                 Nature = pokemonInstance.Nature?.Name,

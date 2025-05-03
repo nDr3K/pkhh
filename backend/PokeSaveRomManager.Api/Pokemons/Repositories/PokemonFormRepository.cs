@@ -17,6 +17,8 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
         {
             return await _context.PokemonForms
                 .Include(pf => pf.Pokemon)
+                .Include(pf => pf.Type1)
+                .Include(pf => pf.Type2)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(pf => pf.Id == id);
         }
@@ -25,6 +27,8 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
         {
             return await _context.PokemonForms
                 .Include(pf => pf.Pokemon)
+                .Include(pf => pf.Type1)
+                .Include(pf => pf.Type2)
                 .Where(pf => pf.PokemonId == pokemonId)
                 .AsNoTracking()
                 .ToListAsync();
