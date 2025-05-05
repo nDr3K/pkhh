@@ -37,6 +37,12 @@ namespace PokeSaveRomManager.Api.Games.Repositories
             return await _context.GameMoves.FirstOrDefaultAsync(gm => gm.Id == gameMove.Id);
         }
 
+        public async Task AddRangeAsync(IEnumerable<GameMove> gameMoves)
+        {
+            await _context.GameMoves.AddRangeAsync(gameMoves);
+            await SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(GameMove gameMove)
         {
             _context.GameMoves.Update(gameMove);

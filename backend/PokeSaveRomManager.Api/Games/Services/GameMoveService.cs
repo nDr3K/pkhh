@@ -61,6 +61,21 @@ namespace PokeSaveRomManager.Api.Games.Services
             }
         }
 
+        public async Task AddRangeAsync(int gameId, IEnumerable<GameMoveCreateDto> gameMoveDtos)
+        {
+            try
+            {
+                _logger.LogInformation("Adding {count} moves for game with ID: {gameId}", gameMoveDtos.Count(), gameId);
+                var gameMoves = GameMapper.ToEntities(gameId, gameMoveDtos);
+                await _gameMoveRepository.AddRangeAsync(gameMoves);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while adding range of moves for game with ID: {gameId}", gameId);
+                throw;
+            }
+        }
+
         public async Task UpdateAsync(int gameId, int id, GameMoveUpdateDto gameMoveDto)
         {
             try
