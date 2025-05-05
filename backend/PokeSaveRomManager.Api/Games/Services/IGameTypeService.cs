@@ -7,6 +7,7 @@ namespace PokeSaveRomManager.Api.Games.Services
         Task<IEnumerable<GameTypeDto>> GetAllAsync(int gameId);
         Task<GameTypeDto> GetByIdAsync(int gameId, int id);
         Task<GameTypeDto> AddAsync(int gameId, GameTypeCreateDto gameType);
+        Task AddRangeAsync(int gameId, IEnumerable<GameTypeCreateDto> gameTypes);
         Task UpdateAsync(int gameId, int id, GameTypeUpdateDto gameType);
         Task DeleteAsync(int gameId, int id);
         Task<bool> ExistsAsync(int gameId, int id);

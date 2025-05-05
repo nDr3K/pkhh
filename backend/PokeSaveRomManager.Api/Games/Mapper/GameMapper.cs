@@ -92,6 +92,14 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             };
         }
 
+        public static IEnumerable<GameType> ToEntities(int gameId, IEnumerable<GameTypeCreateDto> gameTypeDtos)
+        {
+            if (gameTypeDtos == null)
+                return new List<GameType>();
+
+            return gameTypeDtos.Select(g => ToEntity(gameId, g));
+        }
+
         public static void UpdateFromDto(this GameType gameType, int gameId, GameTypeUpdateDto gameTypeDto)
         {
             if (gameType == null || gameTypeDto == null)
