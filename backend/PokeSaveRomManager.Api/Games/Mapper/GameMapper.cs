@@ -66,6 +66,7 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             return new GameTypeDto
             {
                 Id = gameType.Id,
+                TypeId = gameType.TypeId,
                 TypeName = gameType.Type.Name,
                 TypeInGameId = gameType.TypeInGameId
             };

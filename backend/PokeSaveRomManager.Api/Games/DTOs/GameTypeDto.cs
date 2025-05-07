@@ -6,6 +6,8 @@ namespace PokeSaveRomManager.Api.Games.DTOs
     {
         public int Id { get; set; }
 
+        public int TypeId { get; set; }
+
         [Required]
         public string TypeName { get; set; }
 
