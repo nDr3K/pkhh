@@ -8,6 +8,7 @@ namespace PokeSaveRomManager.Api.Moves.Repositories
         Task<IEnumerable<Move>> GetAllAsync();
         Task<Move> GetByIdAsync(int id);
         Task<Move> CreateAsync(Move move);
+        Task<IEnumerable<Move>> AddRangeAsync(IEnumerable<Move> moves);
         Task UpdateAsync(Move move);
         Task DeleteAsync(int id);
         Task<bool> ExistsAsync(int id);
@@ -19,6 +20,7 @@ namespace PokeSaveRomManager.Api.Moves.Repositories
         Task<IEnumerable<MoveName>> GetAllNamesAsync();
         Task<MoveName> GetNameByIdAsync(int id);
         Task<MoveName> CreateNameAsync(MoveName moveName);
+        Task<IEnumerable<MoveName>> AddNameRangeAsync(IEnumerable<MoveName> moveNames);
         Task UpdateNameAsync(MoveName moveName);
         Task DeleteNameAsync(int id);
         Task<bool> ExistsNameAsync(int id);

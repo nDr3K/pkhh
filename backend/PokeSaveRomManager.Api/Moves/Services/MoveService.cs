@@ -63,6 +63,22 @@ namespace PokeSaveRomManager.Api.Moves.Services
             }
         }
 
+        public async Task<IEnumerable<MoveDto>> AddRangeAsync(IEnumerable<MoveCreateDto> moveCreateDtos)
+        {
+            try
+            {
+                _logger.LogInformation("Adding range of moves");
+                var moves = moveCreateDtos.Select(m => m.ToEntity());
+                var addedMoves = await _moveRepository.AddRangeAsync(moves);
+                return addedMoves.ToDtos();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding range of moves");
+                throw;
+            }
+        }
+
         public async Task UpdateAsync(int id, MoveUpdateDto moveUpdateDto)
         {
             try
@@ -202,6 +218,22 @@ namespace PokeSaveRomManager.Api.Moves.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error creating move name");
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<MoveNameDto>> AddNameRangeAsync(IEnumerable<MoveNameCreateDto> moveNameCreateDtos)
+        {
+            try
+            {
+                _logger.LogInformation("Adding range of move names");
+                var moveNames = moveNameCreateDtos.Select(m => m.ToEntity());
+                var createdMoveNames = await _moveRepository.AddNameRangeAsync(moveNames);
+                return createdMoveNames.ToDtos();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding range of move names");
                 throw;
             }
         }

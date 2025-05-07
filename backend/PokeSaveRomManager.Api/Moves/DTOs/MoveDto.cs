@@ -7,9 +7,11 @@ namespace PokeSaveRomManager.Api.Moves.DTOs
     {
         public int Id { get; set; }
 
+        public int NameId { get; set; }
         [Required]
         public string Name { get; set; }
 
+        public int TypeId { get; set; }
         [Required]
         public string Type { get; set; }
 

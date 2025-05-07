@@ -11,7 +11,9 @@ namespace PokeSaveRomManager.Api.Moves.Mapper
             return new MoveDto
             {
                 Id = move.Id,
+                NameId = move.NameId,
                 Name = move.Name?.Name,
+                TypeId = move.TypeId,
                 Type = move.Type?.Name,
                 Category = move.Category?.Name,
                 Power = move.Power,
