@@ -60,6 +60,22 @@ namespace PokeSaveRomManager.Api.Pokemons.Services
             }
         }
 
+        public async Task<IEnumerable<PokemonDto>> AddRangeAsync(IEnumerable<PokemonCreateDto> pokemons)
+        {
+            try
+            {
+                _logger.LogInformation("Adding range of Pokemons");
+                var entities = pokemons.ToEntities();
+                var createdPokemons = await _pokemonRepository.AddRangeAsync(entities);
+                return PokemonMapper.ToDtos(createdPokemons);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding range of Pokemons");
+                throw;
+            }
+        }
+
         public async Task UpdateAsync(int id, PokemonUpdateDto pokemon)
         {
             try

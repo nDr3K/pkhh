@@ -22,6 +22,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
         {
             return pokemons.Select(p => p.ToDto());
         }
+
         public static Pokemon ToEntity(this PokemonCreateDto dto)
         {
             if (dto == null)
@@ -33,6 +34,11 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
                 DexNumber = dto.DexNumber,
                 GameId = dto.GameId,
             };
+        }
+
+        public static IEnumerable<Pokemon> ToEntities(this IEnumerable<PokemonCreateDto> dtos)
+        {
+            return dtos.Select(dto => dto.ToEntity());
         }
 
         public static void UpdateFromDto(this Pokemon pokemon, PokemonUpdateDto dto)
@@ -101,6 +107,11 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
                 IsMega = dto.IsMega,
                 IsGigantamax = dto.IsGigantamax
             };
+        }
+
+        public static IEnumerable<PokemonForm> ToEntities(this IEnumerable<PokemonFormCreateDto> dtos)
+        {
+            return dtos.Select(dto => dto.ToEntity(dto.PokemonId));
         }
 
         public static void UpdateFromDto(this PokemonForm form, int pokemonId, PokemonFormUpdateDto dto)

@@ -61,6 +61,22 @@ namespace PokeSaveRomManager.Api.Pokemons.Services
             }
         }
 
+        public async Task<IEnumerable<PokemonFormDto>> AddRangeAsync(IEnumerable<PokemonFormCreateDto> forms)
+        {
+            try
+            {
+                var entities = forms.ToEntities();
+                var createdForms = await _repository.AddRangeAsync(entities);
+                _logger.LogInformation($"Created {createdForms.Count()} PokemonForms");
+                return createdForms.ToDtos();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error creating multiple PokemonForms");
+                throw;
+            }
+        }
+
         public async Task UpdateAsync(int id, int pokemonId, PokemonFormUpdateDto form)
         {
             try

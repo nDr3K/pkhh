@@ -7,6 +7,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
         Task<Pokemon> GetByIdAsync(int id);
         Task<IEnumerable<Pokemon>> GetAllAsync();
         Task<Pokemon> CreateAsync(Pokemon pokemon);
+        Task<IEnumerable<Pokemon>> AddRangeAsync(IEnumerable<Pokemon> pokemons);
         Task UpdateAsync(Pokemon pokemon);
         Task DeleteAsync(int id);
         Task<bool> ExistAsync(int id);
