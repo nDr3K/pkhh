@@ -1,32 +1,32 @@
 ﻿{
   "Moves": {
-    "Offset": "0x38000",
+    "Offset": 0x38000,
     "EntryLength": 6,
     "Count": 165
   },
   "MoveNames": {
-    "Offset": "0xB0000",
+    "Offset": 0xB0000,
     "EntryLength": 0,
     "Count": 165
   },
   "PokemonStats": {
-    "Offset": "0x383DE",
+    "Offset": 0x383DE,
     "EntryLength": 28,
-    "Count": 150 //Mew is stored somewhere else
+    "Count": 150
   },
   "PokemonNames": {
-    "Offset": "0x1C21E",
+    "Offset": 0x1C21E,
     "EntryLength": 10,
     "Count": 190
   },
   "Pokedex": {
-    "Offset": "0x41024",
+    "Offset": 0x41024,
     "EntryLength": 1,
     "Count": 190
   },
   "Types": {
-    "Offset": "0x27DAE",
-    "EntryLength": 6,
-    "Count": 17
+    "Offset": 0x27DAE,
+    "EntryLength": 2,
+    "Count": 27
   }
 }
