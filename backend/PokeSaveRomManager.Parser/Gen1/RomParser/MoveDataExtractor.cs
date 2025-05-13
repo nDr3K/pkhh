@@ -27,7 +27,9 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
                     Power = power,
                     Type = type,
                     Accuracy = (byte)Math.Min(100, Math.Round(accuracyRaw * 100.0 / 255)), // Normalize to 0-100
-                    PP = pp
+                    PP = pp,
+                    Priority = 0,
+                    Category = power == 0 ? Category.Status : (type <= 8 ? Category.Physical : Category.Special)
                 };
 
                 moves.Add(move);
