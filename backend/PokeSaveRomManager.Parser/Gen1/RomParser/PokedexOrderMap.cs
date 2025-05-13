@@ -12,7 +12,7 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
             for (int i = 0; i < pokedexOffsets.Count; i++)
             {
                 int pokedexNumber = romData[pokedexOffsets.Offset + i];
-                int internalId = i + 1;
+                int internalId = i;
 
                 _pokedexToInternal[pokedexNumber] = internalId;
                 _internalToPokedex[internalId] = pokedexNumber;

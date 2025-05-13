@@ -54,13 +54,13 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
 
                 string name = reader.ReadString(offset, section.EntryLength);
 
-                var dexNumber = _pokedexOrderMap.GetPokedexNumber(i + 1);
+                var dexNumber = _pokedexOrderMap.GetPokedexNumber(i);
                 if (dexNumber == 0)
                     continue;
 
                 list.Add(new PokemonNameData
                 {
-                    InternalId = i + 1,
+                    InternalId = i,
                     DexNumber = dexNumber,
                     Name = name
                 });

@@ -21,7 +21,7 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
 
                 list.Add(new TypeData
                 {
-                    Id = i + 1,
+                    Id = i,
                     Name = typeName
                 });
             }
