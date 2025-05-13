@@ -6,6 +6,7 @@ namespace PokeSaveRomManager.Data.Domain
     public class Save
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]

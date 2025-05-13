@@ -6,6 +6,7 @@ namespace PokeSaveRomManager.Data.Domain
     public class GameMove
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int MoveId { get; set; }
         public int GameId { get; set; }

@@ -6,6 +6,7 @@ namespace PokeSaveRomManager.Data.Domain
     public class SaveTeamMember
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int TeamId { get; set; }
         public int PokemonInstanceId { get; set; }
