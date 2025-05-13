@@ -43,9 +43,10 @@ namespace PokeSaveRomManager.Api.Moves.Repositories
 
         public async Task<IEnumerable<Move>> AddRangeAsync(IEnumerable<Move> moves)
         {
-            await _context.Moves.AddRangeAsync(moves);
+            var trackedMoves = moves.ToList();
+            _context.Moves.AddRange(trackedMoves);
             await SaveChangesAsync();
-            return moves;
+            return trackedMoves;
         }
 
         public async Task UpdateAsync(Move move)
@@ -126,9 +127,10 @@ namespace PokeSaveRomManager.Api.Moves.Repositories
 
         public async Task<IEnumerable<MoveName>> AddNameRangeAsync(IEnumerable<MoveName> moveNames)
         {
-            await _context.MoveNames.AddRangeAsync(moveNames);
+            var trackedNames = moveNames.ToList();
+            _context.MoveNames.AddRange(trackedNames);
             await SaveChangesAsync();
-            return moveNames;
+            return trackedNames;
         }
 
         public async Task UpdateNameAsync(MoveName moveName)

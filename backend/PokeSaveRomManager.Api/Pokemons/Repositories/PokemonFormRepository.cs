@@ -43,9 +43,10 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
 
         public async Task<IEnumerable<PokemonForm>> AddRangeAsync(IEnumerable<PokemonForm> forms)
         {
-            await _context.PokemonForms.AddRangeAsync(forms);
+            var trackedForms = forms.ToList();
+            _context.PokemonForms.AddRange(trackedForms);
             await SaveChangesAsync();
-            return forms;
+            return trackedForms;
         }
 
         public async Task UpdateAsync(PokemonForm form)

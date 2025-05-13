@@ -39,7 +39,7 @@ namespace PokeSaveRomManager.Api.Games.Repositories
 
         public async Task AddRangeAsync(IEnumerable<GameMove> gameMoves)
         {
-            await _context.GameMoves.AddRangeAsync(gameMoves);
+            _context.GameMoves.AddRange(gameMoves);
             await SaveChangesAsync();
         }
 

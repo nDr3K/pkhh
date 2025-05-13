@@ -38,9 +38,10 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
 
         public async Task<IEnumerable<Pokemon>> AddRangeAsync(IEnumerable<Pokemon> pokemons)
         {
-            await _context.Pokemon.AddRangeAsync(pokemons);
+            var trackedPokemons = pokemons.ToList();
+            _context.Pokemon.AddRange(trackedPokemons);
             await SaveChangesAsync();
-            return pokemons;
+            return trackedPokemons;
         }
 
         public async Task UpdateAsync(Pokemon pokemon)
