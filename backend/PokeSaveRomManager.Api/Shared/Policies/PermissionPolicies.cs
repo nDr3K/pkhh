@@ -12,5 +12,6 @@
         public const string MovesPolicy = "MovesPolicy";
         public const string PokemonPolicy = "PokemonPolicy";
         public const string SavesPolicy = "SavesPolicy";
+        public const string RomPolicy = "RomPolicy";
     }
 }

@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PokeSaveRomManager.Data\PokeSaveRomManager.Data.csproj" />
+	<ProjectReference Include="..\PokeSaveRomManager.Parser\PokeSaveRomManager.Parser.csproj" />
   </ItemGroup>
 
 </Project>

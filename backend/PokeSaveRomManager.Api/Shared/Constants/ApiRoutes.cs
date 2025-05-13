@@ -82,5 +82,10 @@
             public const string Teams = ById + "/teams";
             public const string Boxes = ById + "/boxes";
         }
+
+        public static class Roms
+        {
+            public const string Root = Base + "/roms";
+        }
     }
 }
