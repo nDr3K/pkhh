@@ -1,6 +1,5 @@
 ﻿using PokeSaveRomManager.Parser.Core.Exceptions;
 using PokeSaveRomManager.Parser.Core.Parsers;
-using System.Reflection.PortableExecutable;
 using System.Text;
 
 namespace PokeSaveRomManager.Parser.Core.Utils
