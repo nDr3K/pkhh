@@ -25,11 +25,10 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                 {
                     Id = s.Id,
                     Game = s.Game,
-                    Team = new SaveTeam
+                    Party = new SaveTeam
                     {
-                        Id = s.Team.Id,
-                        Name = s.Team.Name,
-                        Members = s.Team.Members.Select(m => new SaveTeamMember
+                        Id = s.Party.Id,
+                        Members = s.Party.Members.Select(m => new SaveTeamMember
                         {
                             Id = m.Id,
                             PokemonInstance = new PokemonInstance
@@ -55,9 +54,9 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                 {
                     Id = s.Id,
                     Game = s.Game,
-                    Team = new SaveTeam
+                    Party = new SaveTeam
                     {
-                        Name = s.Team.Name,
+                        Members = s.Party.Members.Select(m => new SaveTeamMember
                         Members = s.Team.Members.Select(m => new SaveTeamMember
                         {
                             Id = m.Id,

@@ -13,7 +13,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             {
                 Id = save.Id,
                 Game = save.Game.Name,
-                Team = save.Team.Members.Select(m => new SaveDtoPokemon
+                Team = save.Party.Members.Select(m => new SaveDtoPokemon
                 {
                     Id = m.PokemonInstance.Id,
                     Name = m.PokemonInstance.Pokemon.Name
@@ -35,7 +35,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             {
                 Id = save.Id,
                 Game = save.Game.Name,
-                Team = save.Team.Members.Select(m => m.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
+                Team = save.Party.Members.Select(m => m.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
                 Boxes = save.Boxes.SelectMany(b => b.Slots).Select(s => s.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray()
             };
         }

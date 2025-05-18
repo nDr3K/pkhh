@@ -8,29 +8,23 @@ namespace PokeSaveRomManager.Data.Domain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         [Required]
         public int UserId { get; set; }
-
         [Required]
         public int GameId { get; set; }
-
         [Required]
-        public int TeamId { get; set; }
-
+        public string Name { get; set; }
 
         // Navigation properties
+
         [ForeignKey("UserId")]
         public User User { get; set; }
 
         [ForeignKey("GameId")]
         public Game Game { get; set; }
 
-        [ForeignKey("TeamId")]
-        public SaveTeam Team { get; set; }
-
         public ICollection<SaveBox> Boxes { get; set; }
-
+        public SaveTeam Party { get; set; }
         public ICollection<PokemonInstance> PokemonInstances { get; set; }
     }
 }

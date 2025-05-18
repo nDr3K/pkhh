@@ -8,12 +8,13 @@ namespace PokeSaveRomManager.Data.Domain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int TeamId { get; set; }
+        public int PartyId { get; set; }
         public int PokemonInstanceId { get; set; }
 
         // Navigation properties
-        [ForeignKey("TeamId")]
-        public SaveTeam Team { get; set; }
+        [ForeignKey("PartyId")]
+        public SaveTeam Party { get; set; }
+
         [ForeignKey("PokemonInstanceId")]
         public PokemonInstance PokemonInstance { get; set; }
     }
