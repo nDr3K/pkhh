@@ -51,10 +51,14 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
         {
             return await _context.Saves
                 .AsNoTracking()
+                .Include(s => s.Boxes)
+                    .ThenInclude(b => b.Slots)
                 .Select(s => new Save
                 {
                     Id = s.Id,
                     Game = s.Game,
+                    Name = s.Name,
+                    LastUpdatedTime = s.LastUpdatedTime,
                     Party = new SaveTeam
                     {
                         Members = s.Party.Members.Select(m => new SaveTeamMember
@@ -62,9 +66,10 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                             Id = m.Id,
                             PokemonInstance = new PokemonInstance
                             {
-                                Pokemon = new Pokemon {
+                                Pokemon = new Pokemon
+                                {
                                     Name = m.PokemonInstance.Pokemon.Name,
-                                    DexNumber = m.PokemonInstance.Pokemon.DexNumber,
+                                    DexNumber = m.PokemonInstance.Pokemon.DexNumber
                                 },
                                 Form = new PokemonForm
                                 {
@@ -75,16 +80,67 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                                 Nature = m.PokemonInstance.Nature,
                                 Ability = m.PokemonInstance.Ability,
                                 Level = m.PokemonInstance.Level,
-                                Move1 = m.PokemonInstance.Move1,
-                                Move2 = m.PokemonInstance.Move2,
-                                Move3 = m.PokemonInstance.Move3,
-                                Move4 = m.PokemonInstance.Move4
+                                Move1 = new Move
+                                {
+                                    Name = m.PokemonInstance.Move1.Name
+                                },
+                                Move2 = new Move
+                                {
+                                    Name = m.PokemonInstance.Move2.Name
+                                },
+                                Move3 = new Move
+                                {
+                                    Name = m.PokemonInstance.Move3.Name
+                                },
+                                Move4 = new Move
+                                {
+                                    Name = m.PokemonInstance.Move4.Name
+                                }
                             }
                         }).ToList()
-                    }
+                    },
+                    Boxes = s.Boxes.Select(b => new SaveBox
+                    {
+                        Id = b.Id,
+                        Name = b.Name,
+                        Slots = b.Slots.Select(slot => new SaveBoxSlot
+                        {
+                            Id = slot.Id,
+                            SlotNumber = slot.SlotNumber,
+                            PokemonInstance = new PokemonInstance
+                            {
+                                // Include nested details if needed, e.g.:
+                                Pokemon = new Pokemon
+                                {
+                                    Name = slot.PokemonInstance.Pokemon.Name,
+                                    DexNumber = slot.PokemonInstance.Pokemon.DexNumber
+                                },
+                                Nature = slot.PokemonInstance.Nature,
+                                Ability = slot.PokemonInstance.Ability,
+                                Level = slot.PokemonInstance.Level,
+                                Move1 = new Move
+                                {
+                                    Name = slot.PokemonInstance.Move1.Name
+                                },
+                                Move2 = new Move
+                                {
+                                    Name = slot.PokemonInstance.Move2.Name
+                                },
+                                Move3 = new Move
+                                {
+                                    Name = slot.PokemonInstance.Move3.Name
+                                },
+                                Move4 = new Move
+                                {
+                                    Name = slot.PokemonInstance.Move4.Name
+                                }
+                            }
+                        }).ToList()
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
+
 
         public async Task<Save> Create(Save save)
         {

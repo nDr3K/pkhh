@@ -76,7 +76,8 @@ namespace PokeSaveRomManager.Api.Saves.Services
                 await _repository.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                return currentSave.ToDetailDto();
+                var addedSave = await _repository.GetByIdAsync(currentSave.Id);
+                return addedSave.ToDetailDto();
             }
             catch (Exception ex)
             {
@@ -134,7 +135,8 @@ namespace PokeSaveRomManager.Api.Saves.Services
                 await _repository.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                return existingSave.ToDetailDto();
+                var updatedSave = await _repository.GetByIdAsync(existingSave.Id);
+                return updatedSave.ToDetailDto();
             }
             catch (Exception ex)
             {
