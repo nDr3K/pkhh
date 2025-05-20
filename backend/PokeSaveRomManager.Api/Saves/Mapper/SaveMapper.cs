@@ -21,7 +21,8 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                     DexNumber = m.PokemonInstance.Pokemon.DexNumber,
                     Name = m.PokemonInstance.Pokemon.Name
                 }).ToArray(),
-                LastUpdatedTime = save.LastUpdatedTime
+                CreatedAt = save.CreatedAt,
+                UpdatedAt = save.UpdatedAt
 
             };
         }
@@ -41,7 +42,8 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Game = save.Game.Name,
                 Team = save.Party.Members.Select(m => m.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
                 Boxes = save.Boxes.SelectMany(b => b.Slots).Select(s => s.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
-                LastUpdatedTime = save.LastUpdatedTime
+                CreatedAt = save.CreatedAt,
+                UpdatedAt = save.UpdatedAt
             };
         }
 
@@ -80,7 +82,8 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 GameId = saveFileDto.GameId,
                 Name = saveFileDto.Name,
                 Boxes = new List<SaveBox>(),
-                LastUpdatedTime = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
             var party = new SaveTeam

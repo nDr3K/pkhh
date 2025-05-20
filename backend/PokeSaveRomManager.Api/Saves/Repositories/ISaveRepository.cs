@@ -9,6 +9,7 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
         Task<Save> GetByIdAsync(int saveId);
         Task<Save> Create(Save save);
         Task<Save> Update(Save save);
+        Task<Save> GetByIdWithReferences(int saveId);
         Task Delete(int saveId);
         Task<IDbContextTransaction> BeginTransactionAsync();
         Task<PokemonInstance> GetPokemonInstanceByIdAsync(int pokemonInstanceId);

@@ -96,7 +96,7 @@ namespace PokeSaveRomManager.Api.Saves.Services
             var transaction = await _repository.BeginTransactionAsync();
             try
             {
-                var existingSave = await _repository.GetByIdAsync(saveId);
+                var existingSave = await _repository.GetByIdWithReferences(saveId);
                 if (existingSave == null)
                 {
                     _logger.LogError("Save with ID {Id} not found", saveId);
@@ -107,12 +107,6 @@ namespace PokeSaveRomManager.Api.Saves.Services
                     _logger.LogError("User {UserId} is not authorized to update save with ID {Id}", userId, saveId);
                     throw new Exception($"User {userId} is not authorized to update this save");
                 }
-
-                var saveData = ProcessSaveFile(save.SaveFile);
-                _logger.LogInformation("Processed save file with {Size} bytes", save.SaveFile.Length);
-
-                var pokemonData = await _saveServiceHandler.GetDatas(saveData, save.Metadata.GameId);
-                _logger.LogInformation("Parsed save file data for user {UserId}", userId);
 
                 // Delete existing pokemon instances and references
                 if (existingSave.Party != null)
@@ -126,11 +120,17 @@ namespace PokeSaveRomManager.Api.Saves.Services
                 }
                 await _saveServiceHandler.DeletePokemonInstances(saveId);
 
+                var saveData = ProcessSaveFile(save.SaveFile);
+                _logger.LogInformation("Processed save file with {Size} bytes", save.SaveFile.Length);
+
+                var pokemonData = await _saveServiceHandler.GetDatas(saveData, save.Metadata.GameId);
+                _logger.LogInformation("Parsed save file data for user {UserId}", userId);
+
                 // Process Pokemon data and associate with team/boxes
                 await ProcessPokemonData(pokemonData, existingSave);
 
                 // Update Timestamp
-                existingSave.LastUpdatedTime = DateTime.UtcNow;
+                existingSave.UpdatedAt = DateTime.UtcNow;
 
                 await _repository.SaveChangesAsync();
                 await transaction.CommitAsync();

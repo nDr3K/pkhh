@@ -27,7 +27,8 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                     Id = s.Id,
                     Game = s.Game,
                     Name = s.Name,
-                    LastUpdatedTime = s.LastUpdatedTime,
+                    CreatedAt = s.CreatedAt,
+                    UpdatedAt = s.UpdatedAt,
                     Party = new SaveTeam
                     {
                         Id = s.Party.Id,
@@ -64,15 +65,14 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
             return await _context.Saves
                 .AsNoTracking()
                 .Include(s => s.User)
-                .Include(s => s.Boxes)
-                    .ThenInclude(b => b.Slots)
                 .Select(s => new Save
                 {
                     Id = s.Id,
                     Game = s.Game,
                     Name = s.Name,
                     User = s.User,
-                    LastUpdatedTime = s.LastUpdatedTime,
+                    CreatedAt = s.CreatedAt,
+                    UpdatedAt = s.UpdatedAt,
                     Party = new SaveTeam
                     {
                         Members = s.Party.Members.Select(m => new SaveTeamMember
@@ -155,6 +155,16 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
+        public async Task<Save> GetByIdWithReferences(int saveId)
+        {
+            return await _context.Saves
+                .Include(s => s.User)
+                .Include(s => s.Party)
+                    .ThenInclude(p => p.Members)
+                .Include(s => s.Boxes)
+                    .ThenInclude(b => b.Slots)
+                .FirstOrDefaultAsync(s => s.Id == saveId);
+        }
 
         public async Task<Save> Create(Save save)
         {
