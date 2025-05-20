@@ -36,13 +36,13 @@ namespace PokeSaveRomManager.Api.Saves.ModelBinders
                 {
                     PropertyNameCaseInsensitive = true
                 };
-                var metadata = JsonSerializer.Deserialize<SaveFileUploadDto>(metadataJson, options);
+                var metadata = JsonSerializer.Deserialize<SaveFileDto>(metadataJson, options);
 
                 // Create the upload DTO
                 var saveFilUpload = new SaveFileUploadDto
                 {
                     SaveFile = saveFile,
-                    Metadata = metadata.Metadata
+                    Metadata = metadata
                 };
 
                 // Set the successfully bound model
