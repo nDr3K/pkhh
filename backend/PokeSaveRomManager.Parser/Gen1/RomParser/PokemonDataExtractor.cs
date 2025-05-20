@@ -60,7 +60,7 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
 
                 list.Add(new PokemonNameData
                 {
-                    InternalId = i,
+                    InternalId = i + 1,
                     DexNumber = dexNumber,
                     Name = name
                 });
