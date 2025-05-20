@@ -68,6 +68,7 @@ namespace PokeSaveRomManager.Api.Games.Repositories
         {
             return await _context.GameMoves
                 .Include(gm => gm.Move)
+                .ThenInclude(m => m.Name)
                 .AsNoTracking()
                 .Where(gm => gm.GameId == gameId && moveIds.Contains(gm.MoveId))
                 .ToListAsync();
