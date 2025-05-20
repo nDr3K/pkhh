@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokeSaveRomManager.Data;
 using PokeSaveRomManager.Data.Domain;
-using System.Linq;
 
 namespace PokeSaveRomManager.Api.Pokemons.Repositories
 {
@@ -73,16 +72,6 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
         public async Task<bool> ExistAsync(int id)
         {
             return await _context.Pokemon.AnyAsync(p => p.Id == id);
-        }
-
-        public async Task<IEnumerable<Pokemon>> GetForGameByIds(int gameId, IEnumerable<int?> internalIds)
-        {
-
-            return await _context.Pokemon
-                .AsNoTracking()
-                .Include(p => p.Forms)
-                .Where(p => p.GameId == gameId && p.Forms.Any(f => internalIds.ToList().Contains(f.InternalId)))
-                .ToListAsync();
         }
 
         private async Task SaveChangesAsync()

@@ -17,10 +17,10 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
         public async Task<(IEnumerable<Save> Saves, int TotalCount)> GetAllAsync(string userId, int pageNumber, int pageSize)
         {
             var totalCount = await _context.Saves
-                .Where(s => s.UserId == userId)
+                .Where(s => s.User.Auth0Id == userId)
                 .CountAsync();
             var saves = await _context.Saves
-                .Where(s => s.UserId == userId)
+                .Where(s => s.User.Auth0Id == userId)
                 .AsNoTracking()
                 .Select(s => new Save // To avoid loading unnecessary data
                 {

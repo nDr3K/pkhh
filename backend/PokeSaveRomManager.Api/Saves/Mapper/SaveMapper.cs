@@ -70,7 +70,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
 
         // SaveFile
         #region SaveFile
-        public static Save ToDomain(this SaveFileData saveFileData, string userId, SaveFileDto saveFileDto)
+        public static Save ToDomain(this SaveFileData saveFileData, int userId, SaveFileDto saveFileDto)
         {
             var save = new Save
             {

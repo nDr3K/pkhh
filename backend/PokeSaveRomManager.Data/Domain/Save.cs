@@ -10,7 +10,7 @@ namespace PokeSaveRomManager.Data.Domain
         public int Id { get; set; }
 
         [Required]
-        public string UserId { get; set; } // Auth0Id
+        public int UserId { get; set; }
 
         [Required]
         public int GameId { get; set; }
@@ -21,6 +21,8 @@ namespace PokeSaveRomManager.Data.Domain
         public DateTime LastUpdatedTime { get; set; }
 
         // Navigation properties
+        [ForeignKey("UserId")]
+        public User User { get; set; }
 
         [ForeignKey("GameId")]
         public Game Game { get; set; }

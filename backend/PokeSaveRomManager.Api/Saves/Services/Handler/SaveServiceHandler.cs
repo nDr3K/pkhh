@@ -5,6 +5,7 @@ using PokeSaveRomManager.Api.Pokemons.Services;
 using PokeSaveRomManager.Api.Saves.Mapper;
 using PokeSaveRomManager.Api.Saves.Models;
 using PokeSaveRomManager.Api.Saves.Repositories;
+using PokeSaveRomManager.Api.Users.Repositories;
 using PokeSaveRomManager.Data.Domain;
 using PokeSaveRomManager.Parser.Core.Models;
 using PokeSaveRomManager.Parser.Core.Models.Data;
@@ -16,25 +17,31 @@ namespace PokeSaveRomManager.Api.Saves.Services.Handler
         private readonly IGameService _gameService;
         private readonly IGameMoveService _gameMoveService;
         private readonly IPokemonService _pokemonService;
+        private readonly IPokemonFormService _pokemonFormService;
         private readonly IPokemonInstanceRepository _pokemonInstanceRepository;
         private readonly IPartyRepository _partyRepository;
         private readonly IBoxRepository _boxRepository;
+        private readonly IUserRepository _userRepository;
 
         public SaveServiceHandler(
             IGameService gameService,
             IGameMoveService gameMoveService, 
             IPokemonService pokemonService, 
+            IPokemonFormService pokemonFormService,
             IPokemonInstanceRepository pokemonInstanceRepository, 
             IPartyRepository partyRepository, 
-            IBoxRepository boxRepository
+            IBoxRepository boxRepository,
+            IUserRepository userRepository
             )
         {
             _gameService = gameService;
             _gameMoveService = gameMoveService;
             _pokemonService = pokemonService;
+            _pokemonFormService = pokemonFormService;
             _pokemonInstanceRepository = pokemonInstanceRepository;
             _partyRepository = partyRepository;
             _boxRepository = boxRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<SaveFileData> GetDatas(ParsedSaveData saveData, int gameId)
@@ -49,7 +56,7 @@ namespace PokeSaveRomManager.Api.Saves.Services.Handler
             var allPokemon = saveData.Party.Concat(saveData.Boxes.SelectMany(b => b.Pokemon)).ToList();
 
             var allPokemonIds = allPokemon.Select(p => p.PokemonId).Distinct().Cast<int?>().ToList();
-            var pokemons = (await _pokemonService.GetForGameByIds(gameId, allPokemonIds))
+            var pokemons = (await _pokemonFormService.GetForGameByIds(gameId, allPokemonIds))
                 .ToDictionary(p => p.PokemonId);
 
             var allMoveIds = allPokemon
@@ -138,6 +145,12 @@ namespace PokeSaveRomManager.Api.Saves.Services.Handler
         {
             var pokemonInstances = pokemonData.ToDomain(saveId);
             return await _pokemonInstanceRepository.SavePokemonInstances(pokemonInstances);
+        }
+
+        public async Task<int> GetUserIdByAuthId(string authId)
+        {
+            var user = await _userRepository.GetByAuth0IdAsync(authId);
+            return user.Id;
         }
     }
 }

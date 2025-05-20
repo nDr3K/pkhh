@@ -16,11 +16,12 @@ namespace PokeSaveRomManager.Api.Saves.Services
         private readonly ILogger<SaveService> _logger;
         private readonly ParserOrchestrator _parserOrchestrator;
 
-        public SaveService(ISaveRepository repository, ISaveServiceHandler saveServiceHandler, ILogger<SaveService> logger)
+        public SaveService(ISaveRepository repository, ISaveServiceHandler saveServiceHandler, ILogger<SaveService> logger, ParserOrchestrator parserOrchestrator)
         {
             _repository = repository;
             _saveServiceHandler = saveServiceHandler;
             _logger = logger;
+            _parserOrchestrator = parserOrchestrator;
         }
 
         public async Task<(IEnumerable<SaveDto> Saves, int TotalCount)> GetAllAsync(string gameId, int pageNumber, int pageSize)
@@ -65,7 +66,8 @@ namespace PokeSaveRomManager.Api.Saves.Services
                 _logger.LogInformation("Parsed save file data for user {UserId}", userId);
 
                 // Determine ID to use for Pokémon instance association
-                var currentSave = await _repository.Create(pokemonData.ToDomain(userId, save.Metadata));
+                var id = await _saveServiceHandler.GetUserIdByAuthId(userId);
+                var currentSave = await _repository.Create(pokemonData.ToDomain(id, save.Metadata));
                 _logger.LogInformation("Created new save for user {UserId}", userId);
 
                 // Process Pokemon data and associate with team/boxes
@@ -99,7 +101,7 @@ namespace PokeSaveRomManager.Api.Saves.Services
                     _logger.LogError("Save with ID {Id} not found", saveId);
                     throw new Exception($"Save with ID {saveId} not found");
                 }
-                if (existingSave.UserId != userId)
+                if (existingSave.User.Auth0Id != userId)
                 {
                     _logger.LogError("User {UserId} is not authorized to update save with ID {Id}", userId, saveId);
                     throw new Exception($"User {userId} is not authorized to update this save");
@@ -125,6 +127,9 @@ namespace PokeSaveRomManager.Api.Saves.Services
 
                 // Process Pokemon data and associate with team/boxes
                 await ProcessPokemonData(pokemonData, existingSave);
+
+                // Update Timestamp
+                existingSave.LastUpdatedTime = DateTime.UtcNow;
 
                 await _repository.SaveChangesAsync();
                 await transaction.CommitAsync();

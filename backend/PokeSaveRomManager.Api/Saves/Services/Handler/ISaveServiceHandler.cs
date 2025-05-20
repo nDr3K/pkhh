@@ -12,5 +12,6 @@ namespace PokeSaveRomManager.Api.Saves.Services.Handler
         Task DeleteBox(int boxId);
         Task<SaveBox> CreateBox(SaveBox saveBox);
         Task<IEnumerable<PokemonInstance>> SavePokemonInstances(IEnumerable<PokemonData> pokemonData, int saveId);
+        Task<int> GetUserIdByAuthId(string authId);
     }
 }

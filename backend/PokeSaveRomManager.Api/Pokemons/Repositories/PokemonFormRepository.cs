@@ -74,5 +74,17 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<PokemonForm>> GetForGameByIds(int gameId, IEnumerable<int?> internalIds)
+        {
+
+            return await _context.PokemonForms
+                .Include(f => f.Pokemon)
+                .Include(f => f.Type1)
+                .Include(f => f.Type2)
+                .Where(f => internalIds.Contains(f.InternalId))
+                .ToListAsync();
+
+        }
     }
 }

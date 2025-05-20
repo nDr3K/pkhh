@@ -11,5 +11,6 @@ namespace PokeSaveRomManager.Api.Pokemons.Services
         Task UpdateAsync(int id, int pokemonId, PokemonFormUpdateDto form);
         Task DeleteAsync(int id);
         Task<bool> ExistsAsync(int id);
+        Task<IEnumerable<PokemonFormDto>> GetForGameByIds(int gameId, IEnumerable<int?> internalIds);
     }
 }

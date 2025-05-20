@@ -121,5 +121,20 @@ namespace PokeSaveRomManager.Api.Pokemons.Services
                 throw;
             }
         }
+
+        public async Task<IEnumerable<PokemonFormDto>> GetForGameByIds(int gameId, IEnumerable<int?> internalIds)
+        {
+            try
+            {
+                _logger.LogInformation("Getting Pokemons for game id {GameId} by internal ids {InternalIds}", gameId, string.Join(", ", internalIds));
+                var pokemons = await _repository.GetForGameByIds(gameId, internalIds);
+                return pokemons.ToDtos();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting Pokemons for game id {GameId} by internal ids {InternalIds}", gameId, string.Join(", ", internalIds));
+                throw;
+            }
+        }
     }
 }
