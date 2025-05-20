@@ -117,6 +117,33 @@ namespace PokeSaveRomManager.Data
 				.HasIndex(u => u.Auth0Id)
 				.IsUnique();
 
+            // Cascade delete for related entities of Save
+            modelBuilder.Entity<Save>()
+                .HasMany(s => s.Boxes)
+                .WithOne(b => b.Save)
+                .HasForeignKey(b => b.SaveId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Save>()
+                .HasOne(s => s.Party)
+                .WithOne(p => p.Save)
+                .HasForeignKey<SaveTeam>(p => p.SaveId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Save>()
+                .HasMany(s => s.PokemonInstances)
+                .WithOne(pi => pi.Save)
+                .HasForeignKey(pi => pi.SaveId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<SaveBox>()
+                .HasMany(sb => sb.Slots)
+                .WithOne(s => s.Box)
+                .HasForeignKey(s => s.BoxId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<SaveTeam>()
+                .HasMany(st => st.Members)
+                .WithOne(m => m.Party)
+                .HasForeignKey(m => m.PartyId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
 		}
 	}

@@ -63,6 +63,7 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
         {
             return await _context.Saves
                 .AsNoTracking()
+                .Include(s => s.User)
                 .Include(s => s.Boxes)
                     .ThenInclude(b => b.Slots)
                 .Select(s => new Save
@@ -70,6 +71,7 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                     Id = s.Id,
                     Game = s.Game,
                     Name = s.Name,
+                    User = s.User,
                     LastUpdatedTime = s.LastUpdatedTime,
                     Party = new SaveTeam
                     {
@@ -166,6 +168,16 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
             _context.Saves.Update(save);
             await SaveChangesAsync();
             return save;
+        }
+
+        public async Task Delete(int id)
+        {
+            var save = await GetByIdAsync(id);
+            if (save != null)
+            {
+                _context.Saves.Remove(save);
+                await SaveChangesAsync();
+            }
         }
 
         public async Task<PokemonInstance> GetPokemonInstanceByIdAsync(int pokemonInstanceId)

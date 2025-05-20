@@ -113,5 +113,29 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
                 return StatusCode(500, "An error occurred while processing the ROM file.");
             }
         }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> DeleteSaveFile(int id)
+        {
+            try
+            {
+                string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("User ID not found in token claims");
+                    return Unauthorized("User ID not found in token");
+                }
+                await _saveService.Delete(userId, id);
+                return Ok(new { message = "ROM file deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting ROM file");
+                return StatusCode(500, "An error occurred while deleting the ROM file.");
+            }
+        }
     }
 }

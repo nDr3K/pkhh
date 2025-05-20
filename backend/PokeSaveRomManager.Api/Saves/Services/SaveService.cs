@@ -228,5 +228,31 @@ namespace PokeSaveRomManager.Api.Saves.Services
                 throw new Exception("An error occurred while processing the save file.", ex);
             }
         }
+
+        public async Task Delete(string userId, int saveId)
+        {
+            try
+            {
+                var existingSave = await _repository.GetByIdAsync(saveId);
+                if (existingSave == null)
+                {
+                    _logger.LogError("Save with ID {Id} not found", saveId);
+                    throw new Exception($"Save with ID {saveId} not found");
+                }
+                if (existingSave.User.Auth0Id != userId)
+                {
+                    _logger.LogError("User {UserId} is not authorized to delete save with ID {Id}", userId, saveId);
+                    throw new Exception($"User {userId} is not authorized to delete this save");
+                }
+                await _saveServiceHandler.DeletePokemonInstances(saveId);
+                await _repository.Delete(saveId);
+                _logger.LogInformation("Deleted save with ID {Id}", saveId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting save for user {UserId}", userId);
+                throw;
+            }
+        }
     }
 }

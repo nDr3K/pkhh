@@ -8,5 +8,6 @@ namespace PokeSaveRomManager.Api.Saves.Services
         Task<SaveDetailDto> GetByIdAsync(int saveId);
         Task<SaveDetailDto> Create(string userId, SaveFileUploadDto save);
         Task<SaveDetailDto> Update(string userId, int saveId, SaveFileUploadDto save);
+        Task Delete(string userId, int saveId);
     }
 }
