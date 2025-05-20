@@ -13,14 +13,23 @@ namespace PokeSaveRomManager.Api.Saves.Services.Handler
 {
     public class SaveServiceHandler : ISaveServiceHandler
     {
+        private readonly IGameService _gameService;
         private readonly IGameMoveService _gameMoveService;
         private readonly IPokemonService _pokemonService;
         private readonly IPokemonInstanceRepository _pokemonInstanceRepository;
         private readonly IPartyRepository _partyRepository;
         private readonly IBoxRepository _boxRepository;
 
-        public SaveServiceHandler(IGameMoveService gameMoveService, IPokemonService pokemonService, IPokemonInstanceRepository pokemonInstanceRepository, IPartyRepository partyRepository, IBoxRepository boxRepository)
+        public SaveServiceHandler(
+            IGameService gameService,
+            IGameMoveService gameMoveService, 
+            IPokemonService pokemonService, 
+            IPokemonInstanceRepository pokemonInstanceRepository, 
+            IPartyRepository partyRepository, 
+            IBoxRepository boxRepository
+            )
         {
+            _gameService = gameService;
             _gameMoveService = gameMoveService;
             _pokemonService = pokemonService;
             _pokemonInstanceRepository = pokemonInstanceRepository;
@@ -30,6 +39,13 @@ namespace PokeSaveRomManager.Api.Saves.Services.Handler
 
         public async Task<SaveFileData> GetDatas(ParsedSaveData saveData, int gameId)
         {
+            // Check if the game exists
+            var gameExist = await _gameService.GameExistsAsync(gameId);
+            if (!gameExist)
+            {
+                throw new Exception($"Game with ID {gameId} not found");
+            }
+
             var allPokemon = saveData.Party.Concat(saveData.Boxes.SelectMany(b => b.Pokemon)).ToList();
 
             var allPokemonIds = allPokemon.Select(p => p.PokemonId).Distinct().Cast<int?>().ToList();
