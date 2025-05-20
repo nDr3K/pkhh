@@ -14,18 +14,20 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
             _context = context;
         }
 
-        public async Task<(IEnumerable<Save> Saves, int TotalCount)> GetAllAsync(string userId, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<Save> Saves, int TotalCount)> GetAllAsync(int userId, int pageNumber, int pageSize)
         {
             var totalCount = await _context.Saves
-                .Where(s => s.User.Auth0Id == userId)
+                .Where(s => s.UserId == userId)
                 .CountAsync();
             var saves = await _context.Saves
-                .Where(s => s.User.Auth0Id == userId)
+                .Where(s => s.UserId == userId)
                 .AsNoTracking()
                 .Select(s => new Save // To avoid loading unnecessary data
                 {
                     Id = s.Id,
                     Game = s.Game,
+                    Name = s.Name,
+                    LastUpdatedTime = s.LastUpdatedTime,
                     Party = new SaveTeam
                     {
                         Id = s.Party.Id,
@@ -35,7 +37,17 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                             PokemonInstance = new PokemonInstance
                             {
                                 Id = m.PokemonInstance.Id,
-                                PokemonId = m.PokemonInstance.PokemonId
+                                Pokemon = new Pokemon
+                                {
+                                    Name = m.PokemonInstance.Pokemon.Name,
+                                    DexNumber = m.PokemonInstance.Pokemon.DexNumber
+                                },
+                                Form = new PokemonForm
+                                {
+                                    Name = m.PokemonInstance.Form.Name,
+                                    Type1 = m.PokemonInstance.Form.Type1,
+                                    Type2 = m.PokemonInstance.Form.Type2
+                                }
                             }
                         }).ToList()
                     }

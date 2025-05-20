@@ -5,7 +5,6 @@ using PokeSaveRomManager.Api.Saves.DTOs;
 using PokeSaveRomManager.Api.Saves.Services;
 using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Models;
-using PokeSaveRomManager.Api.Shared.Policies;
 using System.Security.Claims;
 
 namespace PokeSaveRomManager.Api.Saves.Controllers.V1
@@ -27,7 +26,7 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<PagedResponse<IEnumerable<SaveDto>>>> GetAll([FromRoute] string userId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<PagedResponse<IEnumerable<SaveDto>>>> GetAll([FromRoute] int userId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             var (saves, totalCount) = await _saveService.GetAllAsync(userId, pageNumber, pageSize);
             _logger.LogInformation("Retrieved {Count} saves for User with ID {UserId}", saves.Count(), userId);

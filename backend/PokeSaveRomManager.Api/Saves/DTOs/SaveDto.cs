@@ -12,6 +12,7 @@
     public class SaveDtoPokemon
     {
         public int Id { get; set; } // PokemonInstanceId
+        public int DexNumber { get; set; }
         public string Name { get; set; }
     }
 
@@ -27,6 +28,7 @@
     public class SaveDetailDtoPokemon
     {
         public int Id { get; set; } // PokemonInstanceId
+        public int DexNumber { get; set; }
         public string Name { get; set; }
         public string Type1 { get; set; }
         public string Type2 { get; set; }

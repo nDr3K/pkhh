@@ -5,7 +5,7 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
 {
     public interface ISaveRepository
     {
-        Task<(IEnumerable<Save> Saves, int TotalCount)> GetAllAsync(string userId, int pageNumber, int pageSize);
+        Task<(IEnumerable<Save> Saves, int TotalCount)> GetAllAsync(int userId, int pageNumber, int pageSize);
         Task<Save> GetByIdAsync(int saveId);
         Task<Save> Create(Save save);
         Task<Save> Update(Save save);

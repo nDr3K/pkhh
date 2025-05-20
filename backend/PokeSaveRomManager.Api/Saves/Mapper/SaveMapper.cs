@@ -18,6 +18,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Team = save.Party.Members.Select(m => new SaveDtoPokemon
                 {
                     Id = m.PokemonInstance.Id,
+                    DexNumber = m.PokemonInstance.Pokemon.DexNumber,
                     Name = m.PokemonInstance.Pokemon.Name
                 }).ToArray(),
                 LastUpdatedTime = save.LastUpdatedTime
@@ -49,6 +50,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             return new SaveDetailDtoPokemon
             {
                 Id = pokemonInstance.Id,
+                DexNumber = pokemonInstance.Pokemon.DexNumber,
                 Name = pokemonInstance.Pokemon.Name,
                 Type1 = pokemonInstance.Form.Type1.Name,
                 Type2 = pokemonInstance.Form.Type2?.Name,

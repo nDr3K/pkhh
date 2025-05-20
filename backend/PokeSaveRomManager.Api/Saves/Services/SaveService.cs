@@ -24,17 +24,17 @@ namespace PokeSaveRomManager.Api.Saves.Services
             _parserOrchestrator = parserOrchestrator;
         }
 
-        public async Task<(IEnumerable<SaveDto> Saves, int TotalCount)> GetAllAsync(string gameId, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<SaveDto> Saves, int TotalCount)> GetAllAsync(int userId, int pageNumber, int pageSize)
         {
             try
             {
-                var (saves, totalCount) = await _repository.GetAllAsync(gameId, pageNumber, pageSize);
-                _logger.LogInformation("Retrieved {Count} saves for Game with ID {GameId}", saves.Count(), gameId);
+                var (saves, totalCount) = await _repository.GetAllAsync(userId, pageNumber, pageSize);
+                _logger.LogInformation("Retrieved {Count} saves for User with ID {UserId}", saves.Count(), userId);
                 return (saves.ToDtos(), totalCount);
             }
             catch
             {
-                _logger.LogError("Error retrieving saves for Game with ID {GameId}", gameId);
+                _logger.LogError("Error retrieving saves for User with ID {UserId}", userId);
                 throw;
             }
         }
