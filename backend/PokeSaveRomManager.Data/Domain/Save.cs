@@ -8,17 +8,19 @@ namespace PokeSaveRomManager.Data.Domain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; } // Auth0Id
+
         [Required]
         public int GameId { get; set; }
+
         [Required]
         public string Name { get; set; }
 
-        // Navigation properties
+        public DateTime LastUpdatedTime { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        // Navigation properties
 
         [ForeignKey("GameId")]
         public Game Game { get; set; }

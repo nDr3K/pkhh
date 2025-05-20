@@ -5,6 +5,8 @@ using PokeSaveRomManager.Api.Saves.DTOs;
 using PokeSaveRomManager.Api.Saves.Services;
 using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Models;
+using PokeSaveRomManager.Api.Shared.Policies;
+using System.Security.Claims;
 
 namespace PokeSaveRomManager.Api.Saves.Controllers.V1
 {
@@ -46,6 +48,71 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
 
             _logger.LogInformation("Retrieved save with ID {Id}", id);
             return Ok(save);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> CreateSaveFile([FromForm] SaveFileUploadDto saveFileUploadDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("User ID not found in token claims");
+                    return Unauthorized("User ID not found in token");
+                }
+
+                await _saveService.Create(userId, saveFileUploadDto);
+
+                return Ok(new { message = "ROM file uploaded successfully." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing ROM upload");
+                return StatusCode(500, "An error occurred while processing the ROM file.");
+            }
+        }
+
+        [HttpPut("{id}")]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UploadSaveFile(int id, [FromForm] SaveFileUploadDto saveFileUploadDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("User ID not found in token claims");
+                    return Unauthorized("User ID not found in token");
+                }
+
+                await _saveService.Update(userId, id, saveFileUploadDto);
+
+                return Ok(new { message = "ROM file uploaded successfully." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing ROM upload");
+                return StatusCode(500, "An error occurred while processing the ROM file.");
+            }
         }
     }
 }

@@ -119,5 +119,20 @@ namespace PokeSaveRomManager.Api.Games.Services
                 throw;
             }
         }
+
+        public async Task<IEnumerable<GameMoveDto>> GetForGameByIds(int gameId, IEnumerable<int> moveIds)
+        {
+            try
+            {
+                _logger.LogInformation("Retrieving moves for game with ID: {gameId} by move IDs", gameId);
+                var gameMoves = await _gameMoveRepository.GetForGameByIds(gameId, moveIds);
+                return gameMoves.ToDtos();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving moves for game with ID: {gameId} by move IDs", gameId);
+                throw;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PokeSaveRomManager.Api.Saves.DTOs;
+using PokeSaveRomManager.Api.Saves.Models;
 using PokeSaveRomManager.Data.Domain;
 
 namespace PokeSaveRomManager.Api.Saves.Mapper
@@ -13,11 +14,13 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             {
                 Id = save.Id,
                 Game = save.Game.Name,
+                Name = save.Name,
                 Team = save.Party.Members.Select(m => new SaveDtoPokemon
                 {
                     Id = m.PokemonInstance.Id,
                     Name = m.PokemonInstance.Pokemon.Name
-                }).ToArray()
+                }).ToArray(),
+                LastUpdatedTime = save.LastUpdatedTime
 
             };
         }
@@ -36,7 +39,8 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Id = save.Id,
                 Game = save.Game.Name,
                 Team = save.Party.Members.Select(m => m.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
-                Boxes = save.Boxes.SelectMany(b => b.Slots).Select(s => s.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray()
+                Boxes = save.Boxes.SelectMany(b => b.Slots).Select(s => s.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
+                LastUpdatedTime = save.LastUpdatedTime
             };
         }
 
@@ -61,6 +65,44 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
         public static IEnumerable<SaveDetailDto> ToDetailDtos(this IEnumerable<Save> saves)
         {
             return saves.Select(s => s.ToDetailDto());
+        }
+        #endregion
+
+        // SaveFile
+        #region SaveFile
+        public static Save ToDomain(this SaveFileData saveFileData, string userId, SaveFileDto saveFileDto)
+        {
+            var save = new Save
+            {
+                UserId = userId,
+                GameId = saveFileDto.GameId,
+                Name = saveFileDto.Name,
+                Boxes = new List<SaveBox>(),
+                LastUpdatedTime = DateTime.UtcNow,
+            };
+
+            var party = new SaveTeam
+            {
+                Members = new List<SaveTeamMember>()
+            };
+
+            save.Party = party;
+
+            var box = CreateSaveBox(save.Id);
+
+            save.Boxes.Add(box);
+
+            return save;
+        }
+
+        public static SaveBox CreateSaveBox(int saveId)
+        {
+            return new SaveBox
+            {
+                Name = "Box", // Default name,
+                SaveId = saveId,
+                Slots = new List<SaveBoxSlot>()
+            };
         }
         #endregion
     }

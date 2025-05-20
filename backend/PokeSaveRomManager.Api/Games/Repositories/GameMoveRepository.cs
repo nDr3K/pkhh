@@ -64,6 +64,15 @@ namespace PokeSaveRomManager.Api.Games.Repositories
             return await _context.GameMoves.AnyAsync(gm => gm.MoveId == id && gm.GameId == gameId);
         }
 
+        public async Task<IEnumerable<GameMove>> GetForGameByIds(int gameId, IEnumerable<int> moveIds)
+        {
+            return await _context.GameMoves
+                .Include(gm => gm.Move)
+                .AsNoTracking()
+                .Where(gm => gm.GameId == gameId && moveIds.Contains(gm.MoveId))
+                .ToListAsync();
+        }
+
         private async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

@@ -4,7 +4,9 @@
     {
         public int Id { get; set; }
         public string Game { get; set; }
+        public string Name { get; set; }
         public SaveDtoPokemon[] Team { get; set; } = [];
+        public DateTime LastUpdatedTime { get; set; }
     }
 
     public class SaveDtoPokemon
@@ -19,6 +21,7 @@
         public string Game { get; set; }
         public SaveDetailDtoPokemon[] Team { get; set; } = [];
         public SaveDetailDtoPokemon[] Boxes { get; set; } = [];
+        public DateTime LastUpdatedTime { get; set; }
     }
 
     public class SaveDetailDtoPokemon

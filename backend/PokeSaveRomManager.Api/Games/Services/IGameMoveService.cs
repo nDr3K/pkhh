@@ -11,5 +11,6 @@ namespace PokeSaveRomManager.Api.Games.Services
         Task UpdateAsync(int gameId, int id, GameMoveUpdateDto gameMove);
         Task DeleteAsync(int gameId, int id);
         Task<bool> ExistsAsync(int gameId, int id);
+        Task<IEnumerable<GameMoveDto>> GetForGameByIds(int gameId, IEnumerable<int> moveIds);
     }
 }
