@@ -57,7 +57,7 @@ namespace PokeSaveRomManager.Api.Saves.Services.Handler
 
             var allPokemonIds = allPokemon.Select(p => p.PokemonId).Distinct().Cast<int?>().ToList();
             var pokemons = (await _pokemonFormService.GetForGameByIds(gameId, allPokemonIds))
-                .ToDictionary(p => p.PokemonId);
+                .ToDictionary(p => p.InternalId);
 
             var allMoveIds = allPokemon
                 .SelectMany(p => new[] {

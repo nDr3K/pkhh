@@ -5,6 +5,7 @@ namespace PokeSaveRomManager.Api.Pokemons.DTOs
     public class PokemonFormDto
     {
         public int Id { get; set; }
+        public int InternalId { get; set; }
         public int PokemonId { get; set; }
 
         [Required]

@@ -60,6 +60,7 @@ namespace PokeSaveRomManager.Api.Pokemons.Mapper
             return new PokemonFormDto
             {
                 Id = form.Id,
+                InternalId = form.InternalId ?? form.Pokemon.Id,
                 PokemonId = form.Pokemon.Id,
                 PokemonName = form.Pokemon.Name,
                 Name = form.Name,
