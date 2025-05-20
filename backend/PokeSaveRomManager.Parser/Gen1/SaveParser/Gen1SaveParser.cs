@@ -222,6 +222,8 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
                     var pokemon = _pokemonDataExtractor.ExtractPokemon(data, offset, false);
                     pokemon.PokemonId = data[boxOffset + 1 + i];
 
+                    if (pokemon.PokemonId == 0 || pokemon.PokemonId == 255)
+                        continue; // Skip empty slots
                     box.Pokemon.Add(pokemon);
                 }
 
