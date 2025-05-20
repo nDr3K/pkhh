@@ -14,13 +14,8 @@ namespace PokeSaveRomManager.Api.Users.Repositories
 
         public async Task<User> GetByAuth0IdAsync(string id)
         {
-            var user = await _context.Users
+            return await _context.Users
                 .FirstOrDefaultAsync(u => u.Auth0Id == id);
-            if (user == null)
-            {
-                throw new KeyNotFoundException($"User with Auth0 ID {id} not found.");
-            }
-            return user;
         }
 
         public async Task<User> GetByEmailAsync(string email)
