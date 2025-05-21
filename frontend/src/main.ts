@@ -1,13 +1,22 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { provideAuth0 } from "@auth0/auth0-angular";
 
-import { AppModule } from './app/app.module';
-import {environment} from "./environments/environment";
+import { environment } from "./environments/environment";
+import { enableProdMode } from "@angular/core";
+import { bootstrapApplication } from "@angular/platform-browser";
+import { AppComponent } from "./app/app.component";
+import { provideRouter } from "@angular/router";
+import { provideHttpClient } from "@angular/common/http";
+import { ROUTES } from "./app/routes";
 
 
-platformBrowserDynamic().bootstrapModule(AppModule, {
-  providers: [
+if (environment.production) {
+  enableProdMode();
+}
+
+bootstrapApplication(AppComponent, {
+  providers:[
+    provideRouter(ROUTES),
+    provideHttpClient(),
     provideAuth0(environment.auth0)
   ]
-})
-  .catch(err => console.error(err));
+});
