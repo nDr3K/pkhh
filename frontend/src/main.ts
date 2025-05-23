@@ -14,9 +14,9 @@ if (environment.production) {
 }
 
 bootstrapApplication(AppComponent, {
-  providers:[
+  providers: [
     provideRouter(ROUTES),
     provideHttpClient(),
     provideAuth0(environment.auth0)
   ]
-});
+}).then();

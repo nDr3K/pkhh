@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap");
+
+/* Theme */
+
+:root {
+  --white: #ffffff;
+  --white-rgb: 255, 255, 255;
+  --light-aluminium: #eaecee;
+  --aluminium: #bdc4cf;
+  --grey: #5a5f66;
+  --dark-aluminium: #2a2e35;
+  --black: #000000;
+  --black-rgb: 0, 0, 0;
+  --yellow: #d2a61f;
+  --yellow-rgb: 210, 166, 31;
+  --mandarine: #ff7f38;
+  --orange: #ff4f40;
+
+  --yellow-mandarine-gradient: linear-gradient(
+      153.07deg,
+      var(--yellow) -2.47%,
+      var(--mandarine) 102.78%
+  );
+
+  --mandarine-orange-gradient: linear-gradient(
+      153.07deg,
+      var(--mandarine) -2.47%,
+      var(--orange) 102.78%
+  );
+
+  --font-primary: "Inter", sans-serif;
+  --font-secondary: "Space Grotesk", sans-serif;
+  --font-mono: "Fira Code", monospace;
+}

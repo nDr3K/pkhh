@@ -1,0 +1,5 @@
+<div class="nav-bar__tabs">
+  <ng-container *ngIf="isAuthenticated$ | async">
+    <app-nav-bar-tab path="/dashboard" label="Dashboard"></app-nav-bar-tab>
+  </ng-container>
+</div>
