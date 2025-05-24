@@ -11,8 +11,8 @@ import { NgOptimizedImage } from "@angular/common";
       <a routerLink="/">
         <img
           class="nav-bar__logo"
-          ngSrc="https://cdn.andreacannavo.com/logo.png"
-          alt="Auth0 shield logo"
+          ngSrc="https://cdn.andreacannavo.com/pkhh/logo.png"
+          alt="pkhh app logo"
           width="122"
           height="56"
         />
