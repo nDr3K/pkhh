@@ -1,0 +1,49 @@
+<ng-container *ngIf="error$ | async as error; else authBackend">
+  <app-page-layout>
+    <div class="content-layout">
+      <h1 id="page-title" class="content__title">Error</h1>
+      <div class="content__body">
+        <p id="page-description">
+          <span>{{ error.message }}</span>
+        </p>
+      </div>
+    </div>
+  </app-page-layout>
+</ng-container>
+
+<ng-template #authBackend>
+  <ng-container *ngIf="isProcessingBackend; else signedIn">
+    <div class="content-layout">
+      <h1 id="page-title" class="content__title">Signing you in...</h1>
+      <div class="content__body">
+        <p id="page-description">
+          <span>Please wait while we authenticate you.</span>
+        </p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #signedIn>
+    <ng-container *ngIf="backendError != null; else backendError">
+      <div class="content-layout">
+        <h1 id="page-title" class="content__title">Welcome</h1>
+        <div class="content__body">
+          <p id="page-description">
+            <span>Redirecting you to your dashboard...</span>
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #backendError>
+      <div class="content-layout">
+        <h1 id="page-title" class="content__title">Error</h1>
+        <div class="content__body">
+          <p id="page-description">
+            <span>Something went wrong. Please try again later.</span>
+          </p>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+</ng-template>
