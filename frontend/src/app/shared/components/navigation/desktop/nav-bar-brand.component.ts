@@ -13,7 +13,7 @@ import { NgOptimizedImage } from "@angular/common";
           class="nav-bar__logo"
           ngSrc="https://cdn.andreacannavo.com/pkhh/logo.png"
           alt="pkhh app logo"
-          width="122"
+          width="56"
           height="56"
         />
       </a>

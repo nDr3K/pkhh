@@ -1,0 +1,184 @@
+.game-save-card {
+  background: linear-gradient(135deg, var(--white) 0%, var(--light-aluminium) 100%);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0.25rem 1rem rgba(var(--black-rgb), 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  max-width: 42rem;
+  margin: 1rem;
+}
+
+.game-save-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(var(--black-rgb), 0.15);
+}
+
+.game-save-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--game-color);
+  border-radius: 1rem 1rem 0 0;
+}
+
+.card-header {
+  margin-bottom: 1rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.save-icon {
+  width: 56px;
+  height: 56px;
+  margin-right: 0.75rem;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    color: var(--game-color);
+  }
+}
+
+.game-save-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark-aluminium);
+  margin: 0;
+}
+
+.game-header-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+  margin-right: 1.25rem;
+}
+
+.game-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(var(--black-rgb), 0.2);
+}
+
+.pokemon-team {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 16px;
+  background: rgba(var(--white-rgb), 0.5);
+  border-radius: 0.65rem;
+  border: 1px solid rgba(var(--black-rgb), 0.1);
+}
+
+.pokemon-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  background: white;
+  box-shadow: 0 2px 4px rgba(var(--black-rgb), 0.1);
+  transition: transform 0.2s ease;
+  min-height: 72px;
+}
+
+.pokemon-image {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.pokemon-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--aluminium);
+  text-align: center;
+  text-transform: capitalize;
+  line-height: 1.2;
+}
+
+.empty-slot {
+  opacity: 0.4;
+  background: var(--light-aluminium);
+  justify-content: center;
+}
+
+.empty-pokeball {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--aluminium), var(--light-aluminium));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  border: 2px dashed rgba(var(--dark-aluminium-rgb), 0.5);
+}
+
+.empty-pokeball span {
+  font-size: 1.2rem;
+  color: rgba(var(--dark-aluminium-rgb), 0.5);
+  opacity: 0.8;
+  font-weight: bold;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(var(--white), 0.1);
+}
+
+.timestamp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.8rem;
+}
+
+.timestamp-label {
+  color: rgba(var(--dark-aluminium-rgb), 0.8);
+  margin-bottom: 2px;
+}
+
+.timestamp-value {
+  color: rgba(var(--dark-aluminium-rgb), 0.6);
+  font-weight: 500;
+}
+
+/* Game-specific color variables */
+.game-red { --game-color: #dc3545; }
+.game-blue { --game-color: #007bff; }
+.game-yellow { --game-color: #ffc107; }
+.game-green { --game-color: #32cd32; }
+
+@media (max-width: 480px) {
+  .game-save-card {
+    margin: 8px;
+    padding: 16px;
+  }
+
+  .pokemon-team {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .save-name {
+    font-size: 1.25rem;
+  }
+}

@@ -18,12 +18,12 @@ body {
 
 body {
   //background: linear-gradient(to bottom left, #EAEA80FF, #EAFFFFFF, #EAEA80FF);
-  background: linear-gradient(to bottom, var(--white) 0%, var(--yellow) 100%);
+  background: linear-gradient(to bottom, var(--white) 0%, rgba(var(--yellow-rgb), 0.6) 100%);
 
   color: var(--white);
   font-family: var(--font-primary), sans-serif;
 
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(var(--black-rgb) 0);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 

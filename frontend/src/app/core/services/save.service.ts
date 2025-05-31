@@ -1,19 +1,20 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
 import { AuthService } from "@auth0/auth0-angular";
+import { environment } from "../../../environments/environment";
 import { catchError, Observable, switchMap } from "rxjs";
-import { UserProfile } from "../models/user-profile";
+import { GameSave } from "../models/game-save";
+import { PagedResponse } from "../models/paged-response";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class SaveService {
   private http = inject(HttpClient);
   private auth = inject(AuthService);
   private apiUrl = environment.api.serverUrl;
 
-  authenticateWithBackend(): Observable<UserProfile> {
+  getSaves(pageNumber: number = 1, pageSize: number = 10): Observable<PagedResponse<GameSave>> {
     return this.auth.getAccessTokenSilently().pipe(
       switchMap(token => {
         const headers = new HttpHeaders({
@@ -21,11 +22,13 @@ export class UserService {
           'Content-Type': 'application/json'
         });
 
-        // Call your backend's auth endpoint
-        return this.http.get<UserProfile>(`${this.apiUrl}/auth/login`, { headers });
+        return this.http.get<PagedResponse<GameSave>>(
+          `${this.apiUrl}/saves?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+          { headers }
+        );
       }),
       catchError(error => {
-        console.error('Backend authentication failed:', error);
+        console.error('Failed to retrieve saves:', error);
         throw error;
       })
     );

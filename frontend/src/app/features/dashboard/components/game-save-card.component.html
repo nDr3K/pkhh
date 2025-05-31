@@ -1,0 +1,59 @@
+<div class="game-save-card" [class]="'game-' + getGameClass(gameSave.game)">
+  <!-- Card Header -->
+  <div class="card-header">
+    <div class="header-content">
+      <div class="save-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
+          <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+            <path d="M1250 4951 c-50 -10 -75 -26 -107 -68 l-28 -36 -3 -2261 c-1 -1244 0 -2275 3 -2293 7 -39 46 -87 89 -111 29 -16 111 -17 1126 -17 1178 0 1130 -2 1263 52 179 73 328 239 389 433 l23 75 0 2055 0 2055 -23 37 c-13 20 -40 47 -60 60 l-37 23 -1300 1 c-715 1 -1316 -1 -1335 -5z m2490 -409 c74 -39 71 -2 68 -802 l-3 -715 -23 -55 c-48 -117 -149 -210 -266 -245 -73 -22 -2059 -23 -2111 -1 -68 29 -64 -16 -65 916 -1 928 -5 870 62 903 30 15 135 17 1168 17 1082 0 1137 -1 1170 -18z m-1910 -2511 c5 -11 10 -60 10 -110 l0 -91 91 0 c131 0 129 2 129 -133 0 -75 -4 -117 -12 -125 -8 -8 -47 -12 -110 -12 l-98 0 0 -93 c0 -133 -4 -137 -131 -137 -141 0 -139 -2 -139 125 l0 105 -103 0 c-67 0 -107 4 -115 12 -8 8 -12 50 -12 125 0 135 -2 133 129 133 l91 0 0 91 c0 132 -3 129 140 129 108 0 120 -2 130 -19z m1877 -7 c103 -50 124 -226 36 -306 -28 -26 -88 -48 -128 -48 -40 0 -100 22 -129 48 -50 45 -69 141 -41 210 45 107 154 147 262 96z m-482 -243 c65 -29 115 -104 115 -171 0 -65 -58 -152 -117 -176 -71 -30 -177 -6 -221 50 -53 68 -55 171 -5 234 36 45 105 82 153 82 19 0 53 -9 75 -19z m-920 -705 c8 -13 13 -31 9 -40 -4 -10 -65 -46 -135 -82 -136 -68 -168 -73 -190 -32 -21 39 -1 58 125 118 136 66 168 72 191 36z m489 8 c21 -20 20 -47 -1 -67 -10 -8 -71 -41 -136 -73 -113 -55 -120 -57 -145 -43 -20 11 -27 23 -27 44 0 28 8 34 120 92 124 64 163 74 189 47z m984 -207 c97 -175 112 -217 80 -217 -16 0 -231 387 -222 401 16 27 46 -11 142 -184z m-143 -78 c95 -169 105 -193 92 -206 -13 -13 -17 -11 -34 14 -33 48 -203 358 -203 371 0 7 9 12 19 12 14 0 46 -48 126 -191z m-151 -78 c58 -104 106 -193 106 -199 0 -23 -30 -20 -48 6 -45 66 -203 363 -197 372 17 27 42 -5 139 -179z m-140 -73 c58 -105 106 -197 106 -205 0 -7 -9 -13 -19 -13 -27 0 -236 377 -219 397 6 7 14 13 18 13 4 0 55 -86 114 -192z m-140 -87 c58 -104 106 -194 106 -199 0 -18 -28 -21 -43 -4 -21 25 -207 366 -207 380 0 7 9 12 19 12 14 0 45 -47 125 -189z m-142 -84 c94 -170 105 -194 92 -207 -14 -13 -17 -13 -29 4 -31 41 -205 364 -205 380 0 9 8 16 18 16 12 0 49 -58 124 -193z"/>
+            <path d="M1750 3630 l0 -750 815 0 815 0 0 750 0 750 -815 0 -815 0 0 -750z m1530 0 l0 -640 -715 0 -715 0 0 640 0 640 715 0 715 0 0 -640z"/>
+            <path d="M1495 3908 c-58 -33 -41 -108 25 -108 34 0 60 23 60 54 0 45 -47 75 -85 54z"/>
+          </g>
+        </svg>
+      </div>
+      <div class="game-header-container">
+        <h3 class="game-save-name">{{ gameSave.name }}</h3>
+        <div class="game-badge" [style.background-color]="getGameColor(gameSave.game)">
+          {{ gameSave.game }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pokemon Team Row -->
+  <div class="pokemon-team">
+    <div
+      *ngFor="let pokemon of gameSave.team; trackBy: trackByPokemon"
+      class="pokemon-slot"
+      [title]="pokemon.name"
+    >
+      <img
+        [ngSrc]="getPokemonImageUrl(pokemon.dexNumber)"
+        [alt]="pokemon.name"
+        class="pokemon-image"
+        (error)="onImageError($event)"
+        loading="lazy"
+        width="48"
+        height="48"/>
+      <span class="pokemon-name">{{ pokemon.name }}</span>
+    </div>
+
+    <!-- Empty slots if team has less than 6 Pokemon -->
+    <div
+      *ngFor="let empty of getEmptySlots(); trackBy: trackByIndex"
+      class="pokemon-slot empty-slot"
+    >
+      <div class="empty-pokeball">
+        <span>?</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer with timestamp -->
+  <div class="card-footer">
+    <div class="timestamp">
+      <span class="timestamp-label">Last played:</span>
+      <span class="timestamp-value">{{ formatDate(gameSave.updatedAt) }}</span>
+    </div>
+  </div>
+</div>

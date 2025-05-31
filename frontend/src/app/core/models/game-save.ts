@@ -3,8 +3,8 @@ export interface GameSave {
   game: string;
   name: string;
   team: GamePokemon[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface GamePokemon {

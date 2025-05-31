@@ -1,0 +1,11 @@
+<app-page-layout>
+  <div class="game-saves-container">
+    <h1>My Game Saves</h1>
+    <div class="saves-grid">
+      <app-game-save-card
+        *ngFor="let save of gameSaves$ | async; trackBy: trackBySave"
+        [gameSave]="save">
+      </app-game-save-card>
+    </div>
+  </div>
+</app-page-layout>
