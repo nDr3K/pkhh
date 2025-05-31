@@ -79,7 +79,6 @@ export class CallbackComponent implements OnInit {
   private handleSuccessfulAuth(user: UserProfile): void {
     // Store user data in state management
     this.userStateService.setUser(user);
-    console.log('User authenticated:', user);
     this.router.navigate(['/dashboard']).then();
   }
 }

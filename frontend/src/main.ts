@@ -5,8 +5,9 @@ import { enableProdMode } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { AppComponent } from "./app/app.component";
 import { provideRouter } from "@angular/router";
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { ROUTES } from "./app/routes";
+import { loadingInterceptor } from "./app/core/interceptors/loading.interceptor";
 
 
 if (environment.production) {
@@ -16,7 +17,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(ROUTES),
-    provideHttpClient(),
-    provideAuth0(environment.auth0)
+    provideHttpClient(withInterceptors([loadingInterceptor])),
+    provideAuth0(environment.auth0),
   ]
 }).then();
