@@ -75,7 +75,7 @@
 
         public static class Saves
         {
-            public const string Root = Users.ById + "/saves";
+            public const string Root = Base + "/saves";
             public const string ById = Root + "/{saveId}";
 
             public const string Pokemon = ById + "/pokemon";

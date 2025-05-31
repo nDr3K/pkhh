@@ -26,10 +26,11 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<PagedResponse<IEnumerable<SaveDto>>>> GetAll([FromRoute] int userId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<PagedResponse<SaveDto>>> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var (saves, totalCount) = await _saveService.GetAllAsync(userId, pageNumber, pageSize);
-            _logger.LogInformation("Retrieved {Count} saves for User with ID {UserId}", saves.Count(), userId);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var saves = await _saveService.GetAllAsync(userId, pageNumber, pageSize);
+            _logger.LogInformation("Retrieved {Count} saves for User with ID {UserId}", saves.TotalCount, userId);
             return Ok(saves);
         }
 
