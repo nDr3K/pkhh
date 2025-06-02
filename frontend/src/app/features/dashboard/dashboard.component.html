@@ -1,6 +1,14 @@
 <app-page-layout>
   <div class="game-saves-container">
-    <h1>My Game Saves</h1>
+    <div class="saves-header">
+      <h1>My Game Saves</h1>
+      <button
+        (click)="openUploadModal()"
+        class="button button--primary button--compact"
+      >
+        Upload New Save File
+      </button>
+    </div>
     <div class="saves-grid">
       <app-game-save-card
         *ngFor="let save of gameSaves$ | async; trackBy: trackBySave"
@@ -9,3 +17,9 @@
     </div>
   </div>
 </app-page-layout>
+
+<app-save-file-modal
+  [isVisible]="isModalVisible"
+  (closeEvent)="onModalClose()"
+  (uploadSuccess)="onUploadSuccess($event)"
+></app-save-file-modal>

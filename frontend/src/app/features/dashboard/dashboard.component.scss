@@ -11,6 +11,12 @@
   padding-left: 5rem;
 }
 
+.saves-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .saves-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
