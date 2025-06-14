@@ -69,7 +69,7 @@ namespace PokeSaveRomManager.Api.Saves.Services
 
                 // Determine ID to use for Pokémon instance association
                 var id = await _saveServiceHandler.GetUserIdByAuthId(userId);
-                var currentSave = await _repository.Create(pokemonData.ToDomain(id, save.Metadata));
+                var currentSave = await _repository.Create(saveData.PlayerData.ToDomain(id, save.Metadata));
                 _logger.LogInformation("Created new save for user {UserId}", userId);
 
                 // Process Pokemon data and associate with team/boxes

@@ -1,6 +1,7 @@
 ﻿using PokeSaveRomManager.Api.Saves.DTOs;
 using PokeSaveRomManager.Api.Saves.Models;
 using PokeSaveRomManager.Data.Domain;
+using PokeSaveRomManager.Parser.Core.Models.Data;
 
 namespace PokeSaveRomManager.Api.Saves.Mapper
 {
@@ -40,6 +41,12 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             {
                 Id = save.Id,
                 Game = save.Game.Name,
+                Description = save.Description,
+                Tags = save.Tags?.Split(',').Select(t => t.Trim()).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray() ?? Array.Empty<string>(),
+                PlayTime = save.PlayTime,
+                Badges = save.Badges.ToListBadges(),
+                IsFavorite = save.IsFavorite,
+                PlayerName = save.PlayerName,
                 Team = save.Party.Members.Select(m => m.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
                 Boxes = save.Boxes.SelectMany(b => b.Slots).Select(s => s.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
                 CreatedAt = save.CreatedAt,
@@ -74,13 +81,19 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
 
         // SaveFile
         #region SaveFile
-        public static Save ToDomain(this SaveFileData saveFileData, int userId, SaveFileDto saveFileDto)
+        public static Save ToDomain(this PlayerData playerData, int userId, SaveFileDto saveFileDto)
         {
             var save = new Save
             {
                 UserId = userId,
                 GameId = saveFileDto.GameId,
                 Name = saveFileDto.Name,
+                Description = saveFileDto.Description,
+                Tags = saveFileDto.Tags != null ? string.Join(",", saveFileDto.Tags) : string.Empty,
+                PlayTime = playerData.GameTime.ToString(),
+                Badges = playerData.Badges.ToByteBadges(),
+                IsFavorite = false,
+                PlayerName = playerData.Name,
                 Boxes = new List<SaveBox>(),
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -108,6 +121,45 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 SaveId = saveId,
                 Slots = new List<SaveBoxSlot>()
             };
+        }
+
+        private static Badges ToByteBadges(this List<Badge> badges)
+        {
+            var badge = new Badges();
+            foreach (var b in badges)
+            {
+                switch(b.Index)
+                {
+                    case 1: badge |= Badges.Badge1; break;
+                    case 2: badge |= Badges.Badge2; break;
+                    case 3: badge |= Badges.Badge3; break;
+                    case 4: badge |= Badges.Badge4; break;
+                    case 5: badge |= Badges.Badge5; break;
+                    case 6: badge |= Badges.Badge6; break;
+                    case 7: badge |= Badges.Badge7; break;
+                    case 8: badge |= Badges.Badge8; break;
+                    default: throw new ArgumentOutOfRangeException(nameof(b.Index), $"Invalid badge index: {b.Index}");
+                }
+            }
+            return badge;
+        }
+
+        public static int[] ToListBadges(this Badges badgeFlags)
+        {
+            var badges = new List<int>();
+
+            foreach (Badges badge in Enum.GetValues(typeof(Badges)))
+            {
+                if (badge == Badges.None) continue;
+
+                if (badgeFlags.HasFlag(badge))
+                {
+                    int index = (int)Math.Log((byte)badge, 2) + 1;
+                    badges.Add(index);
+                }
+            }
+
+            return badges.ToArray();
         }
         #endregion
     }

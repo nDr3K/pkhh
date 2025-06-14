@@ -1,4 +1,6 @@
-﻿namespace PokeSaveRomManager.Api.Saves.DTOs
+﻿using PokeSaveRomManager.Data.Domain;
+
+namespace PokeSaveRomManager.Api.Saves.DTOs
 {
     public class SaveDto
     {
@@ -20,7 +22,13 @@
     public class SaveDetailDto
     {
         public int Id { get; set; }
-        public string Game { get; set; }
+        public string Game { get; set; } // Game name
+        public string Description { get; set; }
+        public string[] Tags { get; set; }
+        public string PlayTime { get; set; }
+        public int[] Badges { get; set; } // List of owned badges
+        public bool IsFavorite { get; set; }
+        public string PlayerName { get; set; }
         public SaveDetailDtoPokemon[] Team { get; set; } = [];
         public SaveDetailDtoPokemon[] Boxes { get; set; } = [];
         public DateTime CreatedAt { get; set; }

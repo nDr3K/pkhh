@@ -55,7 +55,7 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> CreateSaveFile([FromForm] SaveFileUploadDto saveFileUploadDto)
+        public async Task<ActionResult<SaveDetailDto>> CreateSaveFile([FromForm] SaveFileUploadDto saveFileUploadDto)
         {
             try
             {
@@ -71,14 +71,14 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
                     return Unauthorized("User ID not found in token");
                 }
 
-                await _saveService.Create(userId, saveFileUploadDto);
+                var save = await _saveService.Create(userId, saveFileUploadDto);
 
-                return Ok(new { message = "ROM file uploaded successfully." });
+                return Ok(save);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing ROM upload");
-                return StatusCode(500, "An error occurred while processing the ROM file.");
+                _logger.LogError(ex, "Error processing Save upload");
+                return StatusCode(500, "An error occurred while processing the Save file.");
             }
         }
 
@@ -88,7 +88,7 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UploadSaveFile(int id, [FromForm] SaveFileUploadDto saveFileUploadDto)
+        public async Task<ActionResult<SaveDetailDto>> UploadSaveFile(int id, [FromForm] SaveFileUploadDto saveFileUploadDto)
         {
             try
             {
@@ -104,14 +104,14 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
                     return Unauthorized("User ID not found in token");
                 }
 
-                await _saveService.Update(userId, id, saveFileUploadDto);
+                var save = await _saveService.Update(userId, id, saveFileUploadDto);
 
-                return Ok(new { message = "ROM file uploaded successfully." });
+                return Ok(save);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing ROM upload");
-                return StatusCode(500, "An error occurred while processing the ROM file.");
+                _logger.LogError(ex, "Error processing Save upload");
+                return StatusCode(500, "An error occurred while processing the Save file.");
             }
         }
 
@@ -130,12 +130,12 @@ namespace PokeSaveRomManager.Api.Saves.Controllers.V1
                     return Unauthorized("User ID not found in token");
                 }
                 await _saveService.Delete(userId, id);
-                return Ok(new { message = "ROM file deleted successfully." });
+                return Ok(new { message = "Save file deleted successfully." });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting ROM file");
-                return StatusCode(500, "An error occurred while deleting the ROM file.");
+                _logger.LogError(ex, "Error deleting Save file");
+                return StatusCode(500, "An error occurred while deleting the Save file.");
             }
         }
     }

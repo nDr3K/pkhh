@@ -17,6 +17,12 @@ namespace PokeSaveRomManager.Data.Domain
 
         [Required]
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string Tags { get; set; } // Comma-separated tags for easy searching
+        public string PlayTime { get; set; }
+        public Badges Badges { get; set; } // Stored in a byte
+        public bool IsFavorite { get; set; }
+        public string PlayerName { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

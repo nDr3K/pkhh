@@ -119,6 +119,9 @@ namespace PokeSaveRomManager.Data
 
             // Cascade delete for related entities of Save
             modelBuilder.Entity<Save>()
+			   .Property(s => s.Badges)
+			   .HasConversion<byte>();
+            modelBuilder.Entity<Save>()
                 .HasMany(s => s.Boxes)
                 .WithOne(b => b.Save)
                 .HasForeignKey(b => b.SaveId)
