@@ -9,6 +9,7 @@ using PokeSaveRomManager.Api.Users.Repositories;
 using PokeSaveRomManager.Data.Domain;
 using PokeSaveRomManager.Parser.Core.Models;
 using PokeSaveRomManager.Parser.Core.Models.Data;
+using BoxData = PokeSaveRomManager.Api.Saves.Models.BoxData;
 
 namespace PokeSaveRomManager.Api.Saves.Services.Handler
 {
@@ -76,9 +77,12 @@ namespace PokeSaveRomManager.Api.Saves.Services.Handler
             {
                 Party = saveData.Party.Select(p => CreatePokemonData(p, pokemons, moves)).ToList(),
                 Boxes = saveData.Boxes
-                    .SelectMany(b => b.Pokemon)
-                    .Select(p => CreatePokemonData(p, pokemons, moves))
-                    .ToList()
+                    .Select(b => new BoxData()
+                    {
+                        Name = b.Name,
+                        Capacity = b.MaxPokemonCount,
+                        Slots = b.Pokemon.Select(p => CreatePokemonData(p, pokemons, moves)).ToList()
+                    }).ToList(),
             };
         }
 

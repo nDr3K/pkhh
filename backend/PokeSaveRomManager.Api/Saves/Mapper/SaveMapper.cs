@@ -1,7 +1,7 @@
 ﻿using PokeSaveRomManager.Api.Saves.DTOs;
-using PokeSaveRomManager.Api.Saves.Models;
 using PokeSaveRomManager.Data.Domain;
 using PokeSaveRomManager.Parser.Core.Models.Data;
+using BoxData = PokeSaveRomManager.Api.Saves.Models.BoxData;
 
 namespace PokeSaveRomManager.Api.Saves.Mapper
 {
@@ -45,10 +45,23 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Tags = save.Tags?.Split(',').Select(t => t.Trim()).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray() ?? Array.Empty<string>(),
                 PlayTime = save.PlayTime,
                 Badges = save.Badges.ToListBadges(),
+                PokemonSeen = save.PokemonSeen,
+                PokemonCaught = save.PokemonCaught,
+                PokemonTotal = save.PokemonTotal,
                 IsFavorite = save.IsFavorite,
                 PlayerName = save.PlayerName,
                 Team = save.Party.Members.Select(m => m.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
-                Boxes = save.Boxes.SelectMany(b => b.Slots).Select(s => s.PokemonInstance.ToSaveDetailDtoPokemon()).ToArray(),
+                Boxes = save.Boxes.Select(box => new SaveDetailDtoBox
+                {
+                    Id = box.Id,
+                    Name = box.Name,
+                    Capacity = box.Capacity,
+                    Count = box.Count,
+                    Pokemons = box.Slots
+                        .OrderBy(s => s.SlotNumber)
+                        .Select(s => s.PokemonInstance.ToSaveDetailDtoPokemon())
+                        .ToArray()
+                }).ToArray(),
                 CreatedAt = save.CreatedAt,
                 UpdatedAt = save.UpdatedAt
             };
@@ -83,7 +96,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
         #region SaveFile
         public static Save ToDomain(this PlayerData playerData, int userId, SaveFileDto saveFileDto)
         {
-            var save = new Save
+            return new Save
             {
                 UserId = userId,
                 GameId = saveFileDto.GameId,
@@ -92,33 +105,29 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Tags = saveFileDto.Tags != null ? string.Join(",", saveFileDto.Tags) : string.Empty,
                 PlayTime = playerData.GameTime.ToString(),
                 Badges = playerData.Badges.ToByteBadges(),
+                PokemonSeen = playerData.Pokedex.Seen,
+                PokemonCaught = playerData.Pokedex.Owned,
+                PokemonTotal = playerData.Pokedex.Total,
                 IsFavorite = false,
                 PlayerName = playerData.Name,
+                Party = new SaveTeam
+                {
+                    Members = new List<SaveTeamMember>()
+                },
                 Boxes = new List<SaveBox>(),
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
-
-            var party = new SaveTeam
-            {
-                Members = new List<SaveTeamMember>()
-            };
-
-            save.Party = party;
-
-            var box = CreateSaveBox(save.Id);
-
-            save.Boxes.Add(box);
-
-            return save;
         }
 
-        public static SaveBox CreateSaveBox(int saveId)
+        public static SaveBox CreateSaveBox(int saveId, BoxData boxData)
         {
             return new SaveBox
             {
                 Name = "Box", // Default name,
                 SaveId = saveId,
+                Capacity = boxData.Capacity,
+                Count = boxData.Slots.Count,
                 Slots = new List<SaveBoxSlot>()
             };
         }

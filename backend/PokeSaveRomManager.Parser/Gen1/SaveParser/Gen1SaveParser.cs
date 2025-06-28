@@ -17,9 +17,15 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
         private const int PLAYER_NAME_OFFSET = 0x2598;
         private const int PLAYER_NAME_LENGTH = 11;
 
+        // Party
         private const int PARTY_COUNT_OFFSET = 0x2F2C;
         private const int PARTY_SPECIES_OFFSET = 0x2F2D;
         private const int PARTY_DATA_OFFSET = 0x2F34;
+
+        // Pokedex
+        private const int OWNED_OFFSET = 0x25B6;
+        private const int SEEN_OFFSET = 0x25A3;
+        private const int NUM_POKEMON = 151;
 
         private const int BADGE_DATA_OFFSET = 0x2602;
 
@@ -31,13 +37,10 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
         private const int CURRENT_BOX_NUM_OFFSET = 0x284C;
         private const int CURRENT_BOX_OFFSET = 0x30C0;
         private const int BOX_1_OFFSET = 0x4000;
+        private const int BOX_6_OFFSET = 0x6000;
         private const int BOX_SIZE = 0x462;
         private const int NUM_BOXES = 12;
         private const int BOX_CAPACITY = 20;
-
-        // Pokemon data offsets
-        private const int POKEDEX_POKEMON_OWNED_OFFSET = 0x25B6;
-        private const int POKEDEX_POKEMON_SEEN_OFFSET = 0x25A3;
 
         // Magic values for save file validation
         private const byte CHECKSUM_INIT = 0xFF;
@@ -73,6 +76,7 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
                 saveData.PlayerData.Name = ExtractPlayerName(reader, data);
                 saveData.PlayerData.Badges = ExtractBadges(data);
                 saveData.PlayerData.GameTime = ExtractGameTime(data);
+                saveData.PlayerData.Pokedex = ExtractPokedex(data);
                 saveData.Party = ExtractParty(data);
                 saveData.Boxes = ExtractBoxes(data);
 
@@ -122,7 +126,7 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
             byte[] nameBytes = new byte[PLAYER_NAME_LENGTH];
             Array.Copy(data, PLAYER_NAME_OFFSET, nameBytes, 0, PLAYER_NAME_LENGTH);
 
-            return reader.ReadString(nameBytes).Trim();
+            return reader.ReadString(nameBytes).Trim().Replace("?", "");
         }
 
         private List<Badge> ExtractBadges(byte[] data)
@@ -208,11 +212,14 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
                 }
                 else
                 {
-                    boxOffset = BOX_1_OFFSET + (boxIdx * BOX_SIZE); // Other boxes are in SRAM
+                    int bankOffset = (boxIdx < 6 ? BOX_1_OFFSET : BOX_6_OFFSET); // Boxes 1-6 are in the second bank, 7-12 in the third bank
+                    int boxInBankIdx = boxIdx % 6;
+                    boxOffset = bankOffset + (boxInBankIdx * BOX_SIZE);
                 }
 
                 int boxCount = data[boxOffset];
-                if (boxCount > 20) boxCount = 20; // Safety check
+                if (boxCount > 20) boxCount = BOX_CAPACITY; // Safety check
+
                 box.PokemonCount = boxCount;
 
                 for (int i = 0; i < boxCount; i++)
@@ -231,6 +238,36 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
             }
 
             return boxes;
+        }
+
+        private Pokedex ExtractPokedex(byte[] data)
+        {
+
+            int owned = 0;
+            int seen = 0;
+
+            for (int i = 0; i <= NUM_POKEMON; i++)
+            {
+                int byteIndex = i / 8;
+                int bitIndex = i % 8;
+                byte ownedByte = data[OWNED_OFFSET + byteIndex];
+                byte seenByte = data[SEEN_OFFSET + byteIndex];
+
+                if ((ownedByte & (1 << bitIndex)) != 0)
+                    owned++;
+
+                if ((seenByte & (1 << bitIndex)) != 0)
+                    seen++;
+            }
+
+            var pokedex = new Pokedex
+            {
+                Seen = seen,
+                Owned = owned,
+                Total = NUM_POKEMON,
+            };
+
+            return pokedex;
         }
     }
 }

@@ -21,6 +21,9 @@ namespace PokeSaveRomManager.Data.Domain
         public string Tags { get; set; } // Comma-separated tags for easy searching
         public string PlayTime { get; set; }
         public Badges Badges { get; set; } // Stored in a byte
+        public int PokemonSeen { get; set; }
+        public int PokemonCaught { get; set; }
+        public int PokemonTotal { get; set; }
         public bool IsFavorite { get; set; }
         public string PlayerName { get; set; }
 

@@ -27,10 +27,13 @@ namespace PokeSaveRomManager.Api.Saves.DTOs
         public string[] Tags { get; set; }
         public string PlayTime { get; set; }
         public int[] Badges { get; set; } // List of owned badges
+        public int PokemonSeen { get; set; }
+        public int PokemonCaught { get; set; }
+        public int PokemonTotal { get; set; }
         public bool IsFavorite { get; set; }
         public string PlayerName { get; set; }
         public SaveDetailDtoPokemon[] Team { get; set; } = [];
-        public SaveDetailDtoPokemon[] Boxes { get; set; } = [];
+        public SaveDetailDtoBox[] Boxes { get; set; } = [];
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -49,5 +52,14 @@ namespace PokeSaveRomManager.Api.Saves.DTOs
         public string Move2 { get; set; }
         public string Move3 { get; set; }
         public string Move4 { get; set; }
+    }
+
+    public class SaveDetailDtoBox
+    {
+        public int Id { get; set; } // SaveBoxId
+        public string Name { get; set; }
+        public int Capacity { get; set; }
+        public int Count { get; set; }
+        public SaveDetailDtoPokemon[] Pokemons { get; set; } = [];
     }
 }

@@ -10,6 +10,8 @@ namespace PokeSaveRomManager.Data.Domain
         public int Id { get; set; }
         public int SaveId { get; set; }
         public string Name { get; set; }
+        public int Capacity { get; set; }
+        public int Count { get; set; }
 
         // Navigation properties
         [ForeignKey("SaveId")]

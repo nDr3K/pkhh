@@ -71,6 +71,9 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                     Game = s.Game,
                     Name = s.Name,
                     Description = s.Description,
+                    PokemonSeen = s.PokemonSeen,
+                    PokemonCaught = s.PokemonCaught,
+                    PokemonTotal = s.PokemonTotal,
                     Tags = s.Tags,
                     PlayTime = s.PlayTime,
                     Badges = s.Badges,
@@ -86,6 +89,7 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                             Id = m.Id,
                             PokemonInstance = new PokemonInstance
                             {
+                                Id = m.PokemonInstance.Id,
                                 Pokemon = new Pokemon
                                 {
                                     Name = m.PokemonInstance.Pokemon.Name,
@@ -123,6 +127,8 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                     {
                         Id = b.Id,
                         Name = b.Name,
+                        Capacity = b.Capacity,
+                        Count = b.Count,
                         Slots = b.Slots.Select(slot => new SaveBoxSlot
                         {
                             Id = slot.Id,

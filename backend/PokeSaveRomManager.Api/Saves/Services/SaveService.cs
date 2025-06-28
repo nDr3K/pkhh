@@ -7,6 +7,8 @@ using PokeSaveRomManager.Parser.Core.Models;
 using PokeSaveRomManager.Parser.Services;
 using PokeSaveRomManager.Data.Domain;
 using PokeSaveRomManager.Api.Shared.Models;
+using PokeSaveRomManager.Parser.Core.Models.Data;
+using BoxData = PokeSaveRomManager.Api.Saves.Models.BoxData;
 
 namespace PokeSaveRomManager.Api.Saves.Services
 {
@@ -174,27 +176,31 @@ namespace PokeSaveRomManager.Api.Saves.Services
             var boxPokemonList = pokemonData.Boxes.ToList();
             _logger.LogInformation("Processing {Count} box Pokemon for save ID {SaveId}", boxPokemonList.Count, save.Id);
 
-            var box = await EnsureBoxExists(save);
-            var boxInstances = await _saveServiceHandler.SavePokemonInstances(boxPokemonList, save.Id);
-            var boxInstanceIds = boxInstances.Select(p => p.Id).ToList();
-
-            foreach (var id in boxInstanceIds)
+            foreach (var boxData in boxPokemonList)
             {
-                box.Slots.Add(new SaveBoxSlot
+                var box = await EnsureBoxExists(save, boxData);
+                var boxInstances = await _saveServiceHandler.SavePokemonInstances(boxData.Slots, save.Id);
+                var boxInstanceIds = boxInstances.Select(p => p.Id).ToList();
+
+
+                foreach (var pokemon in boxInstanceIds.Select((id, index) => new { id, index }))
                 {
-                    PokemonInstanceId = id,
-                    BoxId = box.Id,
-                    SlotNumber = 0, // Not used for now
-                });
+                    box.Slots.Add(new SaveBoxSlot
+                    {
+                        PokemonInstanceId = pokemon.id,
+                        BoxId = box.Id,
+                        SlotNumber = pokemon.index + 1,
+                    });
+                }
             }
         }
 
-        private async Task<SaveBox> EnsureBoxExists(Save save)
+        private async Task<SaveBox> EnsureBoxExists(Save save, BoxData boxData)
         {
             var existingBox = save.Boxes.FirstOrDefault();
             if (existingBox == null)
             {
-                var box = SaveMapper.CreateSaveBox(save.Id);
+                var box = SaveMapper.CreateSaveBox(save.Id, boxData);
                 save.Boxes.Add(box);
                 return await _saveServiceHandler.CreateBox(box);
             }

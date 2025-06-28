@@ -3,6 +3,6 @@
     public class SaveFileData
     {
         public List<PokemonData> Party { get; set; }
-        public List<PokemonData> Boxes { get; set; }
+        public List<BoxData> Boxes { get; set; }
     }
 }
