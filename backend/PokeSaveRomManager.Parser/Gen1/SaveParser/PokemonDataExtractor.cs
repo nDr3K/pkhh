@@ -1,4 +1,5 @@
 using PokeSaveRomManager.Parser.Core.Models.Data;
+using PokeSaveRomManager.Parser.Core.Utils;
 
 namespace PokeSaveRomManager.Parser.Gen1.SaveParser
 {
@@ -7,13 +8,13 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
         public PokemonSaveData ExtractPokemon(byte[] data, int offset, bool isFromParty)
         {
             // Read IVs first for HPIV calculation
-            byte iv1 = data[offset + 26]; // Attack/Defense IV
-            byte iv2 = data[offset + 27]; // Speed/Special IV
+            byte iv1 = data[offset + 27]; // Attack/Defense IV
+            byte iv2 = data[offset + 28]; // Speed/Special IV
 
             return new PokemonSaveData
             {
                 PokemonId = data[offset],                                // Species ID
-                CurrentHp = BitConverter.ToUInt16(data, offset + 1),
+                CurrentHp = ByteReader.ReadUInt16BE(data, offset + 1),
                 Level = isFromParty ? data[offset + 0x21] : data[offset + 3],
                 Status = data[offset + 4],
                 Type1 = data[offset + 5],
@@ -23,33 +24,31 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
                 Move1 = new PokemonMoveData
                 {
                     MoveId = data[offset + 8],
-                    PP = data[offset + 28] & 0x3F
+                    PP = data[offset + 29] & 0x3F
                 },
                 Move2 = new PokemonMoveData
                 {
                     MoveId = data[offset + 9],
-                    PP = data[offset + 29] & 0x3F
+                    PP = data[offset + 30] & 0x3F
                 },
                 Move3 = new PokemonMoveData
                 {
                     MoveId = data[offset + 10],
-                    PP = data[offset + 30] & 0x3F
+                    PP = data[offset + 31] & 0x3F
                 },
                 Move4 = new PokemonMoveData
                 {
                     MoveId = data[offset + 11],
-                    PP = data[offset + 31] & 0x3F
+                    PP = data[offset + 32] & 0x3F
                 },
 
-                Experience = (data[offset + 13] << 16) |
-                             (data[offset + 14] << 8) |
-                             data[offset + 15],
+                Experience = (int)ByteReader.ReadUInt24BE(data, offset + 14),
 
-                HPEV = BitConverter.ToUInt16(data, offset + 16),
-                AttackEV = BitConverter.ToUInt16(data, offset + 18),
-                DefenseEV = BitConverter.ToUInt16(data, offset + 20),
-                SpeedEV = BitConverter.ToUInt16(data, offset + 22),
-                SpecialEV = BitConverter.ToUInt16(data, offset + 24),
+                HPEV = ByteReader.ReadUInt16BE(data, offset + 17),
+                AttackEV = ByteReader.ReadUInt16BE(data, offset + 19),
+                DefenseEV = ByteReader.ReadUInt16BE(data, offset + 21),
+                SpeedEV = ByteReader.ReadUInt16BE(data, offset + 23),
+                SpecialEV = ByteReader.ReadUInt16BE(data, offset + 25),
                 SpecialAttackEV = null,
                 SpecialDefenseEV = null,
 
@@ -66,11 +65,11 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
                 SpecialAttackIV = null,
                 SpecialDefenseIV = null,
 
-                MaxHp = isFromParty ? BitConverter.ToUInt16(data, offset + 33) : null,
-                Attack = isFromParty ? BitConverter.ToUInt16(data, offset + 35) : null,
-                Defense = isFromParty ? BitConverter.ToUInt16(data, offset + 37) : null,
-                Speed = isFromParty ? BitConverter.ToUInt16(data, offset + 39) : null,
-                Special = isFromParty ? BitConverter.ToUInt16(data, offset + 41) : null,
+                MaxHp = isFromParty ? ByteReader.ReadUInt16BE(data, offset + 34) : null,
+                Attack = isFromParty ? ByteReader.ReadUInt16BE(data, offset + 36) : null,
+                Defense = isFromParty ? ByteReader.ReadUInt16BE(data, offset + 38) : null,
+                Speed = isFromParty ? ByteReader.ReadUInt16BE(data, offset + 40) : null,
+                Special = isFromParty ? ByteReader.ReadUInt16BE(data, offset + 42) : null,
                 SpecialAttack = null,
                 SpecialDefense = null
             };

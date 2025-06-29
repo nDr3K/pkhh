@@ -213,18 +213,19 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
                 else
                 {
                     int bankOffset = (boxIdx < 6 ? BOX_1_OFFSET : BOX_6_OFFSET); // Boxes 1-6 are in the second bank, 7-12 in the third bank
-                    int boxInBankIdx = boxIdx % 6;
+                    int boxInBankIdx = boxIdx < 6 ? boxIdx : boxIdx - 6;
                     boxOffset = bankOffset + (boxInBankIdx * BOX_SIZE);
                 }
 
                 int boxCount = data[boxOffset];
+
                 if (boxCount > 20) boxCount = BOX_CAPACITY; // Safety check
 
                 box.PokemonCount = boxCount;
 
                 for (int i = 0; i < boxCount; i++)
                 {
-                    int offset = boxOffset + 1 + 20 + (i * 33); // Box Pokemon structure is 33 bytes per Pokemon
+                    int offset = boxOffset + 2 + BOX_CAPACITY + (i * 33); // Box Pokemon structure is 33 bytes per Pokemon
 
                     var pokemon = _pokemonDataExtractor.ExtractPokemon(data, offset, false);
                     pokemon.PokemonId = data[boxOffset + 1 + i];

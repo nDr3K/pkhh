@@ -21,12 +21,14 @@ namespace PokeSaveRomManager.Parser.Core.Utils
         public ushort ReadUInt16LE(int offset) =>
             (ushort)(_data[offset] | (_data[offset + 1] << 8));
 
-        public ushort ReadUInt16BE(int offset) =>
-            (ushort)((_data[offset] << 8) | _data[offset + 1]);
+        public static ushort ReadUInt16BE(byte[] data, int offset) =>
+            (ushort)((data[offset] << 8) | data[offset + 1]);
+        public static uint ReadUInt24BE(byte[] data, int offset) =>
+            (uint)((data[offset] << 16) | (data[offset + 1] << 8) | data[offset + 2]);
 
-        public uint ReadUInt32LE(int offset) =>
-            (uint)(_data[offset] | (_data[offset + 1] << 8) |
-                   (_data[offset + 2] << 16) | (_data[offset + 3] << 24));
+        public static uint ReadUInt32LE(byte[] data, int offset) =>
+            (uint)(data[offset] | (data[offset + 1] << 8) |
+                   (data[offset + 2] << 16) | (data[offset + 3] << 24));
 
         public byte[] Slice(int offset, int length)
         {
