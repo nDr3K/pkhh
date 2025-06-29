@@ -135,11 +135,17 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                             SlotNumber = slot.SlotNumber,
                             PokemonInstance = new PokemonInstance
                             {
-                                // Include nested details if needed, e.g.:
+                                Id = slot.PokemonInstance.Id,
                                 Pokemon = new Pokemon
                                 {
                                     Name = slot.PokemonInstance.Pokemon.Name,
                                     DexNumber = slot.PokemonInstance.Pokemon.DexNumber
+                                },
+                                Form = new PokemonForm
+                                {
+                                    Name = slot.PokemonInstance.Form.Name,
+                                    Type1 = slot.PokemonInstance.Form.Type1,
+                                    Type2 = slot.PokemonInstance.Form.Type2
                                 },
                                 Nature = slot.PokemonInstance.Nature,
                                 Ability = slot.PokemonInstance.Ability,

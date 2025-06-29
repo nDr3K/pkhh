@@ -178,6 +178,12 @@ namespace PokeSaveRomManager.Api.Saves.Services
 
             foreach (var boxData in boxPokemonList)
             {
+                if (boxData.Slots == null || !boxData.Slots.Any())
+                {
+                    _logger.LogWarning("Box {BoxName} has no slots to process", boxData.Name);
+                    continue;
+                }
+
                 var box = await EnsureBoxExists(save, boxData);
                 var boxInstances = await _saveServiceHandler.SavePokemonInstances(boxData.Slots, save.Id);
                 var boxInstanceIds = boxInstances.Select(p => p.Id).ToList();
@@ -197,7 +203,7 @@ namespace PokeSaveRomManager.Api.Saves.Services
 
         private async Task<SaveBox> EnsureBoxExists(Save save, BoxData boxData)
         {
-            var existingBox = save.Boxes.FirstOrDefault();
+            var existingBox = save.Boxes.FirstOrDefault(b => b.Name == boxData.Name);
             if (existingBox == null)
             {
                 var box = SaveMapper.CreateSaveBox(save.Id, boxData);
