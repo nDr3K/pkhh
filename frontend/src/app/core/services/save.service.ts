@@ -1,57 +1,28 @@
-import { inject, Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { AuthService } from "@auth0/auth0-angular";
+import { Injectable } from "@angular/core";
 import { environment } from "../../../environments/environment";
-import { catchError, Observable, switchMap } from "rxjs";
+import { Observable } from "rxjs";
 import { GameSave, GameSaveExtended } from "../models/game-save";
 import { PagedResponse } from "../models/paged-response";
 import { SaveFile } from "../models/save-file";
+import { BaseService } from "./base-service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SaveService {
-  private http = inject(HttpClient);
-  private auth = inject(AuthService);
+export class SaveService extends BaseService {
   private apiUrl = environment.api.serverUrl;
 
   getSaves(pageNumber: number = 1, pageSize: number = 10): Observable<PagedResponse<GameSave>> {
-    return this.auth.getAccessTokenSilently().pipe(
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        });
-
-        return this.http.get<PagedResponse<GameSave>>(
-          `${this.apiUrl}/saves?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-          { headers }
-        );
-      }),
-      catchError(error => {
-        console.error('Failed to retrieve saves:', error);
-        throw error;
-      })
+    return this.makeAuthenticatedRequest<PagedResponse<GameSave>>(
+      'GET',
+      `${this.apiUrl}/saves?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 
   getSaveFileById(id: string): Observable<GameSaveExtended> {
-    return this.auth.getAccessTokenSilently().pipe(
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        });
-
-        return this.http.get<GameSaveExtended>(
-          `${this.apiUrl}/saves/${id}`,
-          { headers }
-        );
-      }),
-      catchError(error => {
-        console.error('Failed to retrieve saves:', error);
-        throw error;
-      })
+    return this.makeAuthenticatedRequest<GameSaveExtended>(
+      'GET',
+      `${this.apiUrl}/saves/${id}`
     );
   }
 
@@ -60,18 +31,10 @@ export class SaveService {
     formData.append('SaveFile', file);
     formData.append('Metadata', JSON.stringify(metadata));
 
-    return this.auth.getAccessTokenSilently().pipe(
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-
-        return this.http.post<GameSaveExtended>(`${this.apiUrl}/saves`, formData, { headers });
-      }),
-      catchError(error => {
-        console.error('Failed to retrieve saves:', error);
-        throw error;
-      })
+    return this.makeAuthenticatedRequest<GameSaveExtended>(
+      'POST',
+      `${this.apiUrl}/saves`,
+      { body: formData }
     );
   }
 
@@ -80,38 +43,17 @@ export class SaveService {
     if (file) formData.append('SaveFile', file);
     if (metadata) formData.append('Metadata', JSON.stringify(metadata));
 
-    return this.auth.getAccessTokenSilently().pipe(
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        });
-
-        return this.http.put<GameSaveExtended>(`${this.apiUrl}/saves/${save.id}`, formData, { headers });
-      }),
-      catchError(error => {
-        console.error('Failed to retrieve saves:', error);
-        throw error;
-      })
+    return this.makeAuthenticatedRequest<GameSaveExtended>(
+      'PUT',
+      `${this.apiUrl}/saves/${save.id}`,
+      { body: formData }
     );
   }
 
   deleteSaveFile(id: string): Observable<void> {
-    return this.auth.getAccessTokenSilently().pipe(
-      switchMap(token => {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        });
-
-        return this.http.delete<void>(
-          `${this.apiUrl}/saves/${id}`,
-          { headers }
-        );
-      }),
-      catchError(error => {
-        console.error('Failed to retrieve saves:', error);
-        throw error;
-      })
+    return this.makeAuthenticatedRequest<void>(
+      'DELETE',
+      `${this.apiUrl}/saves/${id}`,
     );
   }
 }
