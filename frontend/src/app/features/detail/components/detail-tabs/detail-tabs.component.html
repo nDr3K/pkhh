@@ -1,0 +1,10 @@
+<div class="tabs">
+  <div class="tabs-list">
+    <div class="tabs-list-wrapper">
+      <button class="tab-trigger" [class.active]="activeTab === 'summary'" (click)="setActiveTab('summary')">Summary</button>
+      <button class="tab-trigger" [class.active]="activeTab === 'pokemon'" (click)="setActiveTab('pokemon')">Pokemon Team</button>
+      <button class="tab-trigger" [class.active]="activeTab === 'boxes'" (click)="setActiveTab('boxes')">Boxes</button>
+      <button class="tab-trigger" [class.active]="activeTab === 'progress'" (click)="setActiveTab('progress')">Game Progress</button>
+    </div>
+  </div>
+</div>

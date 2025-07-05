@@ -1,0 +1,91 @@
+
+@mixin text-muted {
+  color: var(--grey);
+}
+
+@mixin text-primary {
+  color: var(--dark-aluminium);
+}
+
+.tab-content {
+  margin-top: 1.6rem;
+}
+
+.progress-section {
+  margin-bottom: 2.4rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+  @include text-primary;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border: 1px solid var(--light-aluminium);
+  background: var(--light-aluminium);
+  color: var(--grey);
+
+  &.obtained {
+    background: var(--green);
+    color: var(--white);
+    border-color: var(--green);
+  }
+}
+
+.pokedex-section {
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--light-aluminium);
+}
+
+.pokedex-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+}
+
+.stat-card {
+  background: var(--light-aluminium);
+  border-radius: 0.8rem;
+  padding: 1.6rem;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 3.2rem;
+  font-weight: 700;
+  @include text-primary;
+}
+
+.stat-label {
+  font-size: 1.4rem;
+  @include text-muted;
+}
+
+.empty-state {
+  padding: 3.2rem;
+  text-align: center;
+
+  p {
+    @include text-muted;
+    font-size: 1.4rem;
+  }
+}

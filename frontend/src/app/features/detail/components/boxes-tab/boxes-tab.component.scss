@@ -1,0 +1,77 @@
+
+@mixin card-base {
+  background: var(--white);
+  border: 1px solid var(--light-aluminium);
+  border-radius: 0.8rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(var(--black-rgb), 0.1);
+}
+
+@mixin text-muted {
+  color: var(--grey);
+}
+
+@mixin text-primary {
+  color: var(--dark-aluminium);
+}
+
+.tab-content {
+  margin-top: 1.6rem;
+}
+
+.boxes-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.box-card {
+  @include card-base;
+  padding: 1.6rem;
+}
+
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.box-name {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 500;
+  font-size: 1.6rem;
+  @include text-primary;
+}
+
+.box-count {
+  font-size: 1.4rem;
+  @include text-muted;
+}
+
+.box-status {
+  font-size: 1.4rem;
+  @include text-muted;
+
+  &.empty {
+    color: var(--red);
+  }
+}
+
+.empty-state {
+  padding: 3.2rem;
+  text-align: center;
+
+  p {
+    @include text-muted;
+    font-size: 1.4rem;
+  }
+}

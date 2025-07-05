@@ -1,0 +1,21 @@
+<div class="card" *ngIf="gameSave">
+  <div class="card-header">
+    <h3 class="card-title">Actions</h3>
+  </div>
+  <div class="card-content actions-content">
+    <button class="button button--ghost full-width" (click)="handleUpdate()">
+      <i class="icon edit"></i>
+      Update Save File
+    </button>
+    <button class="button button--ghost full-width">
+      <i class="icon download"></i>
+      Download Save File
+    </button>
+    <button class="button button--destructive full-width"
+            (click)="handleDelete()"
+            [disabled]="isDeleting">
+      <i class="icon trash"></i>
+      {{ isDeleting ? 'Deleting...' : 'Delete Save File' }}
+    </button>
+  </div>
+</div>

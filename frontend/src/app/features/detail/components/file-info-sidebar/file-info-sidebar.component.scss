@@ -1,0 +1,58 @@
+
+@mixin card-base {
+  background: var(--white);
+  border: 1px solid var(--light-aluminium);
+  border-radius: 0.8rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(var(--black-rgb), 0.1);
+}
+
+@mixin text-muted {
+  color: var(--grey);
+}
+
+@mixin text-primary {
+  color: var(--dark-aluminium);
+}
+
+.card {
+  @include card-base;
+}
+
+.card-header {
+  padding: 2.4rem 2.4rem 0;
+}
+
+.card-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  @include text-primary;
+}
+
+.card-content {
+  padding: 2.4rem;
+}
+
+.file-info-card {
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--light-aluminium);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .info-label {
+    font-size: 1.4rem;
+    @include text-muted;
+  }
+
+  .info-value {
+    font-size: 1.4rem;
+    font-weight: 500;
+    @include text-primary;
+  }
+}

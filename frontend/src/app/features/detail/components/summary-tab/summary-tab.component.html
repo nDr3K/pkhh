@@ -1,0 +1,43 @@
+<div class="tab-content" *ngIf="gameSave">
+  <div class="summary-grid">
+    <div class="info-item">
+      <p class="info-label">
+        <i class="icon calendar"></i>
+        Created
+      </p>
+      <p class="info-value">{{ formatDate(gameSave.createdAt) }}</p>
+    </div>
+    <div class="info-item">
+      <p class="info-label">
+        <i class="icon clock"></i>
+        Play Time
+      </p>
+      <p class="info-value">{{ gameSave.playTime }}</p>
+    </div>
+    <div class="info-item">
+      <p class="info-label">
+        <i class="icon tag"></i>
+        Trainer Name
+      </p>
+      <p class="info-value">{{ gameSave.playerName }}</p>
+    </div>
+    <div class="info-item">
+      <p class="info-label">
+        <i class="icon file-text"></i>
+        Pokédex Completion
+      </p>
+      <div class="progress-bar-container">
+        <div
+          class="progress-bar-fill"
+          [ngStyle]="{ width: gameSave.pokemonCaught/gameSave.pokemonTotal * 100 + '%' }"
+        ></div>
+      </div>
+    </div>
+  </div>
+  <div class="description-section">
+    <h3 class="section-title">Description</h3>
+    <p class="description-text">
+      {{ gameSave.description || 'No description provided.' }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="card file-info-card" *ngIf="gameSave">
+  <div class="card-header">
+    <h3 class="card-title">File Information</h3>
+  </div>
+  <div class="card-content">
+    <div class="info-row">
+      <span class="info-label">Format</span>
+      &nbsp;
+      <span class="info-value">.sav</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Version</span>
+      &nbsp;
+      <span class="info-value">1.0.2</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Last Modified</span>
+      &nbsp;
+      <span class="info-value">{{ formatDate(gameSave.updatedAt) }}</span>
+    </div>
+  </div>
+</div>

@@ -8,207 +8,26 @@
           <!-- Main Content -->
           <div class="main-column">
             <div class="card">
-              <div class="card-header">
-                <div class="card-title-row">
-                  <span class="card-title">Save File Details</span>
-                  <span class="badge" [ngClass]="getBadgeVariant(gameSave.game)">
-                    {{ gameSave.game }}
-                  </span>
-                </div>
-                <p class="card-description">View detailed information about your save file</p>
-              </div>
+              <app-detail-header [gameSave]="gameSave"></app-detail-header>
               <div class="card-content">
-                <!-- Tabs -->
-                <div class="tabs">
-                  <div class="tabs-list">
-                    <div class="tabs-list-wrapper">
-                      <button class="tab-trigger" [class.active]="activeTab === 'summary'" (click)="setActiveTab('summary')">Summary</button>
-                      <button class="tab-trigger" [class.active]="activeTab === 'pokemon'" (click)="setActiveTab('pokemon')">Pokemon Team</button>
-                      <button class="tab-trigger" [class.active]="activeTab === 'boxes'" (click)="setActiveTab('boxes')">Boxes</button>
-                      <button class="tab-trigger" [class.active]="activeTab === 'progress'" (click)="setActiveTab('progress')">Game Progress</button>
-                    </div>
-                  </div>
-
-                  <!-- Summary Tab -->
-                  <div *ngIf="activeTab === 'summary'" class="tab-content">
-                    <div class="summary-grid">
-                      <div class="info-item">
-                        <p class="info-label">
-                          <i class="icon calendar"></i>
-                          Created
-                        </p>
-                        <p class="info-value">{{ formatDate(gameSave.createdAt) }}</p>
-                      </div>
-                      <div class="info-item">
-                        <p class="info-label">
-                          <i class="icon clock"></i>
-                          Play Time
-                        </p>
-                        <p class="info-value">{{ gameSave.playTime }}</p>
-                      </div>
-                      <div class="info-item">
-                        <p class="info-label">
-                          <i class="icon tag"></i>
-                          Trainer Name
-                        </p>
-                        <p class="info-value">{{ gameSave.playerName }}</p>
-                      </div>
-                      <div class="info-item">
-                        <p class="info-label">
-                          <i class="icon file-text"></i>
-                          Pokédex Completion
-                        </p>
-                        <div class="progress-bar-container">
-                          <div
-                            class="progress-bar-fill"
-                            [ngStyle]="{ width: gameSave.pokemonCaught/gameSave.pokemonTotal * 100 + '%' }"
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="description-section">
-                      <h3 class="section-title">Description</h3>
-                      <p class="description-text">
-                        {{ gameSave.description || 'No description provided.' }}
-                      </p>
-                    </div>
-                  </div>
-
-                  <!-- Pokemon Team Tab -->
-                  <div *ngIf="activeTab === 'pokemon'" class="tab-content">
-                    <div class="pokemon-grid" *ngIf="gameSave.team && gameSave.team.length > 0">
-                      <div class="pokemon-card" *ngFor="let pokemon of gameSave.team">
-                        <div class="pokemon-content">
-                          <div class="pokemon-avatar">
-                            <img [ngSrc]="getPokemonImageUrl(pokemon.dexNumber)"
-                                 [alt]="pokemon.name" class="pokemon-image"
-                                 width="48"
-                                 height="48">
-                          </div>
-                          <div class="pokemon-info">
-                            <h4 class="pokemon-name">{{ pokemon.name }}</h4>
-                            <p class="pokemon-level">Level {{ pokemon.level }}</p>
-                            <div class="pokemon-types">
-                              <span class="type-badge">
-                                {{ pokemon.type1 }}
-                              </span>
-                              <span class="type-badge" *ngIf="pokemon.type2 && pokemon.type2 !== pokemon.type1">
-                                {{ pokemon.type2 }}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div *ngIf="!gameSave.team || gameSave.team.length === 0" class="empty-state">
-                      <p>No Pokemon team data available.</p>
-                    </div>
-                  </div>
-
-                  <!-- Boxes Tab -->
-                  <div *ngIf="activeTab === 'boxes'" class="tab-content">
-                    <div class="boxes-grid" *ngIf="gameSave.boxes && gameSave.boxes.length > 0">
-                      <div class="box-card" *ngFor="let box of gameSave.boxes; let i = index">
-                        <div class="box-header">
-                          <h4 class="box-name">{{ box.name || 'Box ' + (i + 1) }}</h4>
-                          <span class="box-count">{{ box.count }}/{{box.capacity}}</span>
-                        </div>
-                        <div class="box-status" [class.empty]="!box.count">
-                          {{ !box.count ? 'Empty' : box.count + ' Pokemon' }}
-                        </div>
-                      </div>
-                    </div>
-                    <div *ngIf="!gameSave.boxes || gameSave.boxes.length === 0" class="empty-state">
-                      <p>No box data available.</p>
-                    </div>
-                  </div>
-
-                  <!-- Progress Tab -->
-                  <div *ngIf="activeTab === 'progress'" class="tab-content">
-                    <div class="progress-section">
-                      <h3 class="section-title">Badges</h3>
-                      <div class="badges-grid" *ngIf="gameSave.badges && gameSave.badges.length > 0">
-                        <span class="badge-item"
-                              *ngFor="let x of [1, 2, 3, 4, 5, 6, 7, 8]"
-                              [class.obtained]="gameSave.badges.includes(x)">
-                          Badge {{ x }}
-                        </span>
-                      </div>
-                      <div *ngIf="!gameSave.badges || gameSave.badges.length === 0" class="empty-state">
-                        <p>No badge data available.</p>
-                      </div>
-                    </div>
-                    <div class="pokedex-section">
-                      <h3 class="section-title">Pokedex</h3>
-                      <div class="pokedex-stats">
-                        <div class="stat-card">
-                          <div class="stat-number">{{ gameSave.pokemonCaught || 0 }}</div>
-                          <div class="stat-label">Pokemon Caught</div>
-                        </div>
-                        <div class="stat-card">
-                          <div class="stat-number">{{ gameSave.pokemonSeen || 0 }}</div>
-                          <div class="stat-label">Pokemon Seen</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <app-detail-tabs (tabChange)="setActiveTab($event)"></app-detail-tabs>
+                <app-summary-tab *ngIf="activeTab === 'summary'" [gameSave]="gameSave"></app-summary-tab>
+                <app-pokemon-tab *ngIf="activeTab === 'pokemon'" [gameSave]="gameSave"></app-pokemon-tab>
+                <app-boxes-tab *ngIf="activeTab === 'boxes'" [gameSave]="gameSave"></app-boxes-tab>
+                <app-progress-tab *ngIf="activeTab === 'progress'" [gameSave]="gameSave"></app-progress-tab>
               </div>
             </div>
           </div>
 
           <!-- Sidebar -->
           <div class="sidebar">
-            <!-- Actions Card -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Actions</h3>
-              </div>
-              <div class="card-content actions-content">
-<!--                <button class="button button-primary full-width" (click)="handleToggleFavorite()">-->
-<!--                  <i class="icon star" [class.filled]="gameSave.isFavorite"></i>-->
-<!--                  {{ gameSave.isFavorite ? 'Remove from Favorites' : 'Add to Favorites' }}-->
-<!--                </button>-->
-                <button class="button button--ghost full-width" (click)="handleUpdate()">
-                  <i class="icon edit"></i>
-                  Update Save File
-                </button>
-                <button class="button button--ghost full-width">
-                  <i class="icon download"></i>
-                  Download Save File
-                </button>
-                <button class="button button--destructive full-width"
-                        (click)="handleDelete()"
-                        [disabled]="isDeleting">
-                  <i class="icon trash"></i>
-                  {{ isDeleting ? 'Deleting...' : 'Delete Save File' }}
-                </button>
-              </div>
-            </div>
-
-            <!-- File Information Card -->
-            <div class="card file-info-card">
-              <div class="card-header">
-                <h3 class="card-title">File Information</h3>
-              </div>
-              <div class="card-content">
-                <div class="info-row">
-                  <span class="info-label">Format</span>
-                  &nbsp;
-                  <span class="info-value">.sav</span>
-                </div>
-                <div class="info-row">
-                  <span class="info-label">Version</span>
-                  &nbsp;
-                  <span class="info-value">1.0.2</span>
-                </div>
-                <div class="info-row">
-                  <span class="info-label">Last Modified</span>
-                  &nbsp;
-                  <span class="info-value">{{ formatDate(gameSave.updatedAt) }}</span>
-                </div>
-              </div>
-            </div>
+            <app-actions-sidebar
+              [gameSave]="gameSave"
+              [isDeleting]="isDeleting"
+              (delete)="handleDelete()"
+              (update)="handleUpdate()"
+            ></app-actions-sidebar>
+            <app-file-info-sidebar [gameSave]="gameSave"></app-file-info-sidebar>
           </div>
         </div>
       </div>

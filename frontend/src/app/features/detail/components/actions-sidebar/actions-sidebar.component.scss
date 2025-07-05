@@ -1,0 +1,75 @@
+
+@mixin card-base {
+  background: var(--white);
+  border: 1px solid var(--light-aluminium);
+  border-radius: 0.8rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(var(--black-rgb), 0.1);
+}
+
+@mixin text-primary {
+  color: var(--dark-aluminium);
+}
+
+.card {
+  @include card-base;
+}
+
+.card-header {
+  padding: 2.4rem 2.4rem 0;
+}
+
+.card-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  @include text-primary;
+}
+
+.card-content {
+  padding: 2.4rem;
+}
+
+.actions-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.button--destructive {
+  background-color: var(--red);
+  color: var(--light-aluminium);
+
+  &:hover:not(:disabled) {
+    background: rgba(var(--red-rgb), 0.85);
+  }
+}
+
+.button--ghost {
+  background: var(--dark-aluminium);
+  color: var(--light-aluminium);
+
+  &:hover:not(:disabled) {
+    background: rgba(var(--dark-aluminium-rgb), 0.85);
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: inline-block;
+
+  &.download::before {
+    content: '⬇';
+  }
+
+  &.trash::before {
+    content: '🗑';
+  }
+
+  &.edit::before {
+    content: '✏';
+  }
+}

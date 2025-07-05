@@ -1,0 +1,9 @@
+<div class="card-header" *ngIf="gameSave">
+  <div class="card-title-row">
+    <span class="card-title">Save File Details</span>
+    <span class="badge" [ngClass]="getBadgeVariant(gameSave.game)">
+      {{ gameSave.game }}
+    </span>
+  </div>
+  <p class="card-description">View detailed information about your save file</p>
+</div>
