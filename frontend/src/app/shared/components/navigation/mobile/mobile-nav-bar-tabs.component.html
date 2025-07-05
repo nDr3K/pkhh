@@ -1,0 +1,9 @@
+<div class="mobile-nav-bar__tabs">
+  <ng-container *ngIf="isAuthenticated$ | async">
+    <app-mobile-nav-bar-tab
+      path="/dashboard"
+      label="Dashboard"
+      (mobileNavBarTabClick)="onMobileNavBarTabClick($event)">
+    </app-mobile-nav-bar-tab>
+  </ng-container>
+</div>
