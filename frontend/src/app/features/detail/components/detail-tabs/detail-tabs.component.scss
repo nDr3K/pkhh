@@ -33,5 +33,10 @@
       background: var(--light-aluminium);
       color: var(--dark-aluminium);
     }
+
+    @media (max-width: 640px) {
+      padding: 0.6rem 0.8rem;
+      font-size: 1rem;
+    }
   }
 }

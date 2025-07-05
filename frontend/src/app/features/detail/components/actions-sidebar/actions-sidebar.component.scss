@@ -11,21 +11,19 @@
 }
 
 .card {
+  padding-inline: 2rem;
+  padding-bottom: 1rem;
   @include card-base;
 }
 
 .card-header {
-  padding: 2.4rem 2.4rem 0;
+  padding: 0 2.4rem;
 }
 
 .card-title {
   font-size: 1.8rem;
   font-weight: 600;
   @include text-primary;
-}
-
-.card-content {
-  padding: 2.4rem;
 }
 
 .actions-content {
