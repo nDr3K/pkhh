@@ -39,7 +39,10 @@ export class DashboardComponent implements OnInit {
     this.isModalVisible = false;
   }
 
-  onUploadSuccess(response: any): void {
+  onUploadSuccess(response: GameSave): void {
     this.onModalClose();
+    this.gameSaves$?.pipe(
+      map(saves => saves.concat(response))
+    )
   }
 }

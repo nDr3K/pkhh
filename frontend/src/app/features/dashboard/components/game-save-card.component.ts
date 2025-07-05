@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { GamePokemon, GameSave } from "../../../core/models/game-save";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-game-save-card',
@@ -11,6 +12,7 @@ import { GamePokemon, GameSave } from "../../../core/models/game-save";
 })
 export class GameSaveCardComponent {
   @Input() gameSave!: GameSave;
+  private router = inject(Router);
 
   private gameColors: { [key: string]: string } = {
     'red': '#dc3545',
@@ -73,4 +75,7 @@ export class GameSaveCardComponent {
     }
   }
 
+  onDetailsClick(): void {
+    this.router.navigate(['/detail', this.gameSave.id]).then();
+  }
 }

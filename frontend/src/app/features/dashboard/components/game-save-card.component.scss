@@ -53,6 +53,10 @@
   font-weight: 700;
   color: var(--dark-aluminium);
   margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 33rem;
 }
 
 .game-header-container {
@@ -141,8 +145,18 @@
 
 .card-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
   border-top: 1px solid rgba(var(--white), 0.1);
+}
+
+.card-footer button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+  padding: 0.6rem 1rem;
 }
 
 .timestamp {

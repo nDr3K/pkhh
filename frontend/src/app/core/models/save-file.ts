@@ -1,8 +1,9 @@
 export interface SaveFile {
-  gameId: number;
+  gameId?: number;
   name?: string;
   description?: string;
   tags?: string[];
+  isFavorite?: boolean;
 }
 
 export interface SaveFileCreateRequest {

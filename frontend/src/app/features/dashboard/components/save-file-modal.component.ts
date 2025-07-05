@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { SaveService } from "../../../core/services/save.service";
 import { SaveFile } from "../../../core/models/save-file";
 import { finalize } from "rxjs";
+import { GameSave } from "../../../core/models/game-save";
 
 @Component({
   selector: 'app-save-file-modal',
@@ -15,7 +16,7 @@ import { finalize } from "rxjs";
 export class SaveFileModalComponent {
   @Input() isVisible = false;
   @Output() closeEvent = new EventEmitter<void>();
-  @Output() uploadSuccess = new EventEmitter<any>();
+  @Output() uploadSuccess = new EventEmitter<GameSave>();
 
   private saveService = inject(SaveService);
 
@@ -118,7 +119,7 @@ export class SaveFileModalComponent {
     const metadata: SaveFile = {
       gameId: 1, // TODO: will change to map for standard gens and picker when romhacks will be added
       name: this.uploadForm.get('name')?.value || this.selectedFile.name,
-      description: undefined,//this.uploadForm.get('description')?.value || undefined,
+      description: this.uploadForm.get('description')?.value || undefined,
       tags: [] //this.parseTags(this.uploadForm.get('tagsInput')?.value)
     };
 

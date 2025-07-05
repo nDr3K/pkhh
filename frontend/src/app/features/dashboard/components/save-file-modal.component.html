@@ -11,25 +11,6 @@
 
     <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="modal-body">
       <!-- File Upload -->
-<!--      <div class="form-group">-->
-<!--        <label for="fileInput">Save File *</label>-->
-<!--        <input-->
-<!--          #fileInput-->
-<!--          type="file"-->
-<!--          id="fileInput"-->
-<!--          accept=".sav"-->
-<!--          (change)="onFileSelected($event)"-->
-<!--          class="file-input"-->
-<!--          [class.error]="selectedFile === null && formSubmitted"-->
-<!--        >-->
-<!--        <div class="file-info" *ngIf="selectedFile">-->
-<!--          <span class="file-name">{{ selectedFile.name }}</span>-->
-<!--          <span class="file-size">({{ formatFileSize(selectedFile.size) }})</span>-->
-<!--        </div>-->
-<!--        <div class="error-text" *ngIf="selectedFile === null && formSubmitted">-->
-<!--          Please select a file to upload-->
-<!--        </div>-->
-<!--      </div>-->
       <div class="form-group">
         <label for="fileInput">Save File *</label>
         <div class="file-upload-container">
@@ -105,17 +86,17 @@
         >
       </div>
 
-<!--      &lt;!&ndash; Description &ndash;&gt;-->
-<!--      <div class="form-group">-->
-<!--        <label for="description">Description</label>-->
-<!--        <textarea-->
-<!--          id="description"-->
-<!--          formControlName="description"-->
-<!--          placeholder="Enter description (optional)"-->
-<!--          rows="3"-->
-<!--          class="form-control"-->
-<!--        ></textarea>-->
-<!--      </div>-->
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Enter description (optional)"
+          rows="3"
+          class="form-control"
+        ></textarea>
+      </div>
 
 <!--      &lt;!&ndash; Tags &ndash;&gt;-->
 <!--      <div class="form-group">-->

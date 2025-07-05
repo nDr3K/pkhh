@@ -47,9 +47,13 @@
   background: rgba(var(--white-rgb), 0.5);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .saves-grid {
     grid-template-columns: 1fr;
     gap: 0.5rem;
   }
+}
+
+app-game-save-card {
+  width: 100%;
 }
