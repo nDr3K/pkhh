@@ -5,6 +5,6 @@ namespace PokeSaveRomManager.Api.Roms.Services.Handler
 {
     public interface IRomServiceHandler
     {
-        Task RegisterRomDataAsync(RomCreateDto dto, ParsedRomData data);
+        Task RegisterRomDataAsync(RomSaveDto dto, ParsedRomData data);
     }
 }

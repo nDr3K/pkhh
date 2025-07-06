@@ -21,7 +21,7 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
 
         public int? GetPokedexNumber(int internalId)
         {
-            if (!_internalToPokedex.TryGetValue(internalId, out var dex))
+            if (!_internalToPokedex.TryGetValue(internalId +1, out var dex))
                 throw new KeyNotFoundException($"Internal ID {internalId} not found in Pokédex map.");
             return dex;
         }

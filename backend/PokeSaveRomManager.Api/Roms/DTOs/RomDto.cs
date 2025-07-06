@@ -16,6 +16,17 @@ namespace PokeSaveRomManager.Api.Roms.DTOs
         public string Region { get; set; }
     }
 
+    public class RomSaveDto
+    {
+        [Required]
+        public RomOffsetsMap Offsets { get; set; }
+        public string Name { get; set; }
+        public string Path { get; set; }
+        public int Generation { get; set; }
+        public bool Official { get; set; }
+        public string Region { get; set; }
+    }
+
     [ModelBinder(BinderType = typeof(RomModelBinder))]
     public class RomUploadDto
     {

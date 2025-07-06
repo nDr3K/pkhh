@@ -1,4 +1,5 @@
 ﻿using PokeSaveRomManager.Api.Roms.DTOs;
+using PokeSaveRomManager.Api.Roms.Mapper;
 using PokeSaveRomManager.Api.Roms.Services.Handler;
 using PokeSaveRomManager.Parser.Services;
 
@@ -9,12 +10,14 @@ namespace PokeSaveRomManager.Api.Roms.Services
         private readonly ILogger<RomService> _logger;
         private readonly ParserOrchestrator _parserOrchestrator;
         private readonly IRomServiceHandler _romServiceHandler;
+        private readonly IRomStorageService _romStorageService;
 
-        public RomService(ILogger<RomService> logger, ParserOrchestrator parserOrchestrator, IRomServiceHandler romServiceHandler)
+        public RomService(ILogger<RomService> logger, ParserOrchestrator parserOrchestrator, IRomServiceHandler romServiceHandler, IRomStorageService romStorageService)
         {
             _logger = logger;
             _parserOrchestrator = parserOrchestrator;
             _romServiceHandler = romServiceHandler;
+            _romStorageService = romStorageService;
         }
 
         public async Task UploadRomAsync(RomUploadDto romDto)
@@ -31,9 +34,14 @@ namespace PokeSaveRomManager.Api.Roms.Services
                 _logger.LogInformation($"Successfully parsed ROM '{romDto.Metadata.Name}' with {romBytes.Length} bytes");
                 if (result.Success)
                 {
+                    // Persist the ROM file
+                    var romFilePath = await _romStorageService.PersistRom(romDto);
+                    _logger.LogInformation($"ROM file '{romFilePath}' persisted successfully");
+                    // Update the metadata with the file path
+                    var romSaveDto = romDto.Metadata.MapToRomSaveDto(romFilePath);
                     // Log the successful parsing
-                    await _romServiceHandler.RegisterRomDataAsync(romDto.Metadata, result.Data);
-                    _logger.LogInformation($"Successfully registered ROM data for '{romDto.Metadata.Name}'");
+                    await _romServiceHandler.RegisterRomDataAsync(romSaveDto, result.Data);
+                    _logger.LogInformation($"Successfully registered ROM data for '{romSaveDto.Name}'");
                 }
                 else
                 {

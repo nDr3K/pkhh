@@ -1,5 +1,4 @@
 ﻿using PokeSaveRomManager.Api.Games.DTOs;
-using PokeSaveRomManager.Api.Moves.DTOs;
 using PokeSaveRomManager.Api.Roms.DTOs;
 using PokeSaveRomManager.Api.Types.DTOs;
 using PokeSaveRomManager.Parser.Core.Models.Data;
@@ -9,11 +8,12 @@ namespace PokeSaveRomManager.Api.Roms.Mapper
     public static class RomDtosMapper
     {
         // Game
-        public static GameCreateDto MapToGame(this RomCreateDto dto)
+        public static GameCreateDto MapToGame(this RomSaveDto dto)
         {
             return new GameCreateDto
             {
                 Name = dto.Name,
+                Path = dto.Path,
                 Generation = dto.Generation,
                 Official = dto.Official,
                 Region = dto.Region
@@ -43,6 +43,20 @@ namespace PokeSaveRomManager.Api.Roms.Mapper
                 Category.Special => 2,
                 Category.Status => 3,
                 _ => throw new ArgumentOutOfRangeException(nameof(category), category, null)
+            };
+        }
+
+        // Rom
+        public static RomSaveDto MapToRomSaveDto(this RomCreateDto dto, string path)
+        {
+            return new RomSaveDto
+            {
+                Name = dto.Name,
+                Path = path,
+                Offsets = dto.Offsets,
+                Generation = dto.Generation,
+                Official = dto.Official,
+                Region = dto.Region,
             };
         }
     }

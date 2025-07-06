@@ -46,7 +46,7 @@ namespace PokeSaveRomManager.Api.Roms.Services.Handler
             _romRepository = romRepository;
         }
 
-        public async Task RegisterRomDataAsync(RomCreateDto dto, ParsedRomData data)
+        public async Task RegisterRomDataAsync(RomSaveDto dto, ParsedRomData data)
         {
             using var transaction = await _romRepository.BeginTransactionAsync(); // Start transaction
             try
@@ -67,7 +67,7 @@ namespace PokeSaveRomManager.Api.Roms.Services.Handler
             }
         }
 
-        private async Task<int> CreateGameAsync(RomCreateDto dto)
+        private async Task<int> CreateGameAsync(RomSaveDto dto)
         {
             var gameDto = dto.MapToGame();
             var game = await _gameService.AddGameAsync(gameDto);

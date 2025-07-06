@@ -15,6 +15,7 @@ namespace PokeSaveRomManager.Api.Roms
             services.AddScoped<IRomServiceHandler, RomServiceHandler>();
             services.AddScoped<IRomService, RomService>();
             services.AddScoped<IRomRepository, RomRepository>();
+            services.AddScoped<IRomStorageService, RomStorageService>();
 
             // Register the Rom Parsers
             services.AddScoped<ParserOrchestrator>();

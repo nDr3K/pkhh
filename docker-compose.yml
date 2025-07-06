@@ -24,6 +24,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__DefaultConnection=${CONNECTION_STRING}
+    volumes:
+      - rom-data:/app/data/roms
     depends_on:
       - db
     networks:
@@ -49,4 +51,5 @@ networks:
     driver: bridge
 
 volumes:
+  rom-data:
   postgres-data:
