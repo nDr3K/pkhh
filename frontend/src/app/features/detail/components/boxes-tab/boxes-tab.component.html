@@ -3,6 +3,7 @@
     <div class="box-card" *ngFor="let box of gameSave.boxes; let i = index">
       <div class="box-header">
         <h4 class="box-name">{{ box.name || 'Box ' + (i + 1) }}</h4>
+        &nbsp;
         <span class="box-count">{{ box.count }}/{{box.capacity}}</span>
       </div>
       <div class="box-status" [class.empty]="!box.count">
