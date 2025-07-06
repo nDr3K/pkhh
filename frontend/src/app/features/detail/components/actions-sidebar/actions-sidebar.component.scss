@@ -42,6 +42,15 @@
 }
 
 .button--ghost {
+  background: rgba(var(--aluminium-rgb), 0.35);
+  color: var(--dark-aluminium);
+
+  &:hover:not(:disabled) {
+    background: rgba(var(--aluminium-rgb), 0.65);
+  }
+}
+
+.button--dark {
   background: var(--dark-aluminium);
   color: var(--light-aluminium);
 
