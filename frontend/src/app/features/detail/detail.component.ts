@@ -13,11 +13,16 @@ import { BoxesTabComponent } from './components/boxes-tab/boxes-tab.component';
 import { ProgressTabComponent } from './components/progress-tab/progress-tab.component';
 import { ActionsSidebarComponent } from './components/actions-sidebar/actions-sidebar.component';
 import { FileInfoSidebarComponent } from './components/file-info-sidebar/file-info-sidebar.component';
+import {
+  BreadcrumbComponent,
+  BreadcrumbItem
+} from "../../shared/components/navigation/breadcrumbs/breadcrumb.component";
 
 @Component({
   selector: 'app-detail',
   standalone: true,
   imports: [
+    BreadcrumbComponent,
     CommonModule,
     PageLayoutComponent,
     DetailHeaderComponent,
@@ -39,6 +44,15 @@ export class DetailComponent {
   isLoading = true;
   isDeleting = false;
   activeTab = 'summary';
+  breadcrumbItems = [
+    {
+      label: 'Dashboard',
+      path: '/dashboard',
+    },
+    {
+      label: this.gameSave?.name ?? 'save file',
+    }
+  ];
 
   private route: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
@@ -63,7 +77,10 @@ export class DetailComponent {
       this.saveService
         .getSaveFileById(id)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(game => (this.gameSave = game));
+        .subscribe(game => {
+          this.gameSave = game
+          this.breadcrumbItems[1].label = game.name ?? 'save file';
+        });
     } catch (error) {
       console.error('Failed to load save file:', error);
       await this.router.navigate(['/dashboard']);
@@ -105,5 +122,11 @@ export class DetailComponent {
 
   setActiveTab(tab: string): void {
     this.activeTab = tab;
+  }
+
+  onBreadcrumbClick(event: { item: BreadcrumbItem, index: number }): void {
+    if (event.item.url) {
+      this.router.navigate([event.item.url]).then();
+    }
   }
 }

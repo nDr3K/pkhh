@@ -1,0 +1,101 @@
+.breadcrumb-nav {
+  --breadcrumb-font-size: 1.25rem;
+  --breadcrumb-color: var(--grey);
+  --breadcrumb-link-color: var(--yellow);
+  --breadcrumb-link-hover-color: rgba(var(--yellow-rgb), 0.85);
+  --breadcrumb-active-color: rgba(var(--dark-aluminium-rgb), 0.8);
+  --breadcrumb-separator-color: var(--aluminium);
+  --breadcrumb-disabled-color: var(--light-aluminium);
+  --breadcrumb-spacing: 0.5rem;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  font-size: var(--breadcrumb-font-size);
+  color: var(--breadcrumb-color);
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.breadcrumb-item:not(:last-child) {
+  margin-right: var(--breadcrumb-spacing);
+}
+
+.breadcrumb-link {
+  color: var(--breadcrumb-link-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  margin: -0.125rem -0.25rem;
+}
+
+.breadcrumb-link:hover {
+  color: var(--breadcrumb-link-hover-color);
+  text-decoration: underline;
+}
+
+.breadcrumb-link:focus {
+  outline: 2px solid var(--breadcrumb-link-color);
+  outline-offset: 2px;
+}
+
+.breadcrumb-text {
+  color: var(--breadcrumb-color);
+}
+
+.breadcrumb-item.active .breadcrumb-text {
+  color: var(--breadcrumb-active-color);
+  font-weight: 500;
+}
+
+.breadcrumb-item.disabled .breadcrumb-text,
+.breadcrumb-item.disabled .breadcrumb-link {
+  color: var(--breadcrumb-disabled-color);
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.breadcrumb-separator {
+  color: var(--breadcrumb-separator-color);
+  margin: 0 0.25rem;
+  user-select: none;
+}
+
+.breadcrumb-icon {
+  display: inline-flex;
+  align-items: center;
+  width: 1rem;
+  height: 1rem;
+}
+
+.breadcrumb-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .breadcrumb {
+    font-size: 0.8rem;
+  }
+
+  .breadcrumb-item:not(:last-child):not(:first-child) {
+    display: none;
+  }
+
+  .breadcrumb-item:nth-last-child(2)::after {
+    content: '...';
+    margin: 0 0.5rem;
+    color: var(--breadcrumb-separator-color);
+  }
+}

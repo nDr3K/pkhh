@@ -3,6 +3,13 @@
     <!-- Main Content -->
     <div *ngIf="!isLoading && gameSave" class="main-content">
       <div class="container">
+        <app-breadcrumb
+          [items]="breadcrumbItems"
+          [separator]="'>'"
+          [showIcons]="true"
+          [clickable]="true"
+          (itemClick)="onBreadcrumbClick($event)">
+        </app-breadcrumb>
         <!-- Content Grid -->
         <div class="content-grid">
           <!-- Main Content -->
