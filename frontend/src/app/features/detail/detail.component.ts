@@ -47,7 +47,7 @@ export class DetailComponent {
   breadcrumbItems = [
     {
       label: 'Dashboard',
-      path: '/dashboard',
+      url: '/dashboard',
     },
     {
       label: this.gameSave?.name ?? 'save file',
