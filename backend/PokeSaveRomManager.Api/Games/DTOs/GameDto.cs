@@ -10,6 +10,9 @@ namespace PokeSaveRomManager.Api.Games.DTOs
         public string Name { get; set; }
 
         [Required]
+        public string Path { get; set; }
+
+        [Required]
         [Range(0, 20)]
         public int Generation { get; set; }
 
@@ -39,6 +42,8 @@ namespace PokeSaveRomManager.Api.Games.DTOs
     {
         [Required]
         public string Name { get; set; }
+        [Required]
+        public string Path { get; set; }
 
         [Required]
         [Range(0, 20)]

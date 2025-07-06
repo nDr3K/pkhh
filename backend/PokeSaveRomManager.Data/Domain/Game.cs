@@ -8,9 +8,12 @@ namespace PokeSaveRomManager.Data.Domain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         [Required]
+        public string Path { get; set; }
         public int Generation { get; set; }
         public bool Official { get; set; } = true;
         public string Region { get; set; }

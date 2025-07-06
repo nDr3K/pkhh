@@ -16,6 +16,7 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             {
                 Id = game.Id,
                 Name = game.Name,
+                Path = game.Path,
                 Generation = game.Generation,
                 Official = game.Official,
                 Region = game.Region,
@@ -38,6 +39,7 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             return new Game
             {
                 Name = gameDto.Name,
+                Path = gameDto.Path,
                 Generation = gameDto.Generation,
                 Official = gameDto.Official,
                 Region = gameDto.Region
@@ -50,6 +52,7 @@ namespace PokeSaveRomManager.Api.Games.Mapper
                 return;
 
             game.Name = gameDto.Name;
+            game.Path = gameDto.Path;
             game.Generation = gameDto.Generation;
             game.Official = gameDto.Official;
             game.Region = gameDto.Region;
