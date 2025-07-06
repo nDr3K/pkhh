@@ -41,6 +41,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             {
                 Id = save.Id,
                 Game = save.Game.Name,
+                Name = save.Name,
                 Description = save.Description,
                 Tags = save.Tags?.Split(',').Select(t => t.Trim()).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray() ?? Array.Empty<string>(),
                 PlayTime = save.PlayTime,
