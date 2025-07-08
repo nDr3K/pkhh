@@ -265,6 +265,7 @@ namespace PokeSaveRomManager.Api.Saves.Services
                     _logger.LogError("User {UserId} is not authorized to delete save with ID {Id}", userId, saveId);
                     throw new Exception($"User {userId} is not authorized to delete this save");
                 }
+                _saveStorageService.DeleteSave(existingSave.Path);
                 await _saveServiceHandler.DeletePokemonInstances(saveId);
                 await _repository.Delete(saveId);
                 _logger.LogInformation("Deleted save with ID {Id}", saveId);
