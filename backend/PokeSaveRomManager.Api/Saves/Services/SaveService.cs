@@ -7,7 +7,6 @@ using PokeSaveRomManager.Parser.Core.Models;
 using PokeSaveRomManager.Parser.Services;
 using PokeSaveRomManager.Data.Domain;
 using PokeSaveRomManager.Api.Shared.Models;
-using PokeSaveRomManager.Parser.Core.Models.Data;
 using BoxData = PokeSaveRomManager.Api.Saves.Models.BoxData;
 
 namespace PokeSaveRomManager.Api.Saves.Services
@@ -16,13 +15,15 @@ namespace PokeSaveRomManager.Api.Saves.Services
     {
         private readonly ISaveRepository _repository;
         private readonly ISaveServiceHandler _saveServiceHandler;
+        private readonly ISaveStorageService _saveStorageService;
         private readonly ILogger<SaveService> _logger;
         private readonly ParserOrchestrator _parserOrchestrator;
 
-        public SaveService(ISaveRepository repository, ISaveServiceHandler saveServiceHandler, ILogger<SaveService> logger, ParserOrchestrator parserOrchestrator)
+        public SaveService(ISaveRepository repository, ISaveServiceHandler saveServiceHandler, ISaveStorageService saveStorageService, ILogger<SaveService> logger, ParserOrchestrator parserOrchestrator)
         {
             _repository = repository;
             _saveServiceHandler = saveServiceHandler;
+            _saveStorageService = saveStorageService;
             _logger = logger;
             _parserOrchestrator = parserOrchestrator;
         }
@@ -71,7 +72,8 @@ namespace PokeSaveRomManager.Api.Saves.Services
 
                 // Determine ID to use for Pokémon instance association
                 var id = await _saveServiceHandler.GetUserIdByAuthId(userId);
-                var currentSave = await _repository.Create(saveData.PlayerData.ToDomain(id, save.Metadata));
+                var path = await _saveStorageService.PersistSave(save);
+                var currentSave = await _repository.Create(saveData.PlayerData.ToDomain(id, save.Metadata, path));
                 _logger.LogInformation("Created new save for user {UserId}", userId);
 
                 // Process Pokemon data and associate with team/boxes
@@ -135,6 +137,11 @@ namespace PokeSaveRomManager.Api.Saves.Services
 
                 // Update Timestamp
                 existingSave.UpdatedAt = DateTime.UtcNow;
+
+                // Update path
+                _saveStorageService.DeleteSave(existingSave.Path);
+                var path = await _saveStorageService.PersistSave(save);
+                existingSave.Path = path;
 
                 await _repository.SaveChangesAsync();
                 await transaction.CommitAsync();

@@ -42,6 +42,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Id = save.Id,
                 Game = save.Game.Name,
                 Name = save.Name,
+                Path = save.Path,
                 Description = save.Description,
                 Tags = save.Tags?.Split(',').Select(t => t.Trim()).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray() ?? Array.Empty<string>(),
                 PlayTime = save.PlayTime,
@@ -95,13 +96,14 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
 
         // SaveFile
         #region SaveFile
-        public static Save ToDomain(this PlayerData playerData, int userId, SaveFileDto saveFileDto)
+        public static Save ToDomain(this PlayerData playerData, int userId, SaveFileDto saveFileDto, string path)
         {
             return new Save
             {
                 UserId = userId,
                 GameId = saveFileDto.GameId,
                 Name = saveFileDto.Name,
+                Path = path,
                 Description = saveFileDto.Description,
                 Tags = saveFileDto.Tags != null ? string.Join(",", saveFileDto.Tags) : string.Empty,
                 PlayTime = playerData.GameTime.ToString(),

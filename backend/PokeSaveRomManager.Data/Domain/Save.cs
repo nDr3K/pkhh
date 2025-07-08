@@ -17,6 +17,9 @@ namespace PokeSaveRomManager.Data.Domain
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public string Path { get; set; }
         public string Description { get; set; }
         public string Tags { get; set; } // Comma-separated tags for easy searching
         public string PlayTime { get; set; }

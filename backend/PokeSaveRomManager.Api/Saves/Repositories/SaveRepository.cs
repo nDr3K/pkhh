@@ -27,6 +27,7 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                     Id = s.Id,
                     Game = s.Game,
                     Name = s.Name,
+                    Path = s.Path,
                     CreatedAt = s.CreatedAt,
                     UpdatedAt = s.UpdatedAt,
                     Party = new SaveTeam
@@ -70,6 +71,7 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
                     Id = s.Id,
                     Game = s.Game,
                     Name = s.Name,
+                    Path = s.Path,
                     Description = s.Description,
                     PokemonSeen = s.PokemonSeen,
                     PokemonCaught = s.PokemonCaught,

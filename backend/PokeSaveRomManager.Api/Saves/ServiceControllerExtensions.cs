@@ -15,6 +15,7 @@ namespace PokeSaveRomManager.Api.Saves
             services.AddScoped<ISaveService, SaveService>();
             services.AddScoped<ISaveRepository, SaveRepository>();
             services.AddScoped<ISaveServiceHandler, SaveServiceHandler>();
+            services.AddScoped<ISaveStorageService, SaveStorageService>();
 
             // PokemonInstance
             services.AddScoped<IPokemonInstanceRepository, PokemonInstanceRepository>();
