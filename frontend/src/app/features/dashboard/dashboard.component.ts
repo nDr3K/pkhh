@@ -4,7 +4,7 @@ import { SaveService } from "../../core/services/save.service";
 import { GameSave } from "../../core/models/game-save";
 import { GameSaveCardComponent } from "./components/game-save-card.component";
 import { PageLayoutComponent } from "../../shared/components/page-layout.component";
-import { map, Observable } from "rxjs";
+import { BehaviorSubject, map, Observable } from "rxjs";
 import { SaveFileModalComponent } from "./components/save-file-modal.component";
 
 @Component({
@@ -17,13 +17,13 @@ import { SaveFileModalComponent } from "./components/save-file-modal.component";
 export class DashboardComponent implements OnInit {
   private saveService = inject(SaveService);
 
-  gameSaves$: Observable<GameSave[]> | undefined;
+  gameSaves$ = new BehaviorSubject<GameSave[]>([]);
   isModalVisible: boolean = false;
 
   ngOnInit(): void {
-    this.gameSaves$ = this.saveService.getSaves().pipe(
-      map(response => response.data)
-    );
+    this.saveService.getSaves().subscribe(response => {
+      this.gameSaves$.next(response.data);
+    });
   }
 
   trackBySave(index: number, save: GameSave): number {
@@ -41,8 +41,6 @@ export class DashboardComponent implements OnInit {
 
   onUploadSuccess(response: GameSave): void {
     this.onModalClose();
-    this.gameSaves$?.pipe(
-      map(saves => saves.concat(response))
-    )
+    this.gameSaves$.next([...this.gameSaves$.value, response]);
   }
 }
