@@ -9,5 +9,7 @@ export const ROUTES: Route[] = [
   { path: 'dashboard', loadComponent: () =>
       import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [AuthGuard] },
   { path: 'detail/:id', loadComponent: () =>
-      import('./features/detail/detail.component').then(m => m.DetailComponent), canActivate: [AuthGuard] }
+      import('./features/detail/detail.component').then(m => m.DetailComponent), canActivate: [AuthGuard] },
+  { path: 'roms', loadComponent: () =>
+      import('./features/roms/roms.component').then(m => m.RomsComponent), canActivate: [AuthGuard] }
 ];

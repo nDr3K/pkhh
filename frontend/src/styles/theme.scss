@@ -22,15 +22,21 @@
   --green: #31bc31;
 
   --yellow-mandarine-gradient: linear-gradient(
-      153.07deg,
-      var(--yellow) -2.47%,
-      var(--mandarine) 102.78%
+    153.07deg,
+    var(--yellow) -2.47%,
+    var(--mandarine) 102.78%
   );
 
   --mandarine-orange-gradient: linear-gradient(
-      153.07deg,
-      var(--mandarine) -2.47%,
-      var(--orange) 102.78%
+    153.07deg,
+    var(--mandarine) -2.47%,
+    var(--orange) 102.78%
+  );
+
+  --aluminium-gradient: linear-gradient(
+    83.07deg,
+    var(--aluminium) -2.47%,
+    var(--dark-aluminium) 152.78%
   );
 
   --font-primary: "Inter", sans-serif;

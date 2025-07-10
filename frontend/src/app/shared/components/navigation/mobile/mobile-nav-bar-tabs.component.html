@@ -1,6 +1,11 @@
 <div class="mobile-nav-bar__tabs">
   <ng-container *ngIf="isAuthenticated$ | async">
     <app-mobile-nav-bar-tab
+      path="/roms"
+      label="Games"
+      (mobileNavBarTabClick)="onMobileNavBarTabClick($event)">
+    </app-mobile-nav-bar-tab>
+    <app-mobile-nav-bar-tab
       path="/dashboard"
       label="Dashboard"
       (mobileNavBarTabClick)="onMobileNavBarTabClick($event)">

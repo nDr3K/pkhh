@@ -1,0 +1,40 @@
+<app-page-layout>
+  <div class="rom-container">
+    <div class="header">
+      <h1>Pokemon ROM Collection</h1>
+      <p class="subtitle">Choose a game to play</p>
+    </div>
+
+    <div class="games-grid">
+      <div
+        *ngFor="let game of romGames$ | async; trackBy: trackByGame"
+        class="game-card"
+        (click)="onGameClick(game)"
+      >
+        <div class="card-image">
+          <img
+            ngSrc="https://cdn.andreacannavo.com/pokemon/rom/{{game.name.toLowerCase()}}.png"
+            alt="{{ game.name }}"
+            loading="lazy"
+            width="160"
+            height="160"
+          />
+          <div class="generation-badge">Gen {{ game.generation }}</div>
+          <div *ngIf="game.official" class="official-badge">Official</div>
+        </div>
+
+        <div class="card-content">
+          <h3 class="game-name">{{ game.name }}</h3>
+          <p class="game-region">{{ game.region }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="(romGames$ | async)?.length === 0" class="empty-state">
+      <div class="empty-icon">🎮</div>
+      <h2>No games found</h2>
+      <p>Add some Pokemon ROMs to get started!</p>
+    </div>
+  </div>
+</app-page-layout>
