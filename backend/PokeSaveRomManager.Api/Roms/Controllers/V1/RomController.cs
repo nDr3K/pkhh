@@ -5,7 +5,6 @@ using PokeSaveRomManager.Api.Roms.DTOs;
 using PokeSaveRomManager.Api.Roms.Services;
 using PokeSaveRomManager.Api.Shared.Constants;
 using PokeSaveRomManager.Api.Shared.Policies;
-using System.Text.Json;
 
 namespace PokeSaveRomManager.Api.Roms.Controllers.V1
 {
