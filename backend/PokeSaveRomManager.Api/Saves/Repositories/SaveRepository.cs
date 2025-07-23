@@ -178,6 +178,7 @@ namespace PokeSaveRomManager.Api.Saves.Repositories
         public async Task<Save> GetByIdWithReferences(int saveId)
         {
             return await _context.Saves
+                .Include(s => s.Game)
                 .Include(s => s.User)
                 .Include(s => s.Party)
                     .ThenInclude(p => p.Members)

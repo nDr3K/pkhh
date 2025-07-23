@@ -99,6 +99,10 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
                 byte calculatedChecksum = CalculateChecksum(data);
                 byte savedChecksum = data[CHECKSUM_OFFSET];
 
+                // --- ADD THIS LOGGING ---
+                Console.WriteLine($"Saved Checksum (from file at 0x3523): {savedChecksum}");
+                Console.WriteLine($"Calculated Checksum (from 0x2598-0x3522): {calculatedChecksum}");
+
                 return calculatedChecksum == savedChecksum;
             }
             catch
@@ -123,10 +127,17 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
 
         private string ExtractPlayerName(ByteReader reader, byte[] data)
         {
-            byte[] nameBytes = new byte[PLAYER_NAME_LENGTH];
-            Array.Copy(data, PLAYER_NAME_OFFSET, nameBytes, 0, PLAYER_NAME_LENGTH);
+            try
+            {
+                byte[] nameBytes = new byte[PLAYER_NAME_LENGTH];
+                Array.Copy(data, PLAYER_NAME_OFFSET, nameBytes, 0, PLAYER_NAME_LENGTH);
 
-            return reader.ReadString(nameBytes).Trim().Replace("?", "");
+                return reader.ReadString(nameBytes).Trim().Replace("?", "");
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException($"Failed to extract player name: {ex.Message}");
+            }
         }
 
         private List<Badge> ExtractBadges(byte[] data)

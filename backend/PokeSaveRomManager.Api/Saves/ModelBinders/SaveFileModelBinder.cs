@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Primitives;
 using PokeSaveRomManager.Api.Saves.DTOs;
 using System.Text.Json;
 
@@ -17,26 +18,21 @@ namespace PokeSaveRomManager.Api.Saves.ModelBinders
                 // Deserialize Metadata
                 var metadataJson = form["Metadata"];
 
-                if (string.IsNullOrEmpty(metadataJson))
-                {
-                    bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Metadata is required.");
-                    return Task.CompletedTask;
-                }
-
                 // Get the ROM file
                 var saveFile = form.Files.GetFile("SaveFile");
-                if (saveFile == null)
-                {
-                    bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Save file is required.");
-                    return Task.CompletedTask;
-                }
 
                 // Deserialize metadata
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 };
-                var metadata = JsonSerializer.Deserialize<SaveFileDto>(metadataJson, options);
+
+                SaveFileDto? metadata = null;
+
+                if (!StringValues.IsNullOrEmpty(metadataJson))
+                {
+                    metadata = JsonSerializer.Deserialize<SaveFileDto>(metadataJson, options);
+                }
 
                 // Create the upload DTO
                 var saveFilUpload = new SaveFileUploadDto

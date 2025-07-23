@@ -172,6 +172,7 @@ namespace PokeSaveRomManager.Api.Games.Mapper
             return new GameMoveDto
             {
                 Id = gameMove.Id,
+                MoveId = gameMove.Move.Id,
                 MoveName = gameMove.Move.Name.Name,
                 MoveInGameId = gameMove.MoveInGameId
             };

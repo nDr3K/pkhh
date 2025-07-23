@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PokeSaveRomManager.Api.Saves.ModelBinders;
 using PokeSaveRomManager.Api.Shared.ModelBinders;
-using System.ComponentModel.DataAnnotations;
 
 namespace PokeSaveRomManager.Api.Saves.DTOs
 {
@@ -16,10 +15,8 @@ namespace PokeSaveRomManager.Api.Saves.DTOs
     [ModelBinder(BinderType = typeof(SaveFileModelBinder))]
     public class SaveFileUploadDto
     {
-        [Required]
         public IFormFile SaveFile { get; set; }
 
-        [Required]
         [ModelBinder(BinderType = typeof(JsonModelBinder))]
         public SaveFileDto Metadata { get; set; }
     }

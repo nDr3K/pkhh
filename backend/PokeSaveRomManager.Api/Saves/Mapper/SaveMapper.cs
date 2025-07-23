@@ -41,6 +41,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
             {
                 Id = save.Id,
                 Game = save.Game.Name,
+                GamePath = save.Game.Path,
                 Name = save.Name,
                 Path = save.Path,
                 Description = save.Description,

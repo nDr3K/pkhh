@@ -114,34 +114,51 @@ namespace PokeSaveRomManager.Api.Saves.Services
                     throw new Exception($"User {userId} is not authorized to update this save");
                 }
 
-                // Delete existing pokemon instances and references
-                if (existingSave.Party != null)
+                if (save.SaveFile != null)
                 {
-                    await _saveServiceHandler.DeleteParty(existingSave.Party.Id);
+                    _logger.LogInformation("Updating save file for user {UserId}", userId);
+
+                    // Delete existing pokemon instances and references
+                    if (existingSave.Party != null)
+                    {
+                        await _saveServiceHandler.DeleteParty(existingSave.Party.Id);
+                    }
+                    var box = existingSave.Boxes.FirstOrDefault();
+                    if (box != null)
+                    {
+                        await _saveServiceHandler.DeleteBox(box.Id);
+                    }
+                    await _saveServiceHandler.DeletePokemonInstances(saveId);
+
+                    var saveData = ProcessSaveFile(save.SaveFile);
+                    _logger.LogInformation("Processed save file with {Size} bytes", save.SaveFile.Length);
+
+                    var pokemonData = await _saveServiceHandler.GetDatas(saveData, existingSave.Game.Id);
+                    _logger.LogInformation("Parsed save file data for user {UserId}", userId);
+
+                    // Process Pokemon data and associate with team/boxes
+                    await ProcessPokemonData(pokemonData, existingSave);
+
+                    // Update path
+                    _saveStorageService.DeleteSave(existingSave.Path);
+                    var path = await _saveStorageService.PersistSave(save);
+                    existingSave.Path = path;
                 }
-                var box = existingSave.Boxes.FirstOrDefault();
-                if (box != null)
+                else
                 {
-                    await _saveServiceHandler.DeleteBox(box.Id);
+                    _logger.LogWarning("No save file provided for update, using existing data");
                 }
-                await _saveServiceHandler.DeletePokemonInstances(saveId);
 
-                var saveData = ProcessSaveFile(save.SaveFile);
-                _logger.LogInformation("Processed save file with {Size} bytes", save.SaveFile.Length);
-
-                var pokemonData = await _saveServiceHandler.GetDatas(saveData, save.Metadata.GameId);
-                _logger.LogInformation("Parsed save file data for user {UserId}", userId);
-
-                // Process Pokemon data and associate with team/boxes
-                await ProcessPokemonData(pokemonData, existingSave);
+                if (save.Metadata != null)
+                {
+                    _logger.LogInformation("Updating metadata for save with ID {Id}", saveId);
+                    existingSave.Name = save.Metadata.Name;
+                    existingSave.Description = save.Metadata.Description;
+                    existingSave.Tags = save.Metadata.Tags != null ? string.Join(",", save.Metadata.Tags) : string.Empty;
+                }
 
                 // Update Timestamp
                 existingSave.UpdatedAt = DateTime.UtcNow;
-
-                // Update path
-                _saveStorageService.DeleteSave(existingSave.Path);
-                var path = await _saveStorageService.PersistSave(save);
-                existingSave.Path = path;
 
                 await _repository.SaveChangesAsync();
                 await transaction.CommitAsync();

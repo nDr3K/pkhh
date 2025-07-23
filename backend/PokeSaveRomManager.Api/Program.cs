@@ -185,7 +185,7 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine("/app/data", "roms")),
+    FileProvider = new PhysicalFileProvider("/app"),
     RequestPath = "/roms",
     ServeUnknownFileTypes = true,
     DefaultContentType = "application/octet-stream"
