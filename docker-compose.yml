@@ -25,6 +25,7 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__DefaultConnection=${CONNECTION_STRING}
     volumes:
+      - save-data:/app/data/saves
       - rom-data:/app/data/roms
     depends_on:
       - db
@@ -51,5 +52,6 @@ networks:
     driver: bridge
 
 volumes:
+  save-data:
   rom-data:
   postgres-data:
