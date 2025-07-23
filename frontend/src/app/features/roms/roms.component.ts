@@ -4,6 +4,7 @@ import { PageLayoutComponent } from "../../shared/components/page-layout.compone
 import { BehaviorSubject } from "rxjs";
 import { GameRom } from "../../core/models/game-rom";
 import { GameService } from "../../core/services/game.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-roms',
@@ -16,6 +17,7 @@ export class RomsComponent implements OnInit {
   romGames$ = new BehaviorSubject<GameRom[]>([]);
 
   private readonly gameService: GameService = inject(GameService);
+  private readonly router = inject(Router);
 
   public ngOnInit(): void {
     this.gameService.getRoms().subscribe(response => {
@@ -28,5 +30,8 @@ export class RomsComponent implements OnInit {
   }
 
   onGameClick(game: GameRom): void {
+    this.router.navigate([`/emulator`], {
+      state: { game: game }
+    }).then();
   }
 }

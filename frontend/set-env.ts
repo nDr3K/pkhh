@@ -14,6 +14,9 @@ const envConfigFile = `export const environment = {
   api: {
     serverUrl: '${process.env['API_SERVER_URL']}',
   },
+  rom : {
+    url: '${process.env['ROM_URL']}',
+  },
   auth0: {
     domain: '${process.env['AUTH0_DOMAIN']}',
     clientId: '${process.env['AUTH0_CLIENT_ID']}',
@@ -36,12 +39,12 @@ const envConfigFile = `export const environment = {
   }
 })();
 
-function ensureDirectoryExistence(filePath: string) {
-  var dirname = path.dirname(filePath);
+async function ensureDirectoryExistence(filePath: string) {
+  const dirname = path.dirname(filePath);
   if (existsSync(dirname)) {
     return;
   }
-  ensureDirectoryExistence(dirname);
+  await ensureDirectoryExistence(dirname);
   mkdirSync(dirname);
   return;
 }

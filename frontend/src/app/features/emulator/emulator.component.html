@@ -1,0 +1,27 @@
+<app-page-layout>
+  <div class="gba-emulator-container">
+
+    <div class="emulator-wrapper">
+      <div
+        #gameContainer
+        class="emulator-screen">
+        <!-- EmulatorJS will inject content here -->
+      </div>
+    </div>
+
+    <div class="emulator-info" *ngIf="status != 'Running'">
+      <div class="info-row">
+        <span class="label">Status:</span>
+        <span class="value" [class]="'status-' + status.toLowerCase()">{{ status }}</span>
+      </div>
+      <div class="info-row" *ngIf="romUrl">
+        <span class="label">ROM:</span>
+        <span class="value">{{ extractRomName(romUrl) }}</span>
+      </div>
+      <div class="info-row" *ngIf="gameRunning">
+        <span class="label">Core:</span>
+        <span class="value">mGBA (Game Boy Advance)</span>
+      </div>
+    </div>
+  </div>
+</app-page-layout>
