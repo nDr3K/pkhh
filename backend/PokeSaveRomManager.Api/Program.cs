@@ -190,6 +190,13 @@ app.UseStaticFiles(new StaticFileOptions
     ServeUnknownFileTypes = true,
     DefaultContentType = "application/octet-stream"
 });
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider("/app"),
+    RequestPath = "/saves",
+    ServeUnknownFileTypes = true,
+    DefaultContentType = "application/octet-stream"
+});
 
 //app.UseHttpsRedirection();
 
