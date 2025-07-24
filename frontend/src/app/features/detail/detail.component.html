@@ -31,6 +31,7 @@
             <app-actions-sidebar
               [gameSave]="gameSave"
               [isDeleting]="isDeleting"
+              (continue)="handleContinue()"
               (delete)="handleDelete()"
               (update)="handleUpdate()"
             ></app-actions-sidebar>

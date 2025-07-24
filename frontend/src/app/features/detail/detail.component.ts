@@ -89,6 +89,12 @@ export class DetailComponent {
     }
   }
 
+  handleContinue(): void {
+    this.router.navigate(['/emulator'], {
+      state: { save: this.gameSave }
+    }).then();
+  }
+
   async handleDelete(): Promise<void> {
     if (!this.gameSave || !this.gameId) return;
     if (!confirm('Are you sure you want to delete this save file?')) {

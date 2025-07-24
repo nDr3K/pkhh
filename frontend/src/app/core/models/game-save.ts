@@ -14,6 +14,8 @@ export interface GamePokemon {
 }
 
 export interface GameSaveExtended extends GameSave {
+  path: string;
+  gamePath: string;
   description: string;
   tags: string[];
   playTime: string;

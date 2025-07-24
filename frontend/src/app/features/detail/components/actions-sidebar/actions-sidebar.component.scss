@@ -79,4 +79,8 @@
   &.edit::before {
     content: '✏';
   }
+
+  &.play::before {
+    content: '▶';
+  }
 }

@@ -228,11 +228,9 @@ export class EmulatorLoaderService {
       }
 
       this.scriptsLoaded = true;
-      console.log('EmulatorJS scripts loaded successfully');
     } catch (error) {
       console.error('Failed to load EmulatorJS scripts:', error);
       // Try loading individual scripts as fallback
-      console.log('Attempting to load non-minified files as fallback');
       for (const script of scripts) {
         await this.loadScript(scriptPath + 'src/' + script);
       }
@@ -297,14 +295,13 @@ export class EmulatorLoaderService {
       const language = window.EJS_language || this.getSystemLanguage();
       if (language && language !== 'en-US') {
         try {
-          console.log('Loading language', language);
           const langPath = window.EJS_pathtodata + 'localization/' + language + '.json';
           const response = await fetch(langPath);
           const langJson = await response.json();
           emulatorConfig.language = language;
           emulatorConfig.langJson = langJson;
         } catch (error) {
-          console.log('Missing language', language, '!!');
+          console.error('Missing language', language, '!!');
         }
       }
     }
@@ -398,8 +395,6 @@ export class EmulatorLoaderService {
     selectors.forEach(selector => {
       const elements = document.querySelectorAll(selector);
       elements.forEach(element => {
-        console.log('Force removing emulator element:', element);
-
         // If it's an iframe, try to pause/stop it first
         if (element.tagName === 'IFRAME') {
           try {
@@ -441,8 +436,6 @@ export class EmulatorLoaderService {
 
       // Try to suspend any running audio contexts
       if (window.AudioContext || (window as any).webkitAudioContext) {
-        // This is a bit hacky, but we'll try to find and suspend active contexts
-        // Note: This might not work for all cases, but it's better than nothing
         console.log('Attempting to clean up audio contexts...');
       }
     } catch (error) {

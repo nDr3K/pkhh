@@ -15,8 +15,13 @@ import { NgIf } from "@angular/common";
 export class ActionsSidebarComponent {
   @Input() gameSave: GameSaveExtended | null = null;
   @Input() isDeleting = false;
+  @Output() continue = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
   @Output() update = new EventEmitter<void>();
+
+  handleContinue(): void {
+    this.continue.emit();
+  }
 
   handleUpdate(): void {
     this.update.emit();

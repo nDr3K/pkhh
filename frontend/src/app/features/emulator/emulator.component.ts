@@ -36,17 +36,18 @@ export class EmulatorComponent implements OnInit, OnDestroy {
 
   constructor() {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { game?: GameRom };
+    const state = navigation?.extras.state as { game?: GameRom, save?: GameSaveExtended };
     if (state?.game) {
       this.gameRom = state.game;
       this.romUrl = `${environment.rom.url}${state.game.path}`;
     }
-    console.log('EmulatorComponent created', state);
+    if (state?.save) {
+      this.gameSave = state.save;
+      this.romUrl = `${environment.rom.url}${state.save.gamePath}`;
+    }
   }
 
   async ngOnInit() {
-    console.log('EmulatorComponent mounted');
-
     // Small delay to ensure DOM is ready and cleanup is complete
     setTimeout(() => {
       this.initializeEmulator();
@@ -54,7 +55,6 @@ export class EmulatorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('EmulatorComponent destroyed');
     this.cleanup();
 
     // Additional cleanup after a delay to ensure everything is removed
@@ -95,18 +95,14 @@ export class EmulatorComponent implements OnInit, OnDestroy {
         onGameStart: () => {
           this.gameRunning = true;
           this.status = 'Running';
-          console.log('Game started');
         },
         onReady: () => {
           this.status = 'Ready';
-          console.log('Emulator ready');
         },
         onSaveSave: (save: any) => {
-          console.log('Save save', save.save);
           this.saveGame(save.save);
         },
         onLoadSave: () => {
-          console.log('Load save');
         },
         buttonOpts: {
           saveState: false,
@@ -122,18 +118,34 @@ export class EmulatorComponent implements OnInit, OnDestroy {
       // Initialize emulator using service
       this.emulatorInstance = await this.emulatorService.initializeEmulator(config);
 
-      this.emulatorInstance.on('saveSaveFiles', (save: any) => {
-        console.log('Save saveFiles', save);
+      this.emulatorInstance.on('start', () => {
+        console.log('Game started');
+        this.loadSaveFile();
       });
 
       this.status = 'Emulator loaded successfully';
-      console.log('Emulator initialized successfully');
 
     } catch (error) {
       console.error('Failed to initialize emulator:', error);
       this.error = error instanceof Error ? error.message : 'Unknown error occurred';
       this.status = 'Error';
     }
+  }
+
+  private async loadSaveFile() {
+    const file = await fetch(`${environment.save.url}${this.gameSave?.path}`);
+    const sav = new Uint8Array(await file.arrayBuffer());
+    const path = this.emulatorInstance.gameManager.getSaveFilePath();
+    const paths = path.split("/");
+    let cp = "";
+    for (let i = 0; i < paths.length - 1; i++) {
+      if (paths[i] === "") continue;
+      cp += "/" + paths[i];
+      if (!this.emulatorInstance.gameManager.FS.analyzePath(cp).exists) this.emulatorInstance.gameManager.FS.mkdir(cp);
+    }
+    if (this.emulatorInstance.gameManager.FS.analyzePath(path).exists) this.emulatorInstance.gameManager.FS.unlink(path);
+    this.emulatorInstance.gameManager.FS.writeFile(path, sav);
+    this.emulatorInstance.gameManager.loadSaveFiles();
   }
 
   private detectCore(romUrl: string): string {
@@ -178,8 +190,6 @@ export class EmulatorComponent implements OnInit, OnDestroy {
   }
 
   private cleanup(): void {
-    console.log('Cleaning up emulator component...');
-
     // First, cleanup through the service
     if (this.emulatorInstance) {
       this.emulatorService.cleanup();
@@ -196,7 +206,6 @@ export class EmulatorComponent implements OnInit, OnDestroy {
 
       // Stop and remove iframes
       iframes.forEach(iframe => {
-        console.log('Removing iframe:', iframe);
         try {
           if (iframe.contentWindow) {
             iframe.contentWindow.postMessage({ action: 'pause' }, '*');
@@ -209,7 +218,6 @@ export class EmulatorComponent implements OnInit, OnDestroy {
 
       // Remove canvases
       canvases.forEach(canvas => {
-        console.log('Removing canvas:', canvas);
         canvas.remove();
       });
 
@@ -257,8 +265,6 @@ export class EmulatorComponent implements OnInit, OnDestroy {
     selectors.forEach(selector => {
       const elements = document.querySelectorAll(selector);
       elements.forEach(element => {
-        console.log('Force removing remaining emulator element:', element);
-
         if (element.tagName === 'IFRAME') {
           const iframe = element as HTMLIFrameElement;
           try {
@@ -285,20 +291,20 @@ export class EmulatorComponent implements OnInit, OnDestroy {
   }
 
   private saveGame(save: any) {
-    console.log(save);
-    if (!this.gameRom) return;
-    let metadata: SaveFile = {
-      gameId: this.gameRom.id,
-      name: this.gameRom.name
-    };
     let file = new File([save], 'save.sav', {
       type: 'application/octet-stream'
     });
-    console.log(file);
     if (this.gameSave) {
+      // Update existing save
       this.saveService.updateSaveFile(null,file,this.gameSave)
         .subscribe(game => (this.gameSave = game));
     } else {
+      // Create a new save, so gameRom data is required
+      if (!this.gameRom) return;
+      let metadata: SaveFile = {
+        gameId: this.gameRom.id,
+        name: this.gameRom.name
+      };
       this.saveService.uploadSaveFile(metadata,file)
         .subscribe(game => (this.gameSave = game));
     }
