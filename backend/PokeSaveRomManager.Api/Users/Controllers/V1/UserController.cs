@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeSaveRomManager.Api.Users.Services;
+using System.Security.Claims;
 
 namespace PokeSaveRomManager.Api.Users.Controllers.V1
 {
@@ -35,12 +36,17 @@ namespace PokeSaveRomManager.Api.Users.Controllers.V1
             // Get existing user or create new one based on Auth0 data
             var user = await _userService.GetOrCreateUserFromClaimsAsync(User);
 
-            // Return user data and potentially a session token or other application-specific info
+            var permissions = User.Claims
+                .Where(c => c.Type == "permissions")
+                .Select(c => c.Value)
+                .ToList();
+
             return Ok(new
             {
                 UserId = user.Id,
                 user.Name,
                 user.Email,
+                Permissions = permissions,
                 Message = "User successfully authenticated"
             });
         }
