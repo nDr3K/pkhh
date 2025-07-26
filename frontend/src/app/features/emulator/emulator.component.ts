@@ -20,7 +20,7 @@ export class EmulatorComponent implements OnInit, OnDestroy {
   @ViewChild('gameContainer', { static: true }) gameContainer!: ElementRef<HTMLDivElement>;
 
   private emulatorColor = '#74b9ff';
-  private debug = true;//false; TODO()
+  private debug = false;
   romUrl: string | undefined;
   gameRom: GameRom | undefined;
   gameSave: GameSaveExtended | undefined;

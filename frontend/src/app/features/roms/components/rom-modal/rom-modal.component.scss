@@ -1,0 +1,126 @@
+.offsets-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--light-aluminium);
+
+  h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-aluminium);
+  }
+}
+
+.offset-group {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: var(--light-aluminium);
+  border-radius: 8px;
+  border: 1px solid var(--grey);
+
+  h4 {
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--dark-aluminium);
+  }
+}
+
+.offset-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group-inline {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--aluminium);
+    font-size: 14px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--light-aluminium);
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 0;
+  gap: 10px;
+
+  .checkbox-input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--yellow);
+    cursor: pointer;
+  }
+
+  .checkbox-text {
+    color: var(--dark-aluminium);
+    font-weight: 500;
+    user-select: none;
+  }
+}
+
+select.form-control {
+  background-color: var(--white);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 8px center;
+  background-repeat: no-repeat;
+  background-size: 16px 12px;
+  padding-right: 35px;
+  appearance: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(var(--yellow-rgb), 0.35);
+    box-shadow: 0 0 0 2px rgba(var(--yellow-rgb), 0.55);
+  }
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%;
+    margin: 10px;
+  }
+
+  .offset-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-body {
+    padding: 15px;
+  }
+
+  .modal-header, .modal-footer {
+    padding: 15px;
+  }
+}
+
+input[type="number"].form-control {
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

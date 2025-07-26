@@ -1,0 +1,384 @@
+<div class="modal-overlay" *ngIf="isVisible">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Upload ROM File</h2>
+      <button type="button" class="close-btn" (click)="closeModal()" aria-label="Close">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" class="modal-body">
+      <!-- File Upload -->
+      <div class="form-group">
+        <label for="fileInput">ROM File *</label>
+        <div class="file-upload-container">
+          <input
+            #fileInput
+            type="file"
+            id="fileInput"
+            accept=".gba,.nds,.gb,.gbc"
+            (change)="onFileSelected($event)"
+            class="file-input-hidden"
+          >
+          <div
+            class="file-drop-zone"
+            [class.error]="selectedFile === null && formSubmitted"
+            [class.has-file]="selectedFile"
+            (click)="fileInput.click()"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)"
+            (drop)="onDrop($event)"
+          >
+            <div class="upload-content" *ngIf="!selectedFile">
+              <div class="upload-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7,10 12,15 17,10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+              </div>
+              <div class="upload-text">
+                <p class="primary-text">Click to upload or drag and drop</p>
+                <p class="secondary-text">Supported formats: .gba, .nds, .gb, .gbc</p>
+              </div>
+            </div>
+
+            <div class="file-preview" *ngIf="selectedFile">
+              <div class="file-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"></path>
+                </svg>
+              </div>
+              <div class="file-details">
+                <span class="file-name">{{ selectedFile.name }}</span>
+                <span class="file-size">{{ formatFileSize(selectedFile.size) }}</span>
+              </div>
+              <button
+                type="button"
+                class="remove-file-btn"
+                (click)="removeFile($event)"
+                title="Remove file"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="error-text" *ngIf="selectedFile === null && formSubmitted">
+          Please select a ROM file to upload
+        </div>
+      </div>
+
+      <!-- ROM Name -->
+      <div class="form-group">
+        <label for="name">ROM Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Enter ROM name"
+          class="form-control"
+        >
+      </div>
+
+      <!-- Generation -->
+      <div class="form-group">
+        <label for="generation">Generation</label>
+        <select
+          id="generation"
+          formControlName="generation"
+          class="form-control"
+        >
+          <option value="">Select Generation</option>
+          <option *ngFor="let gen of generations" [value]="gen">Generation {{ gen }}</option>
+        </select>
+      </div>
+
+      <!-- Official -->
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            formControlName="official"
+            class="checkbox-input"
+          >
+          <span class="checkbox-text">Official ROM</span>
+        </label>
+      </div>
+
+      <!-- Region -->
+      <div class="form-group">
+        <label for="region">Region</label>
+        <input
+          type="text"
+          id="region"
+          formControlName="region"
+          placeholder="Enter region"
+          class="form-control"
+        >
+      </div>
+
+      <!-- ROM Offsets Section -->
+      <div class="offsets-section">
+        <h3>ROM Data Offsets</h3>
+
+        <!-- Moves Section -->
+        <div class="offset-group">
+          <h4>Moves</h4>
+          <div class="offset-fields">
+            <div class="form-group-inline">
+              <label for="movesOffset">Offset</label>
+              <input
+                type="text"
+                id="movesOffset"
+                formControlName="movesOffset"
+                placeholder="0x000000"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="movesEntryLength">Entry Length</label>
+              <input
+                type="number"
+                id="movesEntryLength"
+                formControlName="movesEntryLength"
+                placeholder="12"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="movesCount">Count</label>
+              <input
+                type="number"
+                id="movesCount"
+                formControlName="movesCount"
+                placeholder="354"
+                class="form-control"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Move Names Section -->
+        <div class="offset-group">
+          <h4>Move Names</h4>
+          <div class="offset-fields">
+            <div class="form-group-inline">
+              <label for="moveNamesOffset">Offset</label>
+              <input
+                type="text"
+                id="moveNamesOffset"
+                formControlName="moveNamesOffset"
+                placeholder="0x000000"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="moveNamesEntryLength">Entry Length</label>
+              <input
+                type="number"
+                id="moveNamesEntryLength"
+                formControlName="moveNamesEntryLength"
+                placeholder="13"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="moveNamesCount">Count</label>
+              <input
+                type="number"
+                id="moveNamesCount"
+                formControlName="moveNamesCount"
+                placeholder="354"
+                class="form-control"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Pokemon Stats Section -->
+        <div class="offset-group">
+          <h4>Pokemon Stats</h4>
+          <div class="offset-fields">
+            <div class="form-group-inline">
+              <label for="pokemonStatsOffset">Offset</label>
+              <input
+                type="text"
+                id="pokemonStatsOffset"
+                formControlName="pokemonStatsOffset"
+                placeholder="0x000000"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="pokemonStatsEntryLength">Entry Length</label>
+              <input
+                type="number"
+                id="pokemonStatsEntryLength"
+                formControlName="pokemonStatsEntryLength"
+                placeholder="28"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="pokemonStatsCount">Count</label>
+              <input
+                type="number"
+                id="pokemonStatsCount"
+                formControlName="pokemonStatsCount"
+                placeholder="412"
+                class="form-control"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Pokemon Names Section -->
+        <div class="offset-group">
+          <h4>Pokemon Names</h4>
+          <div class="offset-fields">
+            <div class="form-group-inline">
+              <label for="pokemonNamesOffset">Offset</label>
+              <input
+                type="text"
+                id="pokemonNamesOffset"
+                formControlName="pokemonNamesOffset"
+                placeholder="0x000000"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="pokemonNamesEntryLength">Entry Length</label>
+              <input
+                type="number"
+                id="pokemonNamesEntryLength"
+                formControlName="pokemonNamesEntryLength"
+                placeholder="11"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="pokemonNamesCount">Count</label>
+              <input
+                type="number"
+                id="pokemonNamesCount"
+                formControlName="pokemonNamesCount"
+                placeholder="412"
+                class="form-control"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Pokedex Section -->
+        <div class="offset-group">
+          <h4>Pokedex</h4>
+          <div class="offset-fields">
+            <div class="form-group-inline">
+              <label for="pokedexOffset">Offset</label>
+              <input
+                type="text"
+                id="pokedexOffset"
+                formControlName="pokedexOffset"
+                placeholder="0x000000"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="pokedexEntryLength">Entry Length</label>
+              <input
+                type="number"
+                id="pokedexEntryLength"
+                formControlName="pokedexEntryLength"
+                placeholder="32"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="pokedexCount">Count</label>
+              <input
+                type="number"
+                id="pokedexCount"
+                formControlName="pokedexCount"
+                placeholder="412"
+                class="form-control"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Types Section -->
+        <div class="offset-group">
+          <h4>Types</h4>
+          <div class="offset-fields">
+            <div class="form-group-inline">
+              <label for="typesOffset">Offset</label>
+              <input
+                type="text"
+                id="typesOffset"
+                formControlName="typesOffset"
+                placeholder="0x000000"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="typesEntryLength">Entry Length</label>
+              <input
+                type="number"
+                id="typesEntryLength"
+                formControlName="typesEntryLength"
+                placeholder="8"
+                class="form-control"
+              >
+            </div>
+            <div class="form-group-inline">
+              <label for="typesCount">Count</label>
+              <input
+                type="number"
+                id="typesCount"
+                formControlName="typesCount"
+                placeholder="18"
+                class="form-control"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Loading Indicator -->
+      <div class="loading-indicator" *ngIf="isUploading">
+        <div class="spinner"></div>
+        <span>Uploading ROM file...</span>
+      </div>
+    </form>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="button button--secondary button--compact"
+        (click)="closeModal()"
+        [disabled]="isUploading"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="button button--primary button--compact"
+        (click)="onSubmit()"
+        [disabled]="isUploading || (!selectedFile && formSubmitted)"
+      >
+        {{ isUploading ? 'Uploading...' : 'Upload ROM' }}
+      </button>
+    </div>
+  </div>
+</div>

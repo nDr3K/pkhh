@@ -48,3 +48,9 @@
     </div>
   </div>
 </app-page-layout>
+
+<app-rom-modal
+  [isVisible]="isModalVisible"
+  (closeEvent)="onModalClose()"
+  (uploadSuccess)="onUploadSuccess()"
+/>
