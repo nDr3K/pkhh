@@ -2,10 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SaveService } from "../../core/services/save.service";
 import { GameSave } from "../../core/models/game-save";
-import { GameSaveCardComponent } from "./components/game-save-card.component";
+import { GameSaveCardComponent } from "./components/game-save-card/game-save-card.component";
 import { PageLayoutComponent } from "../../shared/components/page-layout.component";
 import { BehaviorSubject, map, Observable } from "rxjs";
-import { SaveFileModalComponent } from "./components/save-file-modal.component";
+import { SaveFileModalComponent } from "./components/save-file-modal/save-file-modal.component";
 
 @Component({
   selector: 'app-dashboard',

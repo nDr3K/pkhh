@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { GamePokemon, GameSave } from "../../../core/models/game-save";
+import { GamePokemon, GameSave } from "../../../../core/models/game-save";
 import { Router } from "@angular/router";
 
 @Component({

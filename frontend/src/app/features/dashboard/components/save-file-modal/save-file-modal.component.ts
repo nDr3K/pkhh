@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { SaveService } from "../../../core/services/save.service";
-import { SaveFile } from "../../../core/models/save-file";
+import { SaveService } from "../../../../core/services/save.service";
+import { SaveFile } from "../../../../core/models/save-file";
 import { finalize } from "rxjs";
-import { GameSave } from "../../../core/models/game-save";
+import { GameSave } from "../../../../core/models/game-save";
 
 @Component({
   selector: 'app-save-file-modal',
