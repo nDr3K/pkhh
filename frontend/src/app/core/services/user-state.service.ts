@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { UserProfile } from "../models/user-profile";
+import { canManageRoms, UserProfile } from "../models/user-profile";
 
 @Injectable({
   providedIn: 'root'
@@ -9,5 +9,10 @@ export class UserStateService {
 
   setUser(user: UserProfile) {
     this.user = user;
+  }
+
+  canManageRoms(): boolean {
+    if (!this.user) return false;
+    return canManageRoms(this.user);
   }
 }

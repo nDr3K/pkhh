@@ -1,8 +1,18 @@
 <app-page-layout>
   <div class="rom-container">
-    <div class="header">
-      <h1>Pokemon ROM Collection</h1>
-      <p class="subtitle">Choose a game to play</p>
+    <div class="rom-header-container">
+      <div class="rom-header">
+        <h1>Pokemon ROM Collection</h1>
+        <p class="subtitle">Choose a game to play</p>
+      </div>
+      <div *ngIf="hasPermission" class="rom-upload-button-container">
+        <button
+          (click)="openUploadModal()"
+          class="button button--primary button--compact"
+        >
+          Upload New Rom
+        </button>
+      </div>
     </div>
 
     <div class="games-grid">

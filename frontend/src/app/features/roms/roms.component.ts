@@ -5,6 +5,7 @@ import { BehaviorSubject } from "rxjs";
 import { GameRom } from "../../core/models/game-rom";
 import { GameService } from "../../core/services/game.service";
 import { Router } from "@angular/router";
+import { UserStateService } from "../../core/services/user-state.service";
 
 @Component({
   selector: 'app-roms',
@@ -15,7 +16,9 @@ import { Router } from "@angular/router";
 })
 export class RomsComponent implements OnInit {
   romGames$ = new BehaviorSubject<GameRom[]>([]);
+  hasPermission: boolean = false;
 
+  private readonly userStateService: UserStateService = inject(UserStateService);
   private readonly gameService: GameService = inject(GameService);
   private readonly router = inject(Router);
 
@@ -23,6 +26,7 @@ export class RomsComponent implements OnInit {
     this.gameService.getRoms().subscribe(response => {
       this.romGames$.next(response);
     });
+    this.hasPermission = this.userStateService.canManageRoms();
   }
 
   trackByGame(index: number, rom: GameRom): number {
@@ -33,5 +37,9 @@ export class RomsComponent implements OnInit {
     this.router.navigate([`/emulator`], {
       state: { game: game }
     }).then();
+  }
+
+  openUploadModal(): void {
+
   }
 }
