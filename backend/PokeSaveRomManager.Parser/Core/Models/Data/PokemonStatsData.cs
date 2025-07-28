@@ -15,6 +15,8 @@
         public int Type2Id { get; set; }
         public int CatchRate { get; set; }
         public int BaseExpYield { get; set; }
+        public int HeldItem { get; set; }
+        public int GenderRatio { get; set; }
         public int GrowthRate { get; set; }
     }
 }

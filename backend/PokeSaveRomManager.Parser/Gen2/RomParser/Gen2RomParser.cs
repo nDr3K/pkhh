@@ -1,12 +1,13 @@
-﻿using PokeSaveRomManager.Parser.Core.Models;
+
+using PokeSaveRomManager.Parser.Core.Models;
 using PokeSaveRomManager.Parser.Core.Parsers;
 using PokeSaveRomManager.Parser.Core.Utils;
 
-namespace PokeSaveRomManager.Parser.Gen1.RomParser
+namespace PokeSaveRomManager.Parser.Gen2.RomParser
 {
-    public class Gen1RomParser : IRomParser
+    public class Gen2RomParser : IRomParser
     {
-        public int Generation => 1;
+        public int Generation => 2;
 
         private readonly ICharMap _charMap = new GBCharMap();
 
@@ -16,9 +17,10 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
 
         public bool CanParse(byte[] fileData)
         {
-            // Simple heuristic for Gen1 ROM
+            // Simple heuristic for Gen2 ROM
             // Check Nintendo logo and game title in the ROM header (0x134 to 0x143)
-            var gameTitle = ByteReader.ReadString(fileData, 0x134, 11);
+            // It uses ASCII encoding for its title
+            var gameTitle = ByteReader.ReadStringASCII(fileData, 0x134, 11);
             return gameTitle.StartsWith("POKEMON", StringComparison.OrdinalIgnoreCase);
         }
 
@@ -51,14 +53,14 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
             }
             catch (Exception ex)
             {
-                return ParserResult<ParsedRomData>.FailureResult([$"Failed to parse Gen1 ROM: {ex.Message}"]);
+                return ParserResult<ParsedRomData>.FailureResult([$"Failed to parse Gen2 ROM: {ex.Message}"]);
             }
         }
 
         public RomInfo ParseRomInfo(byte[] data)
         {
             // You can add version, checksum, etc.
-            var title = ByteReader.ReadString(data, 0x134, 11);
+            var title = ByteReader.ReadStringASCII(data, 0x134, 11);
             var versionByte = data[0x14E];
             return new RomInfo
             {

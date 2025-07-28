@@ -52,7 +52,7 @@ namespace PokeSaveRomManager.Parser.Gen1.RomParser
             {
                 int offset = section.Offset + i * section.EntryLength;
 
-                string name = reader.ReadString(offset, section.EntryLength);
+                string name = reader.ReadStringFor(offset, section.EntryLength);
 
                 var dexNumber = _pokedexOrderMap.GetPokedexNumber(i);
                 if (dexNumber == 0)

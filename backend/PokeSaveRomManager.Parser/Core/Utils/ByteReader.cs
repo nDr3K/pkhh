@@ -37,7 +37,7 @@ namespace PokeSaveRomManager.Parser.Core.Utils
             return _data.Skip(offset).Take(length).ToArray();
         }
 
-        public string ReadString(int offset, int length)
+        public string ReadStringFor(int offset, int length)
         {
             if (length <= 0)
                 throw new ArgumentOutOfRangeException(nameof(length), "Length must be greater than 0");
@@ -50,9 +50,28 @@ namespace PokeSaveRomManager.Parser.Core.Utils
             if (length <= 0)
                 throw new ArgumentOutOfRangeException(nameof(length), "Length must be greater than 0");
 
-            var charMap = new Gen1CharMap();
+            var charMap = new GBCharMap();
             return charMap.DecodeString(data, offset, length);
         }
+        public static string ReadStringASCII(byte[] data, int offset, int length)
+        {
+            byte[] stringBytes = new byte[length];
+            Array.Copy(data, offset, stringBytes, 0, length);
+
+            string result = "";
+            foreach (byte b in stringBytes)
+            {
+                if (b == 0x00)
+                    break;
+
+                if (b >= 0x20 && b <= 0x7E)
+                {
+                    result += (char)b;
+                }
+            }
+            return result;
+        }
+
 
         public string ReadString(byte[] bytes)
         {
@@ -66,13 +85,13 @@ namespace PokeSaveRomManager.Parser.Core.Utils
             return sb.ToString().Trim();
         }
 
-        public string ReadString(int offset)
+        public string ReadString(int offset, int limit = int.MaxValue)
         {
             List<byte> nameBytes = [];
             byte currentByte;
             int currentOffset = offset;
 
-            while ((currentByte = ReadByte(currentOffset++)) != Terminator)
+            while ((currentByte = ReadByte(currentOffset++)) != Terminator && nameBytes.Count < limit)
             {
                 nameBytes.Add(currentByte);
             }

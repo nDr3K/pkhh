@@ -9,7 +9,7 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
     {
         public int Generation => 1;
 
-        private readonly ICharMap _charMap = new Gen1CharMap();
+        private readonly ICharMap _charMap = new GBCharMap();
 
         private PokemonDataExtractor _pokemonDataExtractor = new PokemonDataExtractor();
 
