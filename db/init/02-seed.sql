@@ -26,6 +26,7 @@ INSERT INTO "Types" ("Id", "Name") VALUES
 (18, 'Fairy'),
 (19, 'Stellar'),
 (20, 'Bird');
+(21, '???');
 
 -- STAT
 INSERT INTO "Stats" ("Id", "Name") VALUES
