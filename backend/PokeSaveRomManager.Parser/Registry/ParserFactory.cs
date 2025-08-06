@@ -2,6 +2,8 @@
 using PokeSaveRomManager.Parser.Core.Parsers;
 using PokeSaveRomManager.Parser.Gen1.RomParser;
 using PokeSaveRomManager.Parser.Gen1.SaveParser;
+using PokeSaveRomManager.Parser.Gen2.RomParser;
+using PokeSaveRomManager.Parser.Gen2.SaveParser;
 
 namespace PokeSaveRomManager.Parser.Registry
 {
@@ -47,9 +49,11 @@ namespace PokeSaveRomManager.Parser.Registry
         {
             // Register default parsers for ROMs
             _registry.RegisterRomParser(FileIdentifier.GameVersion.Gen1, new Gen1RomParser());
+            _registry.RegisterRomParser(FileIdentifier.GameVersion.Gen2, new Gen2RomParser());
 
             // Register default parsers for saves
             _registry.RegisterSaveParser(FileIdentifier.GameVersion.Gen1, new Gen1SaveParser());
+            _registry.RegisterSaveParser(FileIdentifier.GameVersion.Gen2, new Gen2SaveParser());
         }
     }
 }

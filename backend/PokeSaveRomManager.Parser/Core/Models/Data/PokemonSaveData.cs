@@ -3,7 +3,7 @@
     public class PokemonSaveData
     {
         public int PokemonId { get; set; }
-        public int CurrentHp { get; set; }
+        public int? CurrentHp { get; set; }
         public int Level { get; set; }
         public int Status { get; set; }
         public int Type1 { get; set; }

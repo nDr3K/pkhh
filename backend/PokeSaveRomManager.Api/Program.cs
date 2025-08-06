@@ -140,6 +140,7 @@ builder.Services.AddDbContext<PokemonDbContext>(options =>
 
 builder.WebHost.ConfigureKestrel(options =>
 {
+    options.Limits.MaxRequestBodySize = 4 * 1024 * 1024;
     options.ListenAnyIP(80); // Only listen on HTTP port
 });
 

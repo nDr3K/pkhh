@@ -13,33 +13,37 @@ namespace PokeSaveRomManager.Parser.Gen1.SaveParser
 
             return new PokemonSaveData
             {
-                PokemonId = data[offset],                                // Species ID
-                CurrentHp = ByteReader.ReadUInt16BE(data, offset + 1),
+                PokemonId = data[offset],
+                CurrentHp = isFromParty ? ByteReader.ReadUInt16BE(data, offset + 1) : null,
                 Level = isFromParty ? data[offset + 0x21] : data[offset + 3],
                 Status = data[offset + 4],
                 Type1 = data[offset + 5],
                 Type2 = data[offset + 6],
-                HeldItem = data[offset + 7],                             // catch rate / held item
+                HeldItem = data[offset + 7], // catch-rate
 
                 Move1 = new PokemonMoveData
                 {
                     MoveId = data[offset + 8],
-                    PP = data[offset + 29] & 0x3F
+                    PP = data[offset + 29] & 0x3F,
+                    MaxPP = data[offset + 29] & 0x3F
                 },
                 Move2 = new PokemonMoveData
                 {
                     MoveId = data[offset + 9],
-                    PP = data[offset + 30] & 0x3F
+                    PP = data[offset + 30] & 0x3F,
+                    MaxPP = data[offset + 30]
                 },
                 Move3 = new PokemonMoveData
                 {
                     MoveId = data[offset + 10],
-                    PP = data[offset + 31] & 0x3F
+                    PP = data[offset + 31] & 0x3F,
+                    MaxPP = data[offset + 31]
                 },
                 Move4 = new PokemonMoveData
                 {
                     MoveId = data[offset + 11],
-                    PP = data[offset + 32] & 0x3F
+                    PP = data[offset + 32] & 0x3F,
+                    MaxPP = data[offset + 32]
                 },
 
                 Experience = (int)ByteReader.ReadUInt24BE(data, offset + 14),
