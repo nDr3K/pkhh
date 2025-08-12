@@ -10,6 +10,7 @@ using PokeSaveRomManager.Api.Roms.Repositories;
 using PokeSaveRomManager.Api.Types.Services;
 using PokeSaveRomManager.Parser.Core.Models;
 using PokeSaveRomManager.Parser.Core.Models.Data;
+using System.Linq;
 using MoveName = PokeSaveRomManager.Parser.Core.Models.Data.MoveName;
 
 namespace PokeSaveRomManager.Api.Roms.Services.Handler
@@ -200,10 +201,11 @@ namespace PokeSaveRomManager.Api.Roms.Services.Handler
             var typeMap = gameTypes.ToDictionary(t => t.TypeInGameId, t => t.TypeId); //To retrieve the typeId from the gameTypeId
 
             // Combine name and stats by InternalId
-            var pokemonData = ParserDataMapper.MapPokemonData(statsData, nameData);
+            // PartialPokemonData is used for entities such as Egg
+            var (pokemonData, partialPokemonData) = ParserDataMapper.MapPokemonData(statsData, nameData);
 
             // Create Pokemon entities
-            var newPokemons = pokemonData.Select(p => new PokemonCreateDto
+            var newPokemons = pokemonData.Concat(partialPokemonData).Select(p => new PokemonCreateDto
             {
                 DexNumber = p.DexNumber ?? throw new Exception($"Missing Dex number for {p.Name}"),
                 Name = p.Name,
@@ -235,6 +237,29 @@ namespace PokeSaveRomManager.Api.Roms.Services.Handler
                     IsDefault = true
                 };
             }).ToList();
+
+            foreach (var partial in partialPokemonData)
+            {
+                var pokemonId = addedPokemons
+                    .First(pk => pk.DexNumber == partial.DexNumber && pk.Name == partial.Name).Id;
+
+                newForms.Add(new PokemonFormCreateDto
+                {
+                    PokemonId = pokemonId,
+                    InternalId = partial.InternalId,
+                    Name = "Egg", //TODO() maybe later will have more forms
+                    HP = 0,
+                    Attack = 0,
+                    Defense = 0,
+                    Special = 0,
+                    SpAttack = 0,
+                    SpDefense = 0,
+                    Speed = 0,
+                    Type1Id = typeMap.Last().Value,
+                    Type2Id = null,
+                    IsDefault = true
+                });
+            }
 
             await _pokemonFormService.AddRangeAsync(newForms);
         }

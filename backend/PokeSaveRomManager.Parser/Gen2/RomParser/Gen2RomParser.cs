@@ -34,7 +34,6 @@ namespace PokeSaveRomManager.Parser.Gen2.RomParser
                 var moves = _moveDataExtractor.ExtractMoves(reader, offsetsMap.Moves);
                 var moveNames = _moveDataExtractor.ExtractMoveNames(reader, offsetsMap.MoveNames);
 
-                _pokemonDataExtractor.LoadPokedexOrderMap(data, offsetsMap.Pokedex);
                 var pokemonStats = _pokemonDataExtractor.ExtractStats(reader, offsetsMap.PokemonStats);
                 var pokemonNames = _pokemonDataExtractor.ExtractNames(reader, offsetsMap.PokemonNames);
 

@@ -26,14 +26,14 @@ namespace PokeSaveRomManager.Parser.Registry
             return data.Length switch
             {
                 0x8000 => GameVersion.Gen1,
-                0x8400 => GameVersion.Gen2,
+                0x8030 => GameVersion.Gen2,
                 _ => GameVersion.Unknown
             };
         }
 
         public static bool IsSaveFile(byte[] data)
         {
-            return data.Length is 0x8000 or 0x8400;
+            return data.Length is 0x8000 or 0x8030;
         }
     }
 }

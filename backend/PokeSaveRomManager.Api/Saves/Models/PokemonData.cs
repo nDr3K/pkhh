@@ -3,7 +3,7 @@
     public class PokemonData
     {
         public int PokemonId { get; set; }
-        public int FormId { get; set; }
+        public int? FormId { get; set; }
 
         public int? AbilityId { get; set; }
 

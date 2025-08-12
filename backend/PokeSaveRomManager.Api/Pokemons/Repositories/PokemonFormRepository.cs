@@ -82,9 +82,8 @@ namespace PokeSaveRomManager.Api.Pokemons.Repositories
                 .Include(f => f.Pokemon)
                 .Include(f => f.Type1)
                 .Include(f => f.Type2)
-                .Where(f => internalIds.Contains(f.InternalId))
+                .Where(f => f.Pokemon.GameId == gameId && internalIds.Contains(f.InternalId))
                 .ToListAsync();
-
         }
     }
 }

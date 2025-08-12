@@ -2,14 +2,11 @@
 using PokeSaveRomManager.Parser.Core.Models.Data;
 using PokeSaveRomManager.Parser.Core.Models;
 using PokeSaveRomManager.Parser.Core.Utils;
-using System.Security.Cryptography;
 
 namespace PokeSaveRomManager.Parser.Gen2.RomParser
 {
     public class PokemonDataExtractor
     {
-
-        public void LoadPokedexOrderMap(byte[] romData, DataSection pokedexOffsets) { }
 
         public List<PokemonStatsData> ExtractStats(ByteReader reader, DataSection section)
         {
@@ -65,12 +62,16 @@ namespace PokeSaveRomManager.Parser.Gen2.RomParser
                     }
                 }
 
-                list.Add(new PokemonNameData
+                // Ignore weird cases
+                if (!name.Contains('?'))
                 {
-                    InternalId = i + 1,
-                    DexNumber = i + 1,
-                    Name = name
-                });
+                    list.Add(new PokemonNameData
+                    {
+                        InternalId = i + 1,
+                        DexNumber = i + 1,
+                        Name = name
+                    });
+                }
 
                 currentOffset += name.Length; // Move to the next name offset
 

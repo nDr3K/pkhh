@@ -1,32 +1,32 @@
 {
   "Moves": {
-    "Offset": 0x184000,
-    "EntryLength": 8,
+    "Offset": 0x41AFE,
+    "EntryLength": 7,
     "Count": 251
   },
   "MoveNames": {
-    "Offset": 0x184800,
+    "Offset": 0x1B1574,
     "EntryLength": 0,
     "Count": 251
   },
   "PokemonStats": {
-    "Offset": 0x185000,
+    "Offset": 0x051B0B,
     "EntryLength": 32,
     "Count": 251
   },
   "PokemonNames": {
-    "Offset": 0x186000,
-    "EntryLength": 10,
-    "Count": 251
+    "Offset": 0x1B0B74,
+    "EntryLength": 0,
+    "Count": 253
   },
   "Pokedex": {
-    "Offset": 0x187000,
-    "EntryLength": 1,
+    "Offset": 0x044360,
+    "EntryLength": 2,
     "Count": 251
   },
   "Types": {
-    "Offset": 0x188000,
+    "Offset": 0x0509AE,
     "EntryLength": 2,
-    "Count": 27
+    "Count": 28
   }
 }

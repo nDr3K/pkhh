@@ -10,7 +10,7 @@ namespace PokeSaveRomManager.Data.Domain
         public int Id { get; set; }
 		public int SaveId { get; set; }
 		public int PokemonId { get; set; }
-		public int FormId { get; set; }
+		public int? FormId { get; set; }
 		public string Nickname { get; set; }
 		public GenderType Gender { get; set; }
 		public int Level { get; set; }

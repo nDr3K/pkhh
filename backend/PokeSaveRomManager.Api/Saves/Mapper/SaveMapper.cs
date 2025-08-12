@@ -16,6 +16,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Id = save.Id,
                 Game = save.Game.Name,
                 Name = save.Name,
+                Generation = save.Game.Generation,
                 Team = save.Party.Members.Select(m => new SaveDtoPokemon
                 {
                     Id = m.PokemonInstance.Id,
@@ -42,6 +43,7 @@ namespace PokeSaveRomManager.Api.Saves.Mapper
                 Id = save.Id,
                 Game = save.Game.Name,
                 GamePath = save.Game.Path,
+                Generation = save.Game.Generation,
                 Name = save.Name,
                 Path = save.Path,
                 Description = save.Description,
