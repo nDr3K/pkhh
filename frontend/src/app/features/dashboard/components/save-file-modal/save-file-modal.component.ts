@@ -5,6 +5,7 @@ import { SaveService } from "../../../../core/services/save.service";
 import { SaveFile } from "../../../../core/models/save-file";
 import { finalize } from "rxjs";
 import { GameSave } from "../../../../core/models/game-save";
+import { Game } from "../../../../core/models/game-rom";
 
 @Component({
   selector: 'app-save-file-modal',
@@ -15,6 +16,7 @@ import { GameSave } from "../../../../core/models/game-save";
 })
 export class SaveFileModalComponent {
   @Input() isVisible = false;
+  @Input() games: Game[] | null = [];
   @Output() closeEvent = new EventEmitter<void>();
   @Output() uploadSuccess = new EventEmitter<GameSave>();
 
@@ -29,6 +31,7 @@ export class SaveFileModalComponent {
   constructor(private fb: FormBuilder) {
     this.uploadForm = this.fb.group({
       name: [''],
+      game: [''],
       description: [''],
       tagsInput: ['']
     });
@@ -117,7 +120,7 @@ export class SaveFileModalComponent {
     this.errorMessage = '';
 
     const metadata: SaveFile = {
-      gameId: 1, // TODO: will change to map for standard gens and picker when romhacks will be added
+      gameId: +this.uploadForm.get('game')?.value, //
       name: this.uploadForm.get('name')?.value || this.selectedFile.name,
       description: this.uploadForm.get('description')?.value || undefined,
       tags: [] //this.parseTags(this.uploadForm.get('tagsInput')?.value)

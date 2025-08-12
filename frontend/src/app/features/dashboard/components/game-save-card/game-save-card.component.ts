@@ -31,8 +31,7 @@ export class GameSaveCardComponent {
   }
 
   getPokemonImageUrl(dexNumber: number): string {
-    // Using PokeAPI sprites
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/${dexNumber}.png`
+    return `https://cdn.andreacannavo.com/pokemon/sprites/versions/generation-${this.gameSave?.generation ?? 0}/${dexNumber}.png`
   }
 
   onImageError(event: any): void {

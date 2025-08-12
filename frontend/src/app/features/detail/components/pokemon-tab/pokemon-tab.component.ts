@@ -14,6 +14,6 @@ export class PokemonTabComponent {
   @Input() gameSave: GameSaveExtended | null = null;
 
   getPokemonImageUrl(dexNumber: number): string {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/${dexNumber}.png`;
+    return `https://cdn.andreacannavo.com/pokemon/sprites/versions/generation-${this.gameSave?.generation ?? 0}/${dexNumber}.png`
   }
 }

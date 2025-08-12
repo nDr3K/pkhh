@@ -2,6 +2,7 @@ export interface GameSave {
   id: number;
   game: string;
   name: string;
+  generation: number;
   team: GamePokemon[];
   createdAt: string;
   updatedAt: string;
